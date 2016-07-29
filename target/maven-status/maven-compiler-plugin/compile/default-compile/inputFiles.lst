@@ -1,0 +1,9 @@
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/thread/readers/Reader.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/thread/readers/linux/RoomTempReader.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/listeners/ContextListener.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/thread/readers/linux/CPUTempReader.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/Login.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/LoginServlet.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/thread/TemperatureMeasurer.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/IndexServlet.java
+/home/inigo/workspaceNeonJEE/Thermostat/src/com/inigo/thermostat/listeners/LoginFilter.java

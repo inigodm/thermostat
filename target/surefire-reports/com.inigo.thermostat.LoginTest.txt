@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.inigo.thermostat.LoginTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec <<< FAILURE!
+com.inigo.thermostat.LoginTest.testLogin()  Time elapsed: 0.002 sec  <<< FAILURE!
+java.lang.Error: Unresolved compilation problem: 
+	Test cannot be resolved to a type
+	at com.inigo.thermostat.LoginTest.testLogin(LoginTest.java:7)
+
