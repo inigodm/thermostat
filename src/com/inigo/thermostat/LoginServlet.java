@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.inigo.thermostat.exceptions.ThermostatException;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -22,8 +24,13 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		Login login = new Login();
-		String destiny = "/" + login.login(request.getParameter("username"), request.getParameter("password"));
-		request.setAttribute("error", login.isError);
+		String destiny;
+		try {
+			destiny = "/" + login.login(request.getParameter("username"), request.getParameter("password"));
+			request.setAttribute("error", login.isError);
+		} catch (ThermostatException e) {
+			destiny = "/login";
+		}
 		request.getSession(true).setAttribute("user", login.user);
 		toDestiny(destiny, login.isError, request, response);
 	}
