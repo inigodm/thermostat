@@ -49,7 +49,6 @@ public class CustomConnection implements Connection{
 		 try {
 			Class.forName("org.sqlite.JDBC");
 			 Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
-			 System.out.println("Opened database successfully");
 			 return new CustomConnection(conn);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
