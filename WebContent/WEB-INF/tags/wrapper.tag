@@ -1,5 +1,6 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@attribute name="navigation" fragment="true" %>
 <%@attribute name="jumbotron" fragment="true" %>
 <!DOCTYPE html>
@@ -30,7 +31,7 @@
           </button>
           <a class="navbar-brand" href="#">DOMOENEA</a>
         </div>
-        <jsp:invoke fragment="navigation"/>
+        <t:nav/>
       </div>
     </nav>
     <div class="container">
