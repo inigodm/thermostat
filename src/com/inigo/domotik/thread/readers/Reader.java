@@ -1,4 +1,4 @@
-package com.inigo.thermostat.thread.readers;
+package com.inigo.domotik.thread.readers;
 
 public interface Reader {
 	public String read();

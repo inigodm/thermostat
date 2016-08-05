@@ -1,4 +1,4 @@
-package com.inigo.thermostat.listeners;
+package com.inigo.domotik.listeners;
 
 import java.io.IOException;
 import javax.servlet.Filter;

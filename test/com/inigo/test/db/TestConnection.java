@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.inigo.thermostat.db.CustomConnection;
-import com.inigo.thermostat.db.schema.SchemaCreator;
-import com.inigo.thermostat.exceptions.ThermostatException;
+import com.inigo.domotik.db.CustomConnection;
+import com.inigo.domotik.db.schema.SchemaCreator;
+import com.inigo.domotik.exceptions.ThermostatException;
 
 import junit.framework.TestCase;
 

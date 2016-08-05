@@ -1,4 +1,4 @@
-package com.inigo.thermostat.db;
+package com.inigo.domotik.db;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-import com.inigo.thermostat.exceptions.ThermostatException;
+import com.inigo.domotik.exceptions.ThermostatException;
 
 /**
  * @author GADEMOIN

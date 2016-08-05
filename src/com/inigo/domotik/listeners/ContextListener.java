@@ -1,10 +1,10 @@
-package com.inigo.thermostat.listeners;
+package com.inigo.domotik.listeners;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import com.inigo.thermostat.thread.TemperatureMeasurer;
+import com.inigo.domotik.thread.TemperatureMeasurer;
 
 /**
  * Application Lifecycle Listener implementation class ContextListener

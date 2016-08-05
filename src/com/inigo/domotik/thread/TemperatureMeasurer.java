@@ -1,4 +1,4 @@
-package com.inigo.thermostat.thread;
+package com.inigo.domotik.thread;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,16 +8,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.inigo.thermostat.thread.readers.Reader;
-import com.inigo.thermostat.thread.readers.linux.CPUTempReader;
-import com.inigo.thermostat.thread.readers.linux.RoomTempReader;
+import com.inigo.domotik.thread.readers.Reader;
+import com.inigo.domotik.thread.readers.linux.CPUTempReader;
+import com.inigo.domotik.thread.readers.linux.RoomTempReader;
 
 public class TemperatureMeasurer {
 	
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 1;
 	static Map<Integer, Reader> readers = new HashMap<>();
-	static final List<String> rawTemps = new ArrayList<>();
+	public static final List<String> rawTemps = new ArrayList<>();
 	static ScheduledExecutorService executor = null;
 	
 	static {

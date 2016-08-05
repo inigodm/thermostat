@@ -1,4 +1,4 @@
-package com.inigo.thermostat;
+package com.inigo.domotik;
 
 import java.io.IOException;
 
@@ -9,21 +9,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.inigo.thermostat.thread.TemperatureMeasurer;
+import com.inigo.domotik.exceptions.ThermostatException;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/site/index")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
+    
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("cpuTemp", (new TemperatureMeasurer().getTemps().get(TemperatureMeasurer.TEMP_CPU_INDEX)));
-		toDestiny("/index.jsp", true, request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Login login = new Login();
+		String destiny;
+		try {
+			destiny = "/" + login.login(request.getParameter("username"), request.getParameter("password"));
+			request.setAttribute("error", login.isError);
+		} catch (ThermostatException e) {
+			destiny = "/login";
+		}
+		request.getSession(true).setAttribute("user", login.user);
+		toDestiny(destiny, login.isError, request, response);
 	}
 
 	/**
@@ -32,7 +41,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
+	
 	private void toDestiny(String destiny, boolean isForward, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		if (isForward){
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destiny);

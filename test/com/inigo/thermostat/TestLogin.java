@@ -1,6 +1,7 @@
 package com.inigo.thermostat;
 
-import com.inigo.thermostat.exceptions.ThermostatException;
+import com.inigo.domotik.Login;
+import com.inigo.domotik.exceptions.ThermostatException;
 
 import junit.framework.TestCase;
 

@@ -1,13 +1,13 @@
-package com.inigo.thermostat.db.schema;
+package com.inigo.domotik.db.schema;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.inigo.thermostat.db.CustomConnection;
-import com.inigo.thermostat.exceptions.ThermostatException;
-import com.inigo.thermostat.utils.DBUtils;
+import com.inigo.domotik.db.CustomConnection;
+import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.utils.DBUtils;
 
 public class SchemaCreator {
 	public void createSchema() throws ThermostatException{

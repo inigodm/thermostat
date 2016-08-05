@@ -1,12 +1,12 @@
-package com.inigo.thermostat;
+package com.inigo.domotik;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.inigo.thermostat.db.CustomConnection;
-import com.inigo.thermostat.exceptions.ThermostatException;
+import com.inigo.domotik.db.CustomConnection;
+import com.inigo.domotik.exceptions.ThermostatException;
 
 public class Login {
 	public boolean isError;

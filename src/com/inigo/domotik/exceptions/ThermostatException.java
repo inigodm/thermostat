@@ -1,4 +1,4 @@
-package com.inigo.thermostat.exceptions;
+package com.inigo.domotik.exceptions;
 
 public class ThermostatException extends Exception{
 

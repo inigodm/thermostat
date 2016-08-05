@@ -1,4 +1,4 @@
-package com.inigo.thermostat.thread.readers.linux;
+package com.inigo.domotik.thread.readers.linux;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.inigo.thermostat.thread.readers.Reader;
+import com.inigo.domotik.thread.readers.Reader;
 
 public class RoomTempReader implements Reader {
 	// this is the file in which my sensor writes the temperature that it measures

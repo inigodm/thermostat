@@ -1,11 +1,11 @@
-package com.inigo.thermostat.utils;
+package com.inigo.domotik.utils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.inigo.thermostat.db.CustomConnection;
-import com.inigo.thermostat.exceptions.ThermostatException;
+import com.inigo.domotik.db.CustomConnection;
+import com.inigo.domotik.exceptions.ThermostatException;
 
 public class DBUtils {
 	public static void executeUpdate(String sql) throws ThermostatException{
