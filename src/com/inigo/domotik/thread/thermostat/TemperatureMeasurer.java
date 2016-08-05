@@ -1,4 +1,4 @@
-package com.inigo.domotik.thread;
+package com.inigo.domotik.thread.thermostat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,11 +8,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
-import com.inigo.domotik.thread.readers.linux.CPUTempReader;
-import com.inigo.domotik.thread.readers.linux.RoomTempReader;
+import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
+import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
 
-public class TemperatureMeasurer {
+public class TemperatureMeasurer implements Starter{
 	
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 1;

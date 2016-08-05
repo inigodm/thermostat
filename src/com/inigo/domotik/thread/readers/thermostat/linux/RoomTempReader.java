@@ -1,4 +1,4 @@
-package com.inigo.domotik.thread.readers.linux;
+package com.inigo.domotik.thread.readers.thermostat.linux;
 
 import java.io.BufferedReader;
 import java.io.File;

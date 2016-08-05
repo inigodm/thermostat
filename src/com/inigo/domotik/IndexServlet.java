@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.inigo.domotik.thread.TemperatureMeasurer;
+import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
 
 /**
  * Servlet implementation class IndexServlet

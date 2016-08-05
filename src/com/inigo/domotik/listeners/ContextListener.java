@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import com.inigo.domotik.thread.TemperatureMeasurer;
+import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
 
 /**
  * Application Lifecycle Listener implementation class ContextListener
