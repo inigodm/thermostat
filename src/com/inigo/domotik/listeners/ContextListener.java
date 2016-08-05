@@ -1,9 +1,13 @@
 package com.inigo.domotik.listeners;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
 
 /**
@@ -12,19 +16,27 @@ import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
  */
 @WebListener
 public class ContextListener implements ServletContextListener {
-	TemperatureMeasurer tc = new TemperatureMeasurer();
+	private static final List<Starter> starters = new ArrayList<>();
+	static{
+		starters.add(new TemperatureMeasurer());
+	}
+	
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0)  { 
-    	 tc.stop();
+    	for (Starter s :  starters){
+    		s.stop();
+    	}
     }
 
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
-    	tc.start();
+    	for (Starter s :  starters){
+    		s.start();
+    	}
     }
 	
 }

@@ -20,6 +20,7 @@ public class TemperatureMeasurer implements Starter{
 	static Map<Integer, Reader> readers = new HashMap<>();
 	public static final List<String> rawTemps = new ArrayList<>();
 	static ScheduledExecutorService executor = null;
+	static int desiredTemp = 25;
 	
 	static {
 		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
@@ -62,6 +63,31 @@ public class TemperatureMeasurer implements Starter{
 			rawTemps.clear();
 			setRawTemp(TEMP_CPU_INDEX);
 			setRawTemp(TEMP_ROOM_INDEX);
+			activateCalefactor();
 		}
+		
+		private void activateCalefactor(){
+			if (isActive()){
+				System.out.println("Setting GPIO of calefactor to ON");
+			}else{
+				System.out.println("Setting GPIO of calefactor to OFF");
+			}
+		}
+	}
+	
+	public boolean isActive(){
+		return (getTemp(TEMP_CPU_INDEX) < desiredTemp);
+	}
+
+	public int getTemp(int tempIndex) {
+		return (int)Double.parseDouble(rawTemps.get(tempIndex));
+	}
+
+	public static int getDesiredTemp() {
+		return desiredTemp;
+	}
+
+	public static void setDesiredTemp(int desiredTemp) {
+		TemperatureMeasurer.desiredTemp = desiredTemp;
 	}
 }
