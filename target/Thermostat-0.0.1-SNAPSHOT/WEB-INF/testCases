@@ -1,2 +1,4 @@
 com.inigo.thermostat.TestLogin
 com.inigo.thermostat.thread.TestTempChecker
+com.inigo.test.db.TestConnection
+com.inigo.domotik.thermostat.TempManagerTester

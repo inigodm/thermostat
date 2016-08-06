@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <script src="/js/angular.min.js"></script>
+            <script src="../js/angular.min.js"></script>
             <script>
               var MAX_COLOR = 255; 
               var MIN_COLOR = 50;
@@ -41,16 +41,13 @@
       		    $interpolateProvider.startSymbol('{%');
       		    $interpolateProvider.endSymbol('%}');
               });
-              mod.controller("newCtrl",['$scope', '$timeout', '$interval', function($scope, $timeout, $interval){
+              mod.controller("newCtrl",['$scope', '$timeout',  '$http', '$interval', function($scope, $timeout, $http, $interval){
                 $scope.valor = "" + tempmin;
                 $scope.currentCPUTemp="";
                 $scope.val = tempmin;
                 $scope.state = 'Off';
                 $scope.add = function(newValue){
-                    //if ($scope.val + newValue > tempmax && $scope.val + newValue < tempmin) return;
-                    //$scope.val = $scope.val + newValue;
                     $scope.changeTemp(newValue);
-                    //$scope.ponerTemperaturaMarcador();
                 };
                 $scope.ponerTemperaturaMarcador = function(){
                     $scope.valor = paddy($scope.val, 2);
@@ -64,14 +61,38 @@
                 $scope.getRoomTemp = function(){
                     Dajaxice.thermostat.getRoomThemperature($scope.callback_getRoomTemp);
                 };
-                $scope.changeTemp = function(toAdd){
-                	Dajaxice.thermostat.changeTemp($scope.callback_changeTemp, {'value':toAdd});
+                $scope.getTemps = function(){
+                	$http({
+                	    method: 'POST',
+                	    url: "/Thermostat/site/thermostat/changer",
+                	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                	    data:{'loadProds': 1,'sended': JSON.stringify({'value':0})},
+                	}).success(function(response) {
+                	    $scope.val = response.data.desiredTemp;
+                        $scope.state = response.data.state;
+                        $scope.ponerTemperaturaMarcador();
+                    });
                 };
-                $scope.callback_changeTemp = function(data){
+                $scope.changeTemp = function(toAdd){
+                	$http({
+                	    method: 'POST',
+                	    url: "/Thermostat/site/thermostat/changer",
+                	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                	    data:JSON.stringify({'value':toAdd}),
+                	}).success($scope.manage_thermostatInfo);
+                    //Dajaxice.thermostat.changeTemp($scope.callback_changeTemp, {'value':toAdd});
+                };
+                $scope.manage_thermostatInfo = function(resp){
+                	$scope.val = resp.data.desiredTemp;
+                    $scope.state = resp.data.state;
+                    $scope.ponerTemperaturaMarcador();
+                }
+                
+                /*$scope.callback_changeTemp = function(data){
                     $scope.val = data.desiredTemp;
                     $scope.state = data.state;
                     $scope.ponerTemperaturaMarcador();
-                };
+                };*/
                 $scope.callback_getCPUTemp = function(data){
                 	$scope.currentCPUTemp = data.temp;
                 	$scope.val = data.desiredTemp;
@@ -83,7 +104,7 @@
                 };
                 //TODO: Esto no lo hace bien, probar en el interval
                 $scope.add(0);
-                $interval(function(){$scope.getCPUTemp();}, 10000);
+                $interval(function(){$scope.getTemps();}, 10000);
                 //TODO: en la raspberry solo
                 //$interval(function(){$scope.getRoomTemp();}, 1000);
               }]

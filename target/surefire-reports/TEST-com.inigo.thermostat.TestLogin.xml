@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="com.inigo.thermostat.TestLogin" time="0.001" errors="2" skipped="0">
+<testsuite tests="2" failures="0" name="com.inigo.thermostat.TestLogin" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -25,7 +25,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Linux"/>
-    <property name="classworlds.conf" value="/home/inigo/workspaceNeonJEE/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf6759449462785658898.tmp"/>
+    <property name="classworlds.conf" value="/home/inigo/workspaceNeonJEE/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf1345853068188241360.tmp"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -42,7 +42,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/lib/jvm/java-8-oracle/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B compile deploy"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="es"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -60,174 +60,6 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.inigo.thermostat.TestLogin" name="testErroneusLogin" time="0">
-    <error message="path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist" type="com.inigo.thermostat.exceptions.ThermostatException">com.inigo.thermostat.exceptions.ThermostatException: path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist
-	at com.inigo.thermostat.db.CustomConnection.getConnection(CustomConnection.java:55)
-	at com.inigo.thermostat.Login.findUser(Login.java:33)
-	at com.inigo.thermostat.Login.login(Login.java:18)
-	at com.inigo.thermostat.TestLogin.testErroneusLogin(TestLogin.java:17)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at junit.framework.TestCase.runTest(TestCase.java:176)
-	at junit.framework.TestCase.runBare(TestCase.java:141)
-	at junit.framework.TestResult$1.protect(TestResult.java:122)
-	at junit.framework.TestResult.runProtected(TestResult.java:142)
-	at junit.framework.TestResult.run(TestResult.java:125)
-	at junit.framework.TestCase.run(TestCase.java:129)
-	at junit.framework.TestSuite.runTest(TestSuite.java:252)
-	at junit.framework.TestSuite.run(TestSuite.java:247)
-	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
-	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-Caused by: java.sql.SQLException: path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist
-	at org.sqlite.core.CoreConnection.open(CoreConnection.java:192)
-	at org.sqlite.core.CoreConnection.&lt;init&gt;(CoreConnection.java:76)
-	at org.sqlite.jdbc3.JDBC3Connection.&lt;init&gt;(JDBC3Connection.java:24)
-	at org.sqlite.jdbc4.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:23)
-	at org.sqlite.SQLiteConnection.&lt;init&gt;(SQLiteConnection.java:45)
-	at org.sqlite.JDBC.createConnection(JDBC.java:114)
-	at org.sqlite.JDBC.connect(JDBC.java:88)
-	at java.sql.DriverManager.getConnection(DriverManager.java:664)
-	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.inigo.thermostat.db.CustomConnection.getConnection(CustomConnection.java:51)
-	... 28 more
-</error>
-    <system-err>java.sql.SQLException: path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist
-	at org.sqlite.core.CoreConnection.open(CoreConnection.java:192)
-	at org.sqlite.core.CoreConnection.&lt;init&gt;(CoreConnection.java:76)
-	at org.sqlite.jdbc3.JDBC3Connection.&lt;init&gt;(JDBC3Connection.java:24)
-	at org.sqlite.jdbc4.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:23)
-	at org.sqlite.SQLiteConnection.&lt;init&gt;(SQLiteConnection.java:45)
-	at org.sqlite.JDBC.createConnection(JDBC.java:114)
-	at org.sqlite.JDBC.connect(JDBC.java:88)
-	at java.sql.DriverManager.getConnection(DriverManager.java:664)
-	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.inigo.thermostat.db.CustomConnection.getConnection(CustomConnection.java:51)
-	at com.inigo.thermostat.Login.findUser(Login.java:33)
-	at com.inigo.thermostat.Login.login(Login.java:18)
-	at com.inigo.thermostat.TestLogin.testErroneusLogin(TestLogin.java:17)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at junit.framework.TestCase.runTest(TestCase.java:176)
-	at junit.framework.TestCase.runBare(TestCase.java:141)
-	at junit.framework.TestResult$1.protect(TestResult.java:122)
-	at junit.framework.TestResult.runProtected(TestResult.java:142)
-	at junit.framework.TestResult.run(TestResult.java:125)
-	at junit.framework.TestCase.run(TestCase.java:129)
-	at junit.framework.TestSuite.runTest(TestSuite.java:252)
-	at junit.framework.TestSuite.run(TestSuite.java:247)
-	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
-	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-</system-err>
-  </testcase>
-  <testcase classname="com.inigo.thermostat.TestLogin" name="testUserName" time="0.001">
-    <error message="path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist" type="com.inigo.thermostat.exceptions.ThermostatException">com.inigo.thermostat.exceptions.ThermostatException: path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist
-	at com.inigo.thermostat.db.CustomConnection.getConnection(CustomConnection.java:55)
-	at com.inigo.thermostat.Login.findUser(Login.java:33)
-	at com.inigo.thermostat.Login.login(Login.java:18)
-	at com.inigo.thermostat.TestLogin.testUserName(TestLogin.java:11)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at junit.framework.TestCase.runTest(TestCase.java:176)
-	at junit.framework.TestCase.runBare(TestCase.java:141)
-	at junit.framework.TestResult$1.protect(TestResult.java:122)
-	at junit.framework.TestResult.runProtected(TestResult.java:142)
-	at junit.framework.TestResult.run(TestResult.java:125)
-	at junit.framework.TestCase.run(TestCase.java:129)
-	at junit.framework.TestSuite.runTest(TestSuite.java:252)
-	at junit.framework.TestSuite.run(TestSuite.java:247)
-	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
-	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-Caused by: java.sql.SQLException: path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist
-	at org.sqlite.core.CoreConnection.open(CoreConnection.java:192)
-	at org.sqlite.core.CoreConnection.&lt;init&gt;(CoreConnection.java:76)
-	at org.sqlite.jdbc3.JDBC3Connection.&lt;init&gt;(JDBC3Connection.java:24)
-	at org.sqlite.jdbc4.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:23)
-	at org.sqlite.SQLiteConnection.&lt;init&gt;(SQLiteConnection.java:45)
-	at org.sqlite.JDBC.createConnection(JDBC.java:114)
-	at org.sqlite.JDBC.connect(JDBC.java:88)
-	at java.sql.DriverManager.getConnection(DriverManager.java:664)
-	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.inigo.thermostat.db.CustomConnection.getConnection(CustomConnection.java:51)
-	... 28 more
-</error>
-    <system-err>java.sql.SQLException: path to &apos;/opt/tomcat/test.db&apos;: &apos;/opt/tomcat&apos; does not exist
-	at org.sqlite.core.CoreConnection.open(CoreConnection.java:192)
-	at org.sqlite.core.CoreConnection.&lt;init&gt;(CoreConnection.java:76)
-	at org.sqlite.jdbc3.JDBC3Connection.&lt;init&gt;(JDBC3Connection.java:24)
-	at org.sqlite.jdbc4.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:23)
-	at org.sqlite.SQLiteConnection.&lt;init&gt;(SQLiteConnection.java:45)
-	at org.sqlite.JDBC.createConnection(JDBC.java:114)
-	at org.sqlite.JDBC.connect(JDBC.java:88)
-	at java.sql.DriverManager.getConnection(DriverManager.java:664)
-	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.inigo.thermostat.db.CustomConnection.getConnection(CustomConnection.java:51)
-	at com.inigo.thermostat.Login.findUser(Login.java:33)
-	at com.inigo.thermostat.Login.login(Login.java:18)
-	at com.inigo.thermostat.TestLogin.testUserName(TestLogin.java:11)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at junit.framework.TestCase.runTest(TestCase.java:176)
-	at junit.framework.TestCase.runBare(TestCase.java:141)
-	at junit.framework.TestResult$1.protect(TestResult.java:122)
-	at junit.framework.TestResult.runProtected(TestResult.java:142)
-	at junit.framework.TestResult.run(TestResult.java:125)
-	at junit.framework.TestCase.run(TestCase.java:129)
-	at junit.framework.TestSuite.runTest(TestSuite.java:252)
-	at junit.framework.TestSuite.run(TestSuite.java:247)
-	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
-	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-</system-err>
-  </testcase>
+  <testcase classname="com.inigo.thermostat.TestLogin" name="testErroneusLogin" time="0"/>
+  <testcase classname="com.inigo.thermostat.TestLogin" name="testUserName" time="0"/>
 </testsuite>
