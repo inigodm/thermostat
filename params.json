@@ -1,0 +1,6 @@
+{
+  "name": "Thermostat",
+  "tagline": "",
+  "body": "### thermostat\r\n\r\nThis is a web application to manage the thermostat that i'm building on my raspberry pi 2B\r\n\r\nIt uses only servlets and JSP in order to try to let it as ligth as possible and its build to be able to get future features as domotic-center.\r\n\r\nI use a 5' resistive screen to manage the rasp, a DS18S20 sensor to get ambiental temp and a relee to switch on an off the calefactor. The rasp's SO is raspbian.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
