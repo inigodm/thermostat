@@ -88,6 +88,7 @@ public class TemperatureMeasurer implements Starter{
 	}
 
 	public static void setDesiredTemp(int desiredTemp) {
+		System.out.println("Set temp to" + desiredTemp);
 		TemperatureMeasurer.desiredTemp = desiredTemp;
 	}
 }

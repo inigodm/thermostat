@@ -1,5 +1,7 @@
 package com.inigo.domotik.thread.thermostat;
 
+import com.inigo.domotik.thermostat.models.ThermostatInfo;
+
 public class ThermostatManager {
 	TemperatureMeasurer tc = new TemperatureMeasurer();
 	
@@ -12,8 +14,12 @@ public class ThermostatManager {
 	public int getActualTemp() {
 		return tc.getTemp(TemperatureMeasurer.TEMP_CPU_INDEX);
 	}
-	public void increase(int i) {
+	public ThermostatInfo increase(int i) {
+		ThermostatInfo info = new ThermostatInfo();
 		TemperatureMeasurer.setDesiredTemp(TemperatureMeasurer.getDesiredTemp() + i);
+		info.setDesiredTemp("" + tc.getDesiredTemp());
+		info.setRoomTemp(""+ tc.getTemp(TemperatureMeasurer.TEMP_CPU_INDEX));
+		return info;
 	}
 	public boolean isActive() {
 		return tc.isActive();

@@ -21,7 +21,7 @@
                     <div class="col-sm-12">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-8">
-                        <span>Current CPU Temperature: <span  class="lcd-text"><c:out value="${cpuTemp}"/></span>ºC</span>
+                        <span>Current CPU Temperature: <span  class="lcd-text"><c:out value="{%cpuTemp%}"/></span>ºC</span>
                         </div>
                         <div class="col-sm-2"></div>
                     </div>
@@ -45,63 +45,25 @@
                 $scope.valor = "" + tempmin;
                 $scope.currentCPUTemp="";
                 $scope.val = tempmin;
-                $scope.state = 'Off';
-                $scope.add = function(newValue){
-                    $scope.changeTemp(newValue);
-                };
                 $scope.ponerTemperaturaMarcador = function(){
                     $scope.valor = paddy($scope.val, 2);
                     $scope.color=calcColor($scope.val);
                     $('#temp').css('background-color', $scope.color);
                 };
-                // test sensor
-                $scope.getCPUTemp = function(){
-                    Dajaxice.thermostat.getValue($scope.callback_getCPUTemp);
-                };
-                $scope.getRoomTemp = function(){
-                    Dajaxice.thermostat.getRoomThemperature($scope.callback_getRoomTemp);
-                };
-                $scope.getTemps = function(){
-                	$http({
-                	    method: 'POST',
-                	    url: "/Thermostat/site/thermostat/changer",
-                	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                	    data:{'loadProds': 1,'sended': JSON.stringify({'value':0})},
-                	}).success(function(response) {
-                	    $scope.val = response.data.desiredTemp;
-                        $scope.state = response.data.state;
-                        $scope.ponerTemperaturaMarcador();
-                    });
-                };
-                $scope.changeTemp = function(toAdd){
-                	$http({
-                	    method: 'POST',
-                	    url: "/Thermostat/site/thermostat/changer",
-                	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                	    data:JSON.stringify({'value':toAdd}),
-                	}).success($scope.manage_thermostatInfo);
-                    //Dajaxice.thermostat.changeTemp($scope.callback_changeTemp, {'value':toAdd});
+                $scope.getTemps = check;
+                function check(){
+                	$scope.add(0);
+                }
+                $scope.add = function(value){
+                	$http.post("/Thermostat/site/thermostat/changer",
+                			JSON.stringify({"method":"changetemp", "data": value})
+                	).success($scope.manage_thermostatInfo);
                 };
                 $scope.manage_thermostatInfo = function(resp){
-                	$scope.val = resp.data.desiredTemp;
-                    $scope.state = resp.data.state;
+                	$scope.val = resp.desiredTemp;
+                	$scope.cpuTemp = resp.roomTemp;
                     $scope.ponerTemperaturaMarcador();
                 }
-                
-                /*$scope.callback_changeTemp = function(data){
-                    $scope.val = data.desiredTemp;
-                    $scope.state = data.state;
-                    $scope.ponerTemperaturaMarcador();
-                };*/
-                $scope.callback_getCPUTemp = function(data){
-                	$scope.currentCPUTemp = data.temp;
-                	$scope.val = data.desiredTemp;
-                    $scope.state = data.state;
-                    $scope.ponerTemperaturaMarcador();
-                };
-                $scope.callback_getRoomTemp = function(data){
-                    $scope.currentRoomTemp = data;
-                };
                 //TODO: Esto no lo hace bien, probar en el interval
                 $scope.add(0);
                 $interval(function(){$scope.getTemps();}, 10000);
@@ -109,6 +71,7 @@
                 //$interval(function(){$scope.getRoomTemp();}, 1000);
               }]
             );
+              
             
             function paddy(n, p, c) {
                     var pad_char = typeof c !== 'undefined' ? c : '0';
