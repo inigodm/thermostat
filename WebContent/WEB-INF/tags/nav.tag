@@ -6,7 +6,7 @@
 	      	<li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedule<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	                <li><a href="#contact">New</a></li>
+	                <li><a href="/Thermostat/site/thermostat/schedules">New</a></li>
 	                <li><a href="#about">See all</a></li>
 	          </ul>
 	        </li>
