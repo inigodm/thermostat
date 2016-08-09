@@ -32,21 +32,18 @@ public class SchemaCreator {
 
 	private void createSchedulesTable() throws ThermostatException {
 		String sql = "CREATE TABLE schedules " +
-                "(SCHEDULEID INTEGER PRIMARY KEY     NOT NULL," +
-                " USERID           INTEGER    NOT NULL, " + 
+                "(USERID           INTEGER    NOT NULL, " + 
                 " FROMDATE           INTEGER    NOT NULL, " + 
                 " TODATE           INTEGER    NOT NULL, " + 
                 " STARTHOUR           INTEGER    NOT NULL, " + 
                 " ENDHOUR           INTEGER    NOT NULL, " + 
-                " MINTEMP           INTEGER    NOT NULL, " + 
-                " MAXTEMP          INTEGER    NOT NULL)";
+                " DESIREDTEMP           INTEGER    NOT NULL)";
 		DBUtils.executeUpdate(sql);
 	}
 
 	private void createUserTable() throws ThermostatException {
 		String sql = "CREATE TABLE USERS " +
-                "(USERID INTEGER PRIMARY KEY     NOT NULL," +
-                " USER           TEXT    NOT NULL, " + 
+                "(USER           TEXT    NOT NULL, " + 
                 " PASS           TEXT     NOT NULL)";
 		DBUtils.executeUpdate(sql);
 	}
