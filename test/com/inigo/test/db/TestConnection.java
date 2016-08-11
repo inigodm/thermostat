@@ -42,7 +42,7 @@ public class TestConnection extends TestCase{
 	}
 	
 	public void testCreateSchema() throws SQLException, ThermostatException{
-		try{
+		/*try{
 			String sql = "select user, pass, userid from users";
 			getData(sql);
 			sql = "select fromDate, toDate, startHour, endHour, minTemp, maxTemp, userid, scheduleid from schedules";
@@ -50,7 +50,7 @@ public class TestConnection extends TestCase{
 		}catch(Exception e){
 			SchemaCreator sc = new SchemaCreator();
 			sc.createSchema();	
-		}
+		}*/
 	}
 	
 	public ResultSet getData(String sql) throws SQLException, ThermostatException{

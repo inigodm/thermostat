@@ -1,18 +1,18 @@
 package com.inigo.domotik.thermostat.models;
 
-public class Petition {
+public abstract class Petition<T> {
 	String method;
-	int data;
+	T data;
 	public String getMethod() {
 		return method;
 	}
 	public void setMethod(String method) {
 		this.method = method;
 	}
-	public int getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(int data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 }

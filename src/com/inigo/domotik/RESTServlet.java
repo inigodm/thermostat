@@ -14,7 +14,7 @@ import com.inigo.domotik.thermostat.models.Petition;
 import com.inigo.domotik.thermostat.models.ThermostatInfo;
 
 
-public abstract class RESTServlet<T, R>  extends HttpServlet{
+public abstract class RESTServlet<T>  extends HttpServlet{
 	Class<T> in;
 	
 	/**
@@ -22,7 +22,7 @@ public abstract class RESTServlet<T, R>  extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public RESTServlet(Class<T> in, Class<R> out){
+	public RESTServlet(Class<T> in){
 		this.in = in;
 	}
 	/**
@@ -46,5 +46,5 @@ public abstract class RESTServlet<T, R>  extends HttpServlet{
         response.getWriter().write(gson.toJson(doService(reqObject, request, response)));
 	}
 	
-	protected abstract R doService(T reqObject, HttpServletRequest request, HttpServletResponse response);
+	protected abstract Object doService(T reqObject, HttpServletRequest request, HttpServletResponse response);
 }
