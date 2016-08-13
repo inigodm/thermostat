@@ -77,28 +77,10 @@
 						      </tr>
 						    </thead>
 						    <tbody>
-						      <tr onclick="alert('de')">
-						        <td>John</td>
-						        <td>Doe</td>
-						        <td>john@example.com</td>
-						        <td>
-						         	<span class="glyphicon glyphicon-pencil"></span>
-									<span class="glyphicon glyphicon-trash"></span>
-								</td>
-						      </tr>
-						      <tr>
-						        <td>Mary</td>
-						        <td>Moe</td>
-						        <td>mary@example.com</td>
-						        <td>
-						         	<span class="glyphicon glyphicon-pencil"></span>
-									<span class="glyphicon glyphicon-trash"></span>
-								</td>
-						      </tr>
-						      <tr>
-						        <td>July</td>
-						        <td>Dooley</td>
-						        <td>july@example.com</td>
+						      <tr ng-repeat="x in schedules">
+						        <td>{{ x.startTime }} - {{ x.stopTime }}</td>
+						        <td>{{ x.startDate }} - {{ x.endDate }}</td>
+						        <td>{{ x.minTemp }}</td>
 						        <td>
 						         	<span class="glyphicon glyphicon-pencil"></span>
 									<span class="glyphicon glyphicon-trash"></span>
@@ -107,11 +89,26 @@
 						    </tbody>
 						  </table>
                     </div>
-                    </div>
                 </div>
-            </div>
-            <script src="../js/angular.min.js"></script>
+           </div>
             <script>
+            var mod = angular.module('newApp', []).config(function($interpolateProvider) {
+      		    $interpolateProvider.startSymbol('{%');
+      		    $interpolateProvider.endSymbol('%}');
+            });
+                 
+            mod.controller("newCtrl",['$scope','$http', function($scope, $http){
+            	$scope.add = function(value){
+                	$http.post("/Thermostat/site/thermostat/scheduleManager",
+                			JSON.stringify({"method":"changetemp", "data": value})
+                	).success($scope.schedules = []);
+            	};
+            	$scope.findSchedules = function(value){
+                	$http.post("/Thermostat/site/thermostat/scheduleManager",
+                			JSON.stringify({"method":"changetemp", "data": {method: "getAll"});
+                	).success($scope.schedules = []);
+            	};
+            }]);
             </script>
-         </div>
+       </div>    
 </t:wrapper>

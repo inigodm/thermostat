@@ -13,7 +13,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/Thermostat/img/favicon.ico">
-
+	<script src="/Thermostat/js/angular.min.js"></script>
+            
     <title>DOMOENEA</title>
     <!-- Bootstrap core CSS -->
     <link href="/Thermostat/css/bootstrap.css" rel="stylesheet"/>
@@ -29,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">DOMOENEA</a>
+          <a class="navbar-brand" href="/Thermostat/site/index.jsp">DOMOENEA</a>
         </div>
         <t:nav/>
       </div>

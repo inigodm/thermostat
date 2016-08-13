@@ -27,7 +27,6 @@
                     </div>
                 </div>
             </div>
-            <script src="../js/angular.min.js"></script>
             <script>
               var MAX_COLOR = 255; 
               var MIN_COLOR = 50;
