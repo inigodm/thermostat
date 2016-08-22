@@ -2,4 +2,5 @@ com.inigo.thermostat.thread.TestScheluderManager
 com.inigo.domotik.thermostat.TempManagerTester
 com.inigo.thermostat.thread.TestTempChecker
 com.inigo.thermostat.TestLogin
-com.inigo.test.db.TestConnection
+com.inigo.test.db.TestConnection 
+
