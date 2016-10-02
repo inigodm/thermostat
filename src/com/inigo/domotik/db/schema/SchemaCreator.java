@@ -21,6 +21,7 @@ public class SchemaCreator {
 			System.out.println("trying to generate tables");
 			createUserTable();
 			createSchedulesTable();
+			createLogTable();
 			addData();
 		}
 	}
@@ -47,6 +48,16 @@ public class SchemaCreator {
                 " PASS           TEXT     NOT NULL)";
 		DBUtils.executeUpdate(sql);
 	}
+	
+	private void createLogTable() throws ThermostatException {
+		String sql = "CREATE TABLE LOG " +
+                "(FROMDATE           INTEGER    NOT NULL, " + 
+                " TODATE           INTEGER    NOT NULL, " + 
+                " STARTHOUR           INTEGER    NOT NULL, " + 
+                " ENDHOUR           INTEGER    NOT NULL)";
+		DBUtils.executeUpdate(sql);
+	}
+	
 	public static ResultSet executeQuery(String sql) throws ThermostatException{
 		ResultSet rs = null;
 		try (Connection conn = CustomConnection.getConnection();
