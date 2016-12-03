@@ -25,6 +25,22 @@ public class SchemaCreator {
 			addData();
 		}
 	}
+	
+	public void createTables() throws ThermostatException{
+		String sql = "select user, pass, userid from users";
+		try{
+			DBUtils.executeUpdate("drop table schedules");
+			DBUtils.executeUpdate("drop table users");
+			DBUtils.executeUpdate("drop table log");
+		}catch (Exception e){
+			
+		}
+		System.out.println("trying to generate tables");
+		createUserTable();
+		createSchedulesTable();
+		createLogTable();
+		addData();
+	}
 
 	private void addData() throws ThermostatException {
 		String sql = "insert into users (user, pass) values ('inigo', 'password')";

@@ -28,7 +28,7 @@ public class TestConnection extends TestCase{
 		Connection conn = CustomConnection.getConnection();
 		Statement stmt = conn.createStatement();
 		stmt.executeUpdate(sql);
-	    stmt.close();
+		stmt.close();
 	    conn.close();
 	}
 	
