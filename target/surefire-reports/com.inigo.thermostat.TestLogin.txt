@@ -1,9 +1,9 @@
 -------------------------------------------------------------------------------
 Test set: com.inigo.thermostat.TestLogin
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.039 sec <<< FAILURE!
-testErroneusLogin(com.inigo.thermostat.TestLogin)  Time elapsed: 0.03 sec  <<< ERROR!
-com.inigo.domotik.exceptions.ThermostatException: path to '/opt/tomcat/test.db': '/opt/tomcat' does not exist
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.005 sec <<< FAILURE!
+testErroneusLogin(com.inigo.thermostat.TestLogin)  Time elapsed: 0.001 sec  <<< ERROR!
+com.inigo.domotik.exceptions.ThermostatException: opening db: '/opt/tomcat/test.db': Permiso denegado
 	at com.inigo.domotik.db.CustomConnection.getConnection(CustomConnection.java:55)
 	at com.inigo.domotik.Login.findUser(Login.java:33)
 	at com.inigo.domotik.Login.login(Login.java:18)
@@ -33,8 +33,8 @@ com.inigo.domotik.exceptions.ThermostatException: path to '/opt/tomcat/test.db':
 	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-Caused by: java.sql.SQLException: path to '/opt/tomcat/test.db': '/opt/tomcat' does not exist
-	at org.sqlite.core.CoreConnection.open(CoreConnection.java:192)
+Caused by: java.sql.SQLException: opening db: '/opt/tomcat/test.db': Permiso denegado
+	at org.sqlite.core.CoreConnection.open(CoreConnection.java:203)
 	at org.sqlite.core.CoreConnection.<init>(CoreConnection.java:76)
 	at org.sqlite.jdbc3.JDBC3Connection.<init>(JDBC3Connection.java:24)
 	at org.sqlite.jdbc4.JDBC4Connection.<init>(JDBC4Connection.java:23)
@@ -46,8 +46,8 @@ Caused by: java.sql.SQLException: path to '/opt/tomcat/test.db': '/opt/tomcat' d
 	at com.inigo.domotik.db.CustomConnection.getConnection(CustomConnection.java:51)
 	... 28 more
 
-testUserName(com.inigo.thermostat.TestLogin)  Time elapsed: 0.008 sec  <<< ERROR!
-com.inigo.domotik.exceptions.ThermostatException: path to '/opt/tomcat/test.db': '/opt/tomcat' does not exist
+testUserName(com.inigo.thermostat.TestLogin)  Time elapsed: 0.004 sec  <<< ERROR!
+com.inigo.domotik.exceptions.ThermostatException: opening db: '/opt/tomcat/test.db': Permiso denegado
 	at com.inigo.domotik.db.CustomConnection.getConnection(CustomConnection.java:55)
 	at com.inigo.domotik.Login.findUser(Login.java:33)
 	at com.inigo.domotik.Login.login(Login.java:18)
@@ -77,8 +77,8 @@ com.inigo.domotik.exceptions.ThermostatException: path to '/opt/tomcat/test.db':
 	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-Caused by: java.sql.SQLException: path to '/opt/tomcat/test.db': '/opt/tomcat' does not exist
-	at org.sqlite.core.CoreConnection.open(CoreConnection.java:192)
+Caused by: java.sql.SQLException: opening db: '/opt/tomcat/test.db': Permiso denegado
+	at org.sqlite.core.CoreConnection.open(CoreConnection.java:203)
 	at org.sqlite.core.CoreConnection.<init>(CoreConnection.java:76)
 	at org.sqlite.jdbc3.JDBC3Connection.<init>(JDBC3Connection.java:24)
 	at org.sqlite.jdbc4.JDBC4Connection.<init>(JDBC4Connection.java:23)

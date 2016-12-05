@@ -27,7 +27,7 @@
 	                <li><a href="#about">About</a></li>
 	          </ul>
 	        </li>
-	        <li><a href="/logout">Log out</a></li>
+	        <li><a href="/Thermostat/logout">Log out</a></li>
           </ul>
         </div>
 </c:if>

@@ -9,7 +9,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.NClob;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -47,8 +46,9 @@ public class CustomConnection implements Connection{
 	 */
 	public static Connection getConnection() throws ThermostatException{
 		 try {
-			Class.forName("org.sqlite.JDBC");
-			 Connection conn = DriverManager.getConnection("jdbc:sqlite:/opt/tomcat/test.db");
+			 Class.forName("org.sqlite.JDBC");
+			 System.out.println("tmp:" + System.getProperty("java.io.tmpdir"));
+			 Connection conn = DriverManager.getConnection("jdbc:sqlite:/home/tomcat7/db.db");
 			 return new CustomConnection(conn);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -8,13 +8,13 @@ import junit.framework.TestCase;
 public class TestLogin extends TestCase{
 	
 	public void testUserName() throws ThermostatException{
-		Login login = new Login();
+		Login login = new Login(null);
 		assertEquals("site/index", login.login("inigo", "password"));
 		assertEquals(false, login.isError);
 	}
 	
 	public void testErroneusLogin() throws ThermostatException{
-		Login login = new Login();
+		Login login = new Login(null);
 		assertEquals("login.jsp", login.login("inigo", "none"));
 		assertEquals(true, login.isError);
 		assertEquals("login.jsp", login.login(null, null));
