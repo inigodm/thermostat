@@ -35,7 +35,7 @@ public class TemperatureMeasurer implements Starter{
 	}	
 	
 	private synchronized void initExecutor(){
-		if (executor == null){
+		if (executor == null || executor.isTerminated()){
 			executor = Executors.newSingleThreadScheduledExecutor();
 			executor.scheduleAtFixedRate(new TempMonitoring(), 0, 10, TimeUnit.SECONDS);
 		}
@@ -43,7 +43,6 @@ public class TemperatureMeasurer implements Starter{
 	
 	public void stop(){
 		executor.shutdown();
-		executor = null;
 	}
 	
 	public List<String> getTemps(){
@@ -52,6 +51,7 @@ public class TemperatureMeasurer implements Starter{
 	
 	public void setRawTemp(int index){
 		String temp = readers.get(index).read();
+		System.out.println("Raw read: " + temp);
 		if (temp != ""){
 			rawTemps.add(index, (new Double(temp)/1000 + ""));
 		}
@@ -64,6 +64,7 @@ public class TemperatureMeasurer implements Starter{
 
     private static synchronized void activateCalefactor(){
 		try {
+			System.out.println("Set calefactor to on? " + isActive());
 			if (isActive()){
 				Runtime.getRuntime().exec("gpio write 25 0");//enciende
 			}else{
@@ -75,7 +76,7 @@ public class TemperatureMeasurer implements Starter{
 	}
 	
 	public static boolean isActive(){
-		return (getTemp(TEMP_CPU_INDEX) < desiredTemp);
+		return TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp;
 	}
 
 	public static int getDesiredTemp() {
@@ -94,11 +95,14 @@ public class TemperatureMeasurer implements Starter{
 			while(true){
 				rawTemps.clear();
 				try {
-					TimeUnit.MINUTES.sleep(1);
+					System.out.println("STARTING temp measurement");
 					setRawTemp(TEMP_CPU_INDEX);
 					setRawTemp(TEMP_ROOM_INDEX);
+					System.out.println("END temp measurement");
 					activateCalefactor();
-				} catch (InterruptedException e) {
+					TimeUnit.SECONDS.sleep(60);
+				} catch (Exception e) {
+					System.out.println("Error en el thread que lee temperaturas: " + e.getMessage());
 					e.printStackTrace();
 				}
 			}

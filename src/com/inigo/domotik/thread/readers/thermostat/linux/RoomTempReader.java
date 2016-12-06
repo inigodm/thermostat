@@ -28,7 +28,7 @@ public class RoomTempReader implements Reader {
 			String line;
 			while ((line = br.readLine()) != null){
 				if (line.contains("t=")){
-					res = line.substring(2);
+					res = line.substring(line.indexOf("t=")+2);
 				}
 			}
 			br.close();

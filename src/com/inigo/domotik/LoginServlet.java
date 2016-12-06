@@ -26,9 +26,10 @@ public class LoginServlet extends BaseServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		Login login = new Login(request.getRemoteAddr());
 		String destiny;
-		SchemaCreator sc = new SchemaCreator();
 		try {
-			sc.createTables();
+			// TODO: para pruebas, para generar la BBDD si no esta
+			//SchemaCreator sc = new SchemaCreator();
+			//sc.createTables();
 			destiny = "/" + login.login(request.getParameter("username"), request.getParameter("password"));
 			request.setAttribute("error", login.isError);
 		} catch (ThermostatException e) {

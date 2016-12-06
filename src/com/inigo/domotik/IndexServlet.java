@@ -23,6 +23,7 @@ public class IndexServlet extends BaseServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("cpuTemp", (new TemperatureMeasurer().getTemps().get(TemperatureMeasurer.TEMP_CPU_INDEX)));
+		request.setAttribute("roomTemp", (new TemperatureMeasurer().getTemps().get(TemperatureMeasurer.TEMP_ROOM_INDEX)));
 		toDestiny("/site/index.jsp", true, request, response);
 	}
 

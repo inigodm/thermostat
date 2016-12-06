@@ -47,7 +47,6 @@ public class CustomConnection implements Connection{
 	public static Connection getConnection() throws ThermostatException{
 		 try {
 			 Class.forName("org.sqlite.JDBC");
-			 System.out.println("tmp:" + System.getProperty("java.io.tmpdir"));
 			 Connection conn = DriverManager.getConnection("jdbc:sqlite:/home/tomcat7/db.db");
 			 return new CustomConnection(conn);
 		} catch (ClassNotFoundException | SQLException e) {

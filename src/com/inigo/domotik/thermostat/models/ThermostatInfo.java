@@ -3,6 +3,8 @@ package com.inigo.domotik.thermostat.models;
 public class ThermostatInfo {
 	String roomTemp;
 	String desiredTemp;
+	boolean isOn;
+	
 	public String getRoomTemp() {
 		return roomTemp;
 	}
@@ -15,5 +17,12 @@ public class ThermostatInfo {
 	public void setDesiredTemp(String desiredTemp) {
 		this.desiredTemp = desiredTemp;
 	}
+	public boolean isOn() {
+		return isOn;
+	}
+	public void setOn(boolean isOn) {
+		this.isOn = isOn;
+	}
 	
 }
+

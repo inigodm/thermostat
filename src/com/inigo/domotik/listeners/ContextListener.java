@@ -28,12 +28,14 @@ public class ContextListener implements ServletContextListener {
     	for (Starter s :  starters){
     		s.stop();
     	}
+    	System.out.println("Stop context");
     }
 
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
+    	System.out.println("Init context");
     	for (Starter s :  starters){
     		s.start();
     	}

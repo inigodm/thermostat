@@ -4,7 +4,13 @@
 <t:wrapper>
 <div class="panel-group" ng-app="newApp" ng-controller="newCtrl">
             <div class="panel panel-default">
-                <div class="panel-heading">Thermostate <span  class="lcd-text"><c:out value="${cpuTemp}"/></span>ºC</div>
+                <div class="panel-heading col-sm-12">
+	                    <div class="col-sm-2"></div>
+                        <div class="col-sm-8">                        
+                        	Thermostate <span  class="lcd-text"><c:out value="{%roomTemp%}"/></span>ºC
+                        </div>
+                        <div class="col-sm-2"></div>
+	            </div>
                 <div class="panel-body">
                     <div class="col-sm-12" style="line-height: 10em;">
                         <div class="col-sm-2"></div>
@@ -17,13 +23,6 @@
                         <div class="col-sm-2">
                         	<span>{%state%}</span>
                         </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-8">
-                        <span>Current CPU Temperature: <span  class="lcd-text"><c:out value="{%cpuTemp%}"/></span>ºC</span>
-                        </div>
-                        <div class="col-sm-2"></div>
                     </div>
                 </div>
             </div>
@@ -42,7 +41,6 @@
               });
               mod.controller("newCtrl",['$scope', '$timeout',  '$http', '$interval', function($scope, $timeout, $http, $interval){
                 $scope.valor = "" + tempmin;
-                $scope.currentCPUTemp="";
                 $scope.val = tempmin;
                 $scope.ponerTemperaturaMarcador = function(){
                     $scope.valor = paddy($scope.val, 2);
@@ -60,7 +58,7 @@
                 };
                 $scope.manage_thermostatInfo = function(resp){
                 	$scope.val = resp.desiredTemp;
-                	$scope.cpuTemp = resp.roomTemp;
+                	$scope.roomTemp = resp.roomTemp;
                     $scope.ponerTemperaturaMarcador();
                 }
                 //TODO: Esto no lo hace bien, probar en el interval
