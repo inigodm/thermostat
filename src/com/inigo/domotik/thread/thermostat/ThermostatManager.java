@@ -19,6 +19,7 @@ public class ThermostatManager {
 		TemperatureMeasurer.setDesiredTemp(TemperatureMeasurer.getDesiredTemp() + i);
 		info.setDesiredTemp("" + TemperatureMeasurer.getDesiredTemp());
 		info.setRoomTemp(""+ TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
+		info.setOn(isActive());
 		return info;
 	}
 	public boolean isActive() {

@@ -6,14 +6,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading col-sm-12">
 	                    <div class="col-sm-2"></div>
-                        <div class="col-sm-8">                        
+	                    <div class="col-sm-1">
+	                    	<div ng-class="ngcircle"></div>
+	                    </div>
+                        <div class="col-sm-8">      
                         	Thermostate <span  class="lcd-text"><c:out value="{%roomTemp%}"/></span>ºC
                         </div>
                         <div class="col-sm-2"></div>
 	            </div>
                 <div class="panel-body">
                     <div class="col-sm-12" style="line-height: 10em;">
-                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2">
+                        </div>
                         <div class="col-sm-2 boton big linea boton-left" ng-click="add(1)"><span>+</span></div>
                         <div id="temp" class="col-sm-4 lcd-text-lg big linea">
                             <span id="valor1" class="digito">{%valor.substring(0,1)%}</span>
@@ -59,6 +63,12 @@
                 $scope.manage_thermostatInfo = function(resp){
                 	$scope.val = resp.desiredTemp;
                 	$scope.roomTemp = resp.roomTemp;
+                	var isOn = resp.isOn;
+                	if (isOn || isOn=="true"){
+                		$scope.ngcircle="circle-red";
+                	}else{
+                		$scope.ngcircle="circle-green";
+                	}
                     $scope.ponerTemperaturaMarcador();
                 }
                 //TODO: Esto no lo hace bien, probar en el interval

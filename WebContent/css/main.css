@@ -190,3 +190,20 @@ body {
     text-align:right;
     display:inline-block;
 }
+.circle-red {
+   width: 12px;
+   height: 12px;
+   -webkit-border-radius: 6px;
+   -moz-border-radius: 6px;
+   border-radius: 6px;
+   background: red;
+}
+
+.circle-green {
+   width: 12px;
+   height: 12px;
+   -webkit-border-radius: 6px;
+   -moz-border-radius: 6px;
+   border-radius: 6px;
+   background: green;
+}
