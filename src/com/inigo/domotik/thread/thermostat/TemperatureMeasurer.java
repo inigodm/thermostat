@@ -1,5 +1,6 @@
 package com.inigo.domotik.thread.thermostat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,30 +58,24 @@ public class TemperatureMeasurer implements Starter{
 		System.out.println("readed " + rawTemps);
 	}
 	
-	class TempMonitoring implements Runnable{
-		@Override
-		public void run() {
-			rawTemps.clear();
-			setRawTemp(TEMP_CPU_INDEX);
-			setRawTemp(TEMP_ROOM_INDEX);
-			activateCalefactor();
-		}
-		
-		private void activateCalefactor(){
+	public static int getTemp(int tempIndex) {
+		return (int)Double.parseDouble(rawTemps.get(tempIndex));
+	}
+
+    private static synchronized void activateCalefactor(){
+		try {
 			if (isActive()){
-				System.out.println("Setting GPIO of calefactor to ON");
+				Runtime.getRuntime().exec("gpio write 25 0");//enciende
 			}else{
-				System.out.println("Setting GPIO of calefactor to OFF");
+				Runtime.getRuntime().exec("gpio write 25 1");//apaga
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
-	public boolean isActive(){
+	public static boolean isActive(){
 		return (getTemp(TEMP_CPU_INDEX) < desiredTemp);
-	}
-
-	public int getTemp(int tempIndex) {
-		return (int)Double.parseDouble(rawTemps.get(tempIndex));
 	}
 
 	public static int getDesiredTemp() {
@@ -90,5 +85,23 @@ public class TemperatureMeasurer implements Starter{
 	public static void setDesiredTemp(int desiredTemp) {
 		System.out.println("Set temp to" + desiredTemp);
 		TemperatureMeasurer.desiredTemp = desiredTemp;
+		activateCalefactor();
+	}
+	
+	class TempMonitoring implements Runnable{
+		@Override
+		public void run() {
+			while(true){
+				rawTemps.clear();
+				try {
+					TimeUnit.MINUTES.sleep(1);
+					setRawTemp(TEMP_CPU_INDEX);
+					setRawTemp(TEMP_ROOM_INDEX);
+					activateCalefactor();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
