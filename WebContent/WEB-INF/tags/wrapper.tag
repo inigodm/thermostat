@@ -36,9 +36,9 @@
       </div>
     </nav>
     <div class="container">
-      <div class="jumbotron">
-         <jsp:invoke fragment="jumbotron"/>
-      </div>
+      <!--div class="jumbotron"-->
+         <!-- jsp:invoke fragment="jumbotron"/-->
+      <!--/div-->
 
     </div>
     <jsp:doBody/>

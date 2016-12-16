@@ -25,6 +25,7 @@ public class LogoutServlet extends BaseServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession(true).removeAttribute("user");
 		toDestiny("/login.jsp", false, request, response);
 	}
 
