@@ -18,12 +18,12 @@
                     <div class="col-sm-12" style="line-height: 10em;">
                         <div class="col-sm-2">
                         </div>
-                        <div class="col-sm-2 boton big linea boton-left" ng-click="add(1)"><span>+</span></div>
+                        <div class="col-sm-2 boton big linea boton-left" ng-click="add(1)"><span class="btn-mas-menos">+</span></div>
                         <div id="temp" class="col-sm-4 lcd-text-lg big linea">
                             <span id="valor1" class="digito">{%valor.substring(0,1)%}</span>
                             <span id="valor2" class="digito">{%valor.substring(1)%}</span>
                         </div>
-                        <div class="col-sm-2 boton big linea boton-rigth"  ng-click="add(-1)"><span>-</span></div>
+                        <div class="col-sm-2 boton big linea boton-rigth"  ng-click="add(-1)"><span class="btn-mas-menos">-</span></div>
                         <div class="col-sm-2">
                         	<span>{%state%}</span>
                         </div>
