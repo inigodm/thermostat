@@ -1,9 +1,7 @@
 package com.inigo.domotik.thermostat;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +28,7 @@ public class ScheduleServlet extends RESTServlet<ScheduleManagerPetition> {
     }
     
     @Override
-	protected Object doService(ScheduleManagerPetition reqObject, HttpServletRequest request, HttpServletResponse response) {
+	protected Object get(ScheduleManagerPetition reqObject, HttpServletRequest request, HttpServletResponse response) {
     	ScheduleManager sm = new ScheduleManager();
     	Object res = null;
 		try {
@@ -45,7 +43,7 @@ public class ScheduleServlet extends RESTServlet<ScheduleManagerPetition> {
 				sm.add(reqObject.getData());
 				break;
 			case "getAll":
-				sm.getSchedules();
+				res = sm.getSchedules();
 				break;
 			default:
 				break;

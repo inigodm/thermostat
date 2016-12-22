@@ -68,7 +68,15 @@ public class ScheduleManager {
 	}
 
 	public List<Schedule> getSchedules() throws ThermostatException {
-		return getSchedules(-1, -1);
+		//return getSchedules(-1, -1);
+		Schedule s = new Schedule();
+		s.setDesiredTemp(22);
+		s.setMinHour(2);
+		s.setMaxHour(3);
+		s.setFromDate(12);
+		s.setToDate(25);
+		List<Schedule> l = new ArrayList<>();
+		return l;
 	}
 
 	public List<Schedule> getSchedules(int limit, int offset) throws ThermostatException {

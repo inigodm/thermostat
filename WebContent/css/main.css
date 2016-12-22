@@ -59,6 +59,7 @@
 	    font-size:7em;
 	    vertical-align:sub;
 	    border: solid 1px 1px 1px 1px #20538D;
+	    max-width: 300px;
 	}
 }
 @media (min-width: 768px) {
@@ -87,6 +88,7 @@
 	    font-size:10em;
 	    vertical-align:sub;
 	    border: solid 1px 1px 1px 1px #20538D;
+	    max-width: 300px;
 	}
 	.btn-big{
 	    height:1em;

@@ -78,9 +78,9 @@
 						    </thead>
 						    <tbody>
 						      <tr ng-repeat="x in schedules">
-						        <td>{{ x.startTime }} - {{ x.stopTime }}</td>
-						        <td>{{ x.startDate }} - {{ x.endDate }}</td>
-						        <td>{{ x.minTemp }}</td>
+						        <td>{%x.startTime%} - {%x.stopTime%}</td>
+						        <td>{%x.startDate%} - {%x.endDate%}</td>
+						        <td>{%x.minTemp%}</td>
 						        <td>
 						         	<span class="glyphicon glyphicon-pencil"></span>
 									<span class="glyphicon glyphicon-trash"></span>
@@ -105,7 +105,7 @@
             	};
             	$scope.findSchedules = function(value){
                 	$http.post("/Thermostat/site/thermostat/scheduleManager",
-                			JSON.stringify({"method":"changetemp", "data": {method: "getAll"});
+                			JSON.stringify({"method":"changetemp", "data": {method:"getAll"}})
                 	).success($scope.schedules = []);
             	};
             }]);

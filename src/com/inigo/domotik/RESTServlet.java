@@ -29,22 +29,11 @@ public abstract class RESTServlet<T>  extends HttpServlet{
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doRest(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doRest(request, response);
-	}
-	
-	protected void doRest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Gson gson = new Gson();
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         T reqObject = gson.fromJson(br, in);
-        response.getWriter().write(gson.toJson(doService(reqObject, request, response)));
+        response.getWriter().write(gson.toJson(get(reqObject, request, response)));
 	}
 	
-	protected abstract Object doService(T reqObject, HttpServletRequest request, HttpServletResponse response);
+	protected abstract Object get(T reqObject, HttpServletRequest request, HttpServletResponse response);
 }

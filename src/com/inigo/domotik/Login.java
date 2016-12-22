@@ -39,7 +39,7 @@ public class Login {
 	
 	private String findUser(String user, String pass) throws ThermostatException{
 		try(Connection conn = CustomConnection.getConnection();
-			PreparedStatement stmt = createPreparedStatement(conn, user, pass);
+			PreparedStatement stmt = createPreparedStatement(conn, user.toLowerCase(), pass);
 			ResultSet rs = stmt.executeQuery()){
 			String res = null;
 			if (rs.next()){
