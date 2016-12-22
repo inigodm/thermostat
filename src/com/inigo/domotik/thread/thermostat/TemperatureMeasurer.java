@@ -64,8 +64,7 @@ public class TemperatureMeasurer implements Starter{
 
     private static synchronized void activateCalefactor(){
 		try {
-			System.out.println("Set calefactor to on? " +(TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp));
-			System.out.println("Is " + TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?");
+			System.out.println("Set calefactor to on? " +isActive());
 			if (isActive()){
 				Runtime.getRuntime().exec("gpio write 25 0");//enciende
 			}else{
