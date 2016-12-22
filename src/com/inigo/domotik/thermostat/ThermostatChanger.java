@@ -26,8 +26,12 @@ public class ThermostatChanger extends RESTServlet<ThermostatChagePetition> {
         tm = new ThermostatManager();
     }
 	
-	@Override
+    @Override
 	protected ThermostatInfo get(ThermostatChagePetition reqObject, HttpServletRequest request, HttpServletResponse response) {
+    	return null;
+    }
+    @Override
+	protected ThermostatInfo post(ThermostatChagePetition reqObject, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println(" data " + reqObject.getData());
         return tm.increase(reqObject.getData());
 	}

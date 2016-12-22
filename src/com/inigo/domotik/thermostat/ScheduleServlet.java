@@ -54,6 +54,12 @@ public class ScheduleServlet extends RESTServlet<ScheduleManagerPetition> {
 		}
     	return res;
 	}
+
+	@Override
+	protected Object post(ScheduleManagerPetition reqObject, HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 class ScheduleManagerPetition extends Petition<Schedule>{

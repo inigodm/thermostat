@@ -17,14 +17,14 @@ import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
 public class TemperatureMeasurer implements Starter{
 	
 	public static final int TEMP_CPU_INDEX = 0;
-	public static final int TEMP_ROOM_INDEX = 1;
+	public static final int TEMP_ROOM_INDEX = 0;
 	static Map<Integer, Reader> readers = new HashMap<>();
 	public static final List<String> rawTemps = new ArrayList<>();
 	static ScheduledExecutorService executor = null;
-	static int desiredTemp = 25;
+	static int desiredTemp = 20;
 	
 	static {
-		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
 		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
@@ -64,7 +64,8 @@ public class TemperatureMeasurer implements Starter{
 
     private static synchronized void activateCalefactor(){
 		try {
-			System.out.println("Set calefactor to on? " + isActive());
+			System.out.println("Set calefactor to on? " +(TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp));
+			System.out.println("Is " + TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?");
 			if (isActive()){
 				Runtime.getRuntime().exec("gpio write 25 0");//enciende
 			}else{
@@ -76,6 +77,7 @@ public class TemperatureMeasurer implements Starter{
 	}
 	
 	public static boolean isActive(){
+		System.out.println("Is " + TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?");
 		return TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp;
 	}
 
@@ -96,7 +98,7 @@ public class TemperatureMeasurer implements Starter{
 				rawTemps.clear();
 				try {
 					System.out.println("STARTING temp measurement");
-					setRawTemp(TEMP_CPU_INDEX);
+					//setRawTemp(TEMP_CPU_INDEX);
 					setRawTemp(TEMP_ROOM_INDEX);
 					System.out.println("END temp measurement");
 					activateCalefactor();

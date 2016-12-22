@@ -35,5 +35,13 @@ public abstract class RESTServlet<T>  extends HttpServlet{
         response.getWriter().write(gson.toJson(get(reqObject, request, response)));
 	}
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Gson gson = new Gson();
+        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        T reqObject = gson.fromJson(br, in);
+        response.getWriter().write(gson.toJson(post(reqObject, request, response)));
+	}
+	
 	protected abstract Object get(T reqObject, HttpServletRequest request, HttpServletResponse response);
+	protected abstract Object post(T reqObject, HttpServletRequest request, HttpServletResponse response);
 }
