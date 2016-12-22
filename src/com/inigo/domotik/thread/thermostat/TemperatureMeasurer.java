@@ -24,8 +24,8 @@ public class TemperatureMeasurer implements Starter{
 	static int desiredTemp = 20;
 	
 	static {
-		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public void start(){
