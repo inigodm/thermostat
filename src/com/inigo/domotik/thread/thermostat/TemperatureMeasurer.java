@@ -17,7 +17,7 @@ import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
 public class TemperatureMeasurer implements Starter{
 	
 	public static final int TEMP_CPU_INDEX = 0;
-	public static final int TEMP_ROOM_INDEX = 0;
+	public static final int TEMP_ROOM_INDEX = 1;
 	static Map<Integer, Reader> readers = new HashMap<>();
 	public static final List<String> rawTemps = new ArrayList<>();
 	static ScheduledExecutorService executor = null;
@@ -25,7 +25,7 @@ public class TemperatureMeasurer implements Starter{
 	
 	static {
 		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public void start(){
