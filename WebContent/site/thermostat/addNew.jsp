@@ -62,13 +62,6 @@
 			                        <input id="mintemp" type="number" value="15" class="form-control input-small"/>
 	                        </div>
 	                        </div>
-	                        <div class="col-sm-6">
-	                        	 <label class="control-label col-sm-5" for="maxtemp">Max Temp</label>
-		                         <div class="input-group col-sm-6">
-				                    <input id="maxtemp" type="number" value="15" class="form-control input-small"/>
-		                        	
-		                         </div>
-	                        </div>
                         </div>
                         <div class="form-group-inline">
 						    <div class="col-sm-offset-2 col-sm-10">

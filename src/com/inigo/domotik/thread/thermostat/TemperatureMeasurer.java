@@ -20,12 +20,12 @@ public class TemperatureMeasurer implements Starter{
 	public static final int TEMP_ROOM_INDEX = 0;
 	static Map<Integer, Reader> readers = new HashMap<>();
 	public static final List<String> rawTemps = new ArrayList<>();
-	static ScheduledExecutorService executor = null;
+	public static ScheduledExecutorService executor = null;
 	static int desiredTemp = 20;
 	
 	static {
-		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public void start(){
@@ -42,7 +42,8 @@ public class TemperatureMeasurer implements Starter{
 	}
 	
 	public void stop(){
-		executor.shutdown();
+		executor.shutdownNow();
+		System.out.println("EXECUTOR STOPPED: " + executor.isTerminated());
 	}
 	
 	public List<String> getTemps(){
