@@ -6,7 +6,7 @@
 	      	<!--  if error message -->
 	       <form class="form-signin" method="post" action="./login">
 		         <!--  csrf token! -->	
-				<h2 class="form-signin-heading">Please sign in</h2>
+				<h2 class="form-signin-heading">Please log in</h2>
 				<c:if test="${error}">
 				<label class="error">Login incorrect</label>
 				</c:if>

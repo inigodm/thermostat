@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
 		if (session.getAttribute("user") == null){
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
-			httpResponse.sendRedirect("/Thermostat/login");
+			httpResponse.sendRedirect("/Thermostat/login.jsp");
 			return;
 		}
 		chain.doFilter(request, response);

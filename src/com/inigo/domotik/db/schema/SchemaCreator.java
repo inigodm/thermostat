@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.exceptions.ThermostatException;
@@ -15,6 +16,7 @@ public class SchemaCreator {
 		try {
 			DBUtils.executeUpdate("drop table schedules");
 			DBUtils.executeUpdate("drop table users");
+			DBUtils.executeUpdate("drop table logs");
 			executeQuery(sql);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,7 +33,7 @@ public class SchemaCreator {
 		try{
 			DBUtils.executeUpdate("drop table schedules");
 			DBUtils.executeUpdate("drop table users");
-			DBUtils.executeUpdate("drop table log");
+			DBUtils.executeUpdate("drop table logs");
 		}catch (Exception e){
 			
 		}
@@ -43,34 +45,34 @@ public class SchemaCreator {
 	}
 
 	private void addData() throws ThermostatException {
-		String sql = "insert into users (user, pass) values ('inigo', 'password')";
+		Random rnd = new Random();
+		String sql = "insert into users (user, pass, salt) values ('inigo', 'password', '" + rnd.nextLong() +"')";
 		DBUtils.executeUpdate(sql);
 	}
 
 	private void createSchedulesTable() throws ThermostatException {
 		String sql = "CREATE TABLE schedules " +
-                "(USERID           INTEGER    NOT NULL, " + 
-                " FROMDATE           INTEGER    NOT NULL, " + 
-                " TODATE           INTEGER    NOT NULL, " + 
-                " STARTHOUR           INTEGER    NOT NULL, " + 
-                " ENDHOUR           INTEGER    NOT NULL, " + 
-                " DESIREDTEMP           INTEGER    NOT NULL)";
+                "(FROMDATE           TEXT    NOT NULL, " + 
+                " TODATE           TEXT    NOT NULL, " + 
+                " STARTHOUR           TEXT    NOT NULL, " + 
+                " ENDHOUR           TEXT    NOT NULL, " + 
+                " DESIREDTEMP           INTEGER    NOT NULL, " +
+                " ACTIVE           INTEGER    NOT NULL)";
+		DBUtils.executeUpdate(sql);
+	}
+	
+	private void createLogTable() throws ThermostatException {
+		String sql = "CREATE TABLE logs " +
+                "(DATE           TEXT    NOT NULL, " + 
+                " TEMPERATURE           REAL    NOT NULL)";
 		DBUtils.executeUpdate(sql);
 	}
 
 	private void createUserTable() throws ThermostatException {
 		String sql = "CREATE TABLE USERS " +
                 "(USER           TEXT    NOT NULL, " + 
-                " PASS           TEXT     NOT NULL)";
-		DBUtils.executeUpdate(sql);
-	}
-	
-	private void createLogTable() throws ThermostatException {
-		String sql = "CREATE TABLE LOG " +
-                "(FROMDATE           INTEGER    NOT NULL, " + 
-                " TODATE           INTEGER    NOT NULL, " + 
-                " STARTHOUR           INTEGER    NOT NULL, " + 
-                " ENDHOUR           INTEGER    NOT NULL)";
+                " PASS           TEXT     NOT NULL," + 
+                " SALT			TEXT  	   NOT NULL)";
 		DBUtils.executeUpdate(sql);
 	}
 	

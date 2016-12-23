@@ -62,6 +62,10 @@
 			                        <input id="mintemp" type="number" value="15" class="form-control input-small"/>
 	                        </div>
 	                        </div>
+	                        <div class="col-sm-6">
+		                        <label class="control-label col-sm-5" for="active">Active</label>
+		                        <input id="active" type="checkbox" value="true" class="form-control input-small"/>
+	                        </div>
                         </div>
                         <div class="form-group-inline">
 						    <div class="col-sm-offset-2 col-sm-10">
@@ -73,15 +77,15 @@
                         <table class="table table-striped">
 						    <thead>
 						      <tr>
-						        <th>Time range</th>
 						        <th>Date range</th>
-						        <th>Temp range</th>
+						        <th>Time range</th>
+						        <th>Temperature</th>
 						      </tr>
 						    </thead>
 						    <tbody>
 						      <tr ng-repeat="x in schedules">
-						        <td>{%x.startTime%} - {%x.stopTime%}</td>
 						        <td>{%x.startDate%} - {%x.endDate%}</td>
+						        <td>{%x.startTime%} - {%x.stopTime%}</td>
 						        <td>{%x.minTemp%}</td>
 						        <td>
 						         	<span class="glyphicon glyphicon-pencil"></span>

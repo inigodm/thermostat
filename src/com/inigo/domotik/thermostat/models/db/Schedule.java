@@ -12,7 +12,7 @@ public class Schedule {
                 " MAXTEMP          INTEGER    NOT NULL
 	 */
 	private int id;
-	private int userId;
+	private int active;
 	private long fromDate;
 	private long toDate;
 	private int minHour;
@@ -24,11 +24,11 @@ public class Schedule {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUserId() {
-		return userId;
+	public int getActive() {
+		return active;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setActive(int userId) {
+		this.active = userId;
 	}
 	public long getFromDate() {
 		return fromDate;

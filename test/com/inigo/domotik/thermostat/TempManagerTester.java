@@ -23,7 +23,7 @@ public class TempManagerTester extends TestCase{
 	
 	public void testSetDesTemp(){
 		ThermostatManager tm = new ThermostatManager();
-		tm.setDesiredTemp(50);
+		tm.setDesiredTemp(15);
 		assertEquals(tm.isActive(), tm.getActualTemp() < tm.getDesiredTemp());
 		//tm.setDesiredTemp(1);
 		//assertEquals(tm.isActive(), tm.getDesiredTemp() < tm.getActualTemp());
