@@ -31,7 +31,7 @@ import com.inigo.domotik.exceptions.ThermostatException;
  */
 public class CustomConnection implements Connection{
 
-	private Connection innerConn;
+	private static Connection innerConn;
 	
 	private List<Statement> stmts = new ArrayList<Statement>();
 	
@@ -46,9 +46,12 @@ public class CustomConnection implements Connection{
 	 */
 	public static Connection getConnection() throws ThermostatException{
 		 try {
-			 Class.forName("org.sqlite.JDBC");
-			 Connection conn = DriverManager.getConnection("jdbc:sqlite:/home/tomcat7/db.db");
-			 return new CustomConnection(conn);
+			 if (innerConn == null || innerConn.isClosed()){
+				 Class.forName("org.sqlite.JDBC");
+			 	innerConn = DriverManager.getConnection("jdbc:sqlite:/home/tomcat7/db.db");
+			 }
+			 return new CustomConnection(innerConn);
+			 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			throw new ThermostatException(e.getMessage(), e);

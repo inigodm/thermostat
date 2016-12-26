@@ -9,7 +9,7 @@ import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.exceptions.ThermostatException;
 
 public class DBUtils {
-	public static void executeUpdate(String sql) throws ThermostatException{
+	public synchronized static void executeUpdate(String sql) throws ThermostatException{
 		try(Connection conn = CustomConnection.getConnection();
 		Statement stmt = conn.createStatement()){
 		stmt.executeUpdate(sql);

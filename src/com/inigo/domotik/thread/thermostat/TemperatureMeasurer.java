@@ -1,7 +1,10 @@
 package com.inigo.domotik.thread.thermostat;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.inigo.domotik.thermostat.db.LogManager;
+import com.inigo.domotik.thermostat.models.db.Log;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
@@ -18,14 +23,23 @@ public class TemperatureMeasurer implements Starter{
 	
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 0;
-	static Map<Integer, Reader> readers = new HashMap<>();
-	public static final List<String> rawTemps = new ArrayList<>();
-	public static ScheduledExecutorService executor = null;
-	static int desiredTemp = 20;
+	Map<Integer, Reader> readers = new HashMap<>();
+	public final List<String> rawTemps = new ArrayList<>();
+	ScheduledExecutorService executor = null;
+	int desiredTemp = 20;
+	final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	static TemperatureMeasurer inner;
 	
-	static {
+	private TemperatureMeasurer(){
 		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
 		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+	}
+	
+	public static TemperatureMeasurer getInstance(){
+		if (inner == null){
+			inner = new TemperatureMeasurer();
+		}
+		return inner;
 	}
 	
 	public void start(){
@@ -59,11 +73,15 @@ public class TemperatureMeasurer implements Starter{
 		System.out.println("readed " + rawTemps);
 	}
 	
-	public static int getTemp(int tempIndex) {
+	public int getTemp(int tempIndex) {
 		return (int)Double.parseDouble(rawTemps.get(tempIndex));
 	}
+	
+	public double getRawTemp(int tempIndex) {
+		return Double.parseDouble(rawTemps.get(tempIndex));
+	}
 
-    private static synchronized void activateCalefactor(){
+    private synchronized void activateCalefactor(){
 		try {
 			System.out.println("Set calefactor to on? " +isActive());
 			if (isActive()){
@@ -72,23 +90,37 @@ public class TemperatureMeasurer implements Starter{
 				Runtime.getRuntime().exec("gpio write 25 1");//apaga
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("No se ha podido activar/desactivar el thermostato: estamos en local?");
 		}
 	}
 	
-	public static boolean isActive(){
-		System.out.println("Is " + TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?");
-		return TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp;
+	public boolean isActive(){
+		System.out.println("Is " + this.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?");
+		return this.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp;
 	}
 
-	public static int getDesiredTemp() {
+	public int getDesiredTemp() {
 		return desiredTemp;
 	}
 
-	public static void setDesiredTemp(int desiredTemp) {
+	public void setDesiredTemp(int desiredTemp) {
 		System.out.println("Set temp to" + desiredTemp);
-		TemperatureMeasurer.desiredTemp = desiredTemp;
+		this.desiredTemp = desiredTemp;
 		activateCalefactor();
+	}
+	
+	
+	public void logNow(){
+		LogManager.addLogger(buildLog());
+	}
+	
+	public Log buildLog(){
+		Log l = new Log();
+		l.setDate(df.format(new Date()));
+		l.setDesiredTemp(desiredTemp);
+		l.setTemperature(this.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
+		l.setActive(isActive()?1:0);
+		return l;
 	}
 	
 	class TempMonitoring implements Runnable{
@@ -98,10 +130,10 @@ public class TemperatureMeasurer implements Starter{
 				rawTemps.clear();
 				try {
 					System.out.println("STARTING temp measurement");
-					//setRawTemp(TEMP_CPU_INDEX);
 					setRawTemp(TEMP_ROOM_INDEX);
 					System.out.println("END temp measurement");
 					activateCalefactor();
+					LogManager.addLogger(buildLog());
 					TimeUnit.SECONDS.sleep(60);
 				} catch (Exception e) {
 					System.out.println("Error en el thread que lee temperaturas: " + e.getMessage());

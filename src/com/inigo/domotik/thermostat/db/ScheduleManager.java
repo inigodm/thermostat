@@ -14,7 +14,7 @@ import com.inigo.domotik.thermostat.models.db.Schedule;
 
 public class ScheduleManager {
 
-	public Schedule add(Schedule s) throws ThermostatException {
+	public synchronized Schedule add(Schedule s) throws ThermostatException {
 		String sql= "insert into schedules (FROMDATE, " + 
                 " TODATE, STARTHOUR, ENDHOUR, DESIREDTEMP, ACTIVE) values"
                 + " (?,?,?,?,?,?)";
@@ -34,7 +34,7 @@ public class ScheduleManager {
 		return s;
 	}
 	
-	public Schedule update(Schedule s) throws ThermostatException {
+	public synchronized Schedule update(Schedule s) throws ThermostatException {
 		String sql= "update schedules set ACTIVE=?, FROMDATE=?, " + 
                 " TODATE=?, STARTHOUR=?, ENDHOUR=?, DESIREDTEMP=? where "
                 + " rowid = ?";
@@ -55,7 +55,7 @@ public class ScheduleManager {
 		return s;
 	}
 
-	public int delete(Schedule s) throws ThermostatException {
+	public synchronized int delete(Schedule s) throws ThermostatException {
 		int res = -1;
 		String sql= "delete from schedules where oid=?";
 		try (Connection conn = CustomConnection.getConnection();
@@ -69,7 +69,7 @@ public class ScheduleManager {
 		return res;
 	}
 
-	public List<Schedule> getSchedules() throws ThermostatException {
+	public synchronized List<Schedule> getSchedules() throws ThermostatException {
 		//return getSchedules(-1, -1);
 		Schedule s = new Schedule();
 		s.setDesiredTemp(22);

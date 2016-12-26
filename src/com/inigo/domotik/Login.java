@@ -37,7 +37,7 @@ public class Login {
 		}
 	}
 	
-	private String findUser(String user, String pass) throws ThermostatException{
+	private synchronized String findUser(String user, String pass) throws ThermostatException{
 		try(Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = createPreparedStatement(conn, user.toLowerCase(), pass);
 			ResultSet rs = stmt.executeQuery()){

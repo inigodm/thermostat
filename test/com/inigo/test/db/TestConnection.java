@@ -12,13 +12,13 @@ import com.inigo.domotik.exceptions.ThermostatException;
 import junit.framework.TestCase;
 
 public class TestConnection extends TestCase{
-	public void testConnection() throws ThermostatException, SQLException{
+	public synchronized void testConnection() throws ThermostatException, SQLException{
 		Connection conn = CustomConnection.getConnection();
 		assertEquals(false, conn.isClosed());
 		conn.close();
 	}
 	
-	public void testCreateTable() throws ThermostatException, SQLException{
+	public synchronized void testCreateTable() throws ThermostatException, SQLException{
 		String sql = "CREATE TABLE COMPANY " +
                 "(ID INTEGER PRIMARY KEY     NOT NULL," +
                 " NAME           TEXT    NOT NULL, " + 
@@ -32,7 +32,7 @@ public class TestConnection extends TestCase{
 	    conn.close();
 	}
 	
-	public void testDropTable() throws ThermostatException, SQLException{
+	public synchronized void testDropTable() throws ThermostatException, SQLException{
 		String sql = "DROP TABLE COMPANY "; 
 		try (Connection conn = CustomConnection.getConnection()){
 			Statement stmt = conn.createStatement();
@@ -41,7 +41,7 @@ public class TestConnection extends TestCase{
 		}
 	}
 	
-	public void testCreateSchema() throws SQLException, ThermostatException{
+	public synchronized void testCreateSchema() throws SQLException, ThermostatException{
 		try{
 			String sql = "select user, pass, userid from users";
 			getData(sql);

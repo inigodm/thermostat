@@ -64,7 +64,9 @@ public class SchemaCreator {
 	private void createLogTable() throws ThermostatException {
 		String sql = "CREATE TABLE logs " +
                 "(DATE           TEXT    NOT NULL, " + 
-                " TEMPERATURE           REAL    NOT NULL)";
+                " DESIREDTEMP           INTEGER    NOT NULL," +
+                " TEMPERATURE 			REAL 		NOT NULL," + 
+                "ACTIVE				INTEGER NOT NULL)";
 		DBUtils.executeUpdate(sql);
 	}
 

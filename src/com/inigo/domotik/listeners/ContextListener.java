@@ -18,7 +18,7 @@ import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
 public class ContextListener implements ServletContextListener {
 	private static final List<Starter> starters = new ArrayList<>();
 	static{
-		starters.add(new TemperatureMeasurer());
+		starters.add(TemperatureMeasurer.getInstance());
 	}
 	
 	/**

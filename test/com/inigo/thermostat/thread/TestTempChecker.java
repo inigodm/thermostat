@@ -8,14 +8,14 @@ import junit.framework.TestCase;
 public class TestTempChecker extends TestCase{
 	public void testCPUTemp(){
 		if (TestingServlet.request != null){
-			TemperatureMeasurer tc = new TemperatureMeasurer();
+			TemperatureMeasurer tc = TemperatureMeasurer.getInstance();
 			assertTrue(tc.rawTemps.get(TemperatureMeasurer.TEMP_CPU_INDEX).length()>2);
 		}
 	}
 	
 	public void testRoomTemp(){
 		if (TestingServlet.request != null){
-			TemperatureMeasurer tc = new TemperatureMeasurer();
+			TemperatureMeasurer tc = TemperatureMeasurer.getInstance();
 			assertTrue(tc.rawTemps.get(TemperatureMeasurer.TEMP_ROOM_INDEX).length() > 0);
 		}
 	}

@@ -3,26 +3,26 @@ package com.inigo.domotik.thread.thermostat;
 import com.inigo.domotik.thermostat.models.ThermostatInfo;
 
 public class ThermostatManager {
-	TemperatureMeasurer tc = new TemperatureMeasurer();
+	TemperatureMeasurer tc = TemperatureMeasurer.getInstance();
 	
 	public int getDesiredTemp() {
-		return TemperatureMeasurer.getDesiredTemp();
+		return tc.getDesiredTemp();
 	}
 	public void setDesiredTemp(int desiredTemp) {
-		TemperatureMeasurer.setDesiredTemp(desiredTemp);
+		tc.setDesiredTemp(desiredTemp);
 	}
 	public int getActualTemp() {
-		return TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX);
+		return tc.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX);
 	}
 	public ThermostatInfo increase(int i) {
 		ThermostatInfo info = new ThermostatInfo();
-		TemperatureMeasurer.setDesiredTemp(TemperatureMeasurer.getDesiredTemp() + i);
-		info.setDesiredTemp("" + TemperatureMeasurer.getDesiredTemp());
-		info.setRoomTemp(""+ TemperatureMeasurer.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
+		tc.setDesiredTemp(tc.getDesiredTemp() + i);
+		info.setDesiredTemp("" + tc.getDesiredTemp());
+		info.setRoomTemp(""+ tc.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
 		info.setOn(isActive());
 		return info;
 	}
 	public boolean isActive() {
-		return TemperatureMeasurer.isActive();
+		return tc.isActive();
 	}
 }
