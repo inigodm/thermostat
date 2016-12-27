@@ -1,6 +1,6 @@
 package com.inigo.domotik.thermostat.models;
 
-public abstract class Petition<T> {
+public class Petition<T> {
 	String method;
 	T data;
 	public String getMethod() {

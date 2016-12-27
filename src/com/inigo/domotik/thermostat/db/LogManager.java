@@ -8,7 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.inigo.domotik.thermostat.models.db.Log;
+import com.inigo.domotik.thermostat.models.Log;
 
 public class LogManager {
 	static final DateFormat df = new SimpleDateFormat("yyyyMMdd");

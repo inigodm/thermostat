@@ -1,4 +1,4 @@
-package com.inigo.domotik;
+package com.inigo.domotik.servlets;
 
 import java.io.IOException;
 

@@ -56,8 +56,8 @@
                 	$scope.add(0);
                 }
                 $scope.add = function(value){
-                	$http.post("/Thermostat/site/thermostat/changer",
-                			JSON.stringify({"method":"changetemp", "data": value})
+                	$http.post("/Thermostat/site/rest/thermostat/changer",
+                			{"method":"changetemp", "data": value}
                 	).success($scope.manage_thermostatInfo);
                 };
                 $scope.manage_thermostatInfo = function(resp){

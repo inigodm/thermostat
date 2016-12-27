@@ -13,7 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.inigo.domotik.thermostat.db.LogManager;
-import com.inigo.domotik.thermostat.models.db.Log;
+import com.inigo.domotik.thermostat.models.Log;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
@@ -31,8 +31,8 @@ public class TemperatureMeasurer implements Starter{
 	static TemperatureMeasurer inner;
 	
 	private TemperatureMeasurer(){
-		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public static TemperatureMeasurer getInstance(){

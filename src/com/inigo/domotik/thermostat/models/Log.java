@@ -1,4 +1,6 @@
-package com.inigo.domotik.thermostat.models.db;
+package com.inigo.domotik.thermostat.models;
+
+import com.google.gson.Gson;
 
 public class Log {
 	String date;
@@ -37,6 +39,5 @@ public class Log {
 	public String toString() {
 		return String.format("{'date':'%s', 'temperature':'%s', 'desiredTemp':'%s', 'active':'%s'}\n", date, temperature, desiredTemp,
 				active);
-	}
-	
+	}	
 }

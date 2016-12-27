@@ -1,4 +1,4 @@
-package com.inigo.domotik.thermostat;
+package com.inigo.domotik.rest;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 
-import com.inigo.domotik.RESTServlet;
 import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.thermostat.db.ScheduleManager;
 import com.inigo.domotik.thermostat.models.Petition;
@@ -16,22 +17,15 @@ import com.inigo.domotik.thermostat.models.db.Schedule;
 /**
  * Servlet implementation class ScheduleManager
  */
-@WebServlet("/site/thermostat/scheduleManager")
-public class ScheduleServlet extends RESTServlet<ScheduleManagerPetition> {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ScheduleServlet() {
-        super(ScheduleManagerPetition.class);
-    }
+@Path("/site/thermostat/scheduleManager")
+public class ScheduleServlet{
     
-    @Override
-	protected Object get(ScheduleManagerPetition reqObject, HttpServletRequest request, HttpServletResponse response) {
+	@GET
+	protected Object get() {
     	ScheduleManager sm = new ScheduleManager();
     	Object res = null;
-		try {
+    	System.out.println("asdadasda");
+		/*try {
 			switch (reqObject.getMethod()) {
 			case "delete":
 				sm.delete(reqObject.getData());
@@ -51,15 +45,11 @@ public class ScheduleServlet extends RESTServlet<ScheduleManagerPetition> {
 		} catch (ThermostatException e) {
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
+		}*/
     	return res;
 	}
 
-	@Override
-	protected Object post(ScheduleManagerPetition reqObject, HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }
 
 class ScheduleManagerPetition extends Petition<Schedule>{

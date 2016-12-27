@@ -2,7 +2,7 @@ package com.inigo.thermostat.thread;
 
 import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.thermostat.db.LogManager;
-import com.inigo.domotik.thermostat.models.db.Log;
+import com.inigo.domotik.thermostat.models.Log;
 
 public class TestLog {
 	public void testAdd() throws ThermostatException{

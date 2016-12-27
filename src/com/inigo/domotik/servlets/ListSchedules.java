@@ -1,31 +1,24 @@
-package com.inigo.domotik;
+package com.inigo.domotik.servlets;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
-
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class ListSchedules
  */
-@WebServlet("/site/index")
-public class IndexServlet extends BaseServlet {
+@WebServlet("/site/thermostat/schedules")
+public class ListSchedules extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		TemperatureMeasurer tm = TemperatureMeasurer.getInstance();
-		request.setAttribute("cpuTemp", (tm.getTemps().get(TemperatureMeasurer.TEMP_CPU_INDEX)));
-		request.setAttribute("roomTemp", (tm.getTemps().get(TemperatureMeasurer.TEMP_ROOM_INDEX)));
-		toDestiny("/site/index.jsp", true, request, response);
+		toDestiny("/site/thermostat/addNew.jsp", true, request, response);
 	}
 
 	/**
@@ -34,4 +27,5 @@ public class IndexServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
