@@ -27,12 +27,12 @@ public class TemperatureMeasurer implements Starter{
 	public final List<String> rawTemps = new ArrayList<>();
 	ScheduledExecutorService executor = null;
 	int desiredTemp = 20;
-	final DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	static TemperatureMeasurer inner;
 	
 	private TemperatureMeasurer(){
-		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public static TemperatureMeasurer getInstance(){

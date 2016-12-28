@@ -18,7 +18,7 @@ public class ThermostatManager {
 		ThermostatInfo info = new ThermostatInfo();
 		tc.setDesiredTemp(tc.getDesiredTemp() + i);
 		info.setDesiredTemp("" + tc.getDesiredTemp());
-		info.setRoomTemp(""+ tc.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
+		info.setRoomTemp(""+ tc.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
 		info.setOn(isActive());
 		return info;
 	}

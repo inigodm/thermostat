@@ -40,10 +40,10 @@ public class LogRequest {
 		return this;
 	}
 	public Date obtainFrom() throws ParseException{
-		return StringUtils.stringToDate(fromDate + " " + fromHour);
+		return StringUtils.stringToDate(fromDate);
 	}
 	public Date obtainTo() throws ParseException{
-		return StringUtils.stringToDate(toDate + " " + toHour);
+		return StringUtils.stringToDate(toDate);
 	}
 	@Override
 	public String toString() {

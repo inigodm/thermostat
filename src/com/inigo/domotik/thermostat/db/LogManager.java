@@ -15,12 +15,16 @@ public class LogManager {
 	
 	public static void addLogger(Log log) {
 		try {
-			String filename = "/home/tomcat7/thermostatLog"+df.format(new Date())+".log";
+			String filename = getFileName(new Date());
 		    Files.write(Paths.get(filename), log.toString().getBytes(), findMode(filename));
 		}catch (Exception e) {
 		    System.out.println("IOException writing logs: " + e.getMessage());
 		    e.printStackTrace();
 		}
+	}
+	
+	public static String getFileName(Date date){
+		return "/home/tomcat7/thermostatLog"+df.format(date)+".log";
 	}
 	
 	private static StandardOpenOption findMode(String filename){
