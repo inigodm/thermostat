@@ -69,7 +69,7 @@ class DataBuilder{
 	private void fileConsumer(String line){
 		try {
 			Log l = gson.fromJson(line, Log.class);
-			if (StringUtils.stringToDate(l.getDate(), "MM/dd/yyyy HH:mm:ss").getTime() > from.getTime()){
+			if (StringUtils.stringToDate(l.getDate(), "yyyy-MM-dd'T'HH:mm:ss").getTime() > from.getTime()){
 				count++;
 				if (count >= period){
 					count = 0;

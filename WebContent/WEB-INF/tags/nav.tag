@@ -13,8 +13,7 @@
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	                <li><a href="#contact">Stats 1</a></li>
-	                <li><a href="#about">Stats 2</a></li>
+	                <li><a href="/Thermostat/site/stats">ThermoStats</a></li>
 	          </ul>
 	        </li>
 	        <li><a href="/settings">Settings</a></li>
