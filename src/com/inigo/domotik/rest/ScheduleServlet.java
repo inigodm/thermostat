@@ -3,11 +3,8 @@ package com.inigo.domotik.rest;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 
 import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.thermostat.db.ScheduleManager;
@@ -17,10 +14,13 @@ import com.inigo.domotik.thermostat.models.db.Schedule;
 /**
  * Servlet implementation class ScheduleManager
  */
-@Path("/site/thermostat/scheduleManager")
-public class ScheduleServlet{
+@WebServlet("/site/rest/tasks/")
+public class ScheduleServlet extends RESTServlet<Schedule>{
     
-	@GET
+	public ScheduleServlet() {
+		super(Schedule.class);
+	}
+
 	protected Object get() {
     	ScheduleManager sm = new ScheduleManager();
     	Object res = null;
@@ -47,6 +47,25 @@ public class ScheduleServlet{
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}*/
     	return res;
+	}
+
+	@Override
+	protected Object get(Schedule reqObject, HttpServletRequest request, HttpServletResponse response) {
+		return reqObject;
+	}
+
+	@Override
+	protected Object post(Schedule reqObject, HttpServletRequest request, HttpServletResponse response) {
+		ScheduleManager sm = new ScheduleManager();
+		List<Schedule> res = null;
+		try {
+			sm.add(reqObject);
+			res = sm.getSchedules();
+		} catch (ThermostatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	

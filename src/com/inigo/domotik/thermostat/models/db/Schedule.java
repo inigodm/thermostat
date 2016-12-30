@@ -13,10 +13,10 @@ public class Schedule {
 	 */
 	private int id;
 	private int active;
-	private long fromDate;
-	private long toDate;
-	private int minHour;
-	private int maxHour;
+	private String fromDate;
+	private String toDate;
+	private String minHour;
+	private String maxHour;
 	private int desiredTemp;
 	public int getId() {
 		return id;
@@ -30,28 +30,28 @@ public class Schedule {
 	public void setActive(int userId) {
 		this.active = userId;
 	}
-	public long getFromDate() {
+	public String getFromDate() {
 		return fromDate;
 	}
-	public void setFromDate(long fromDate) {
+	public void setFromDate(String fromDate) {
 		this.fromDate = fromDate;
 	}
-	public long getToDate() {
+	public String getToDate() {
 		return toDate;
 	}
-	public void setToDate(long toDate) {
+	public void setToDate(String toDate) {
 		this.toDate = toDate;
 	}
-	public int getMinHour() {
+	public String getMinHour() {
 		return minHour;
 	}
-	public void setMinHour(int minHour) {
+	public void setMinHour(String minHour) {
 		this.minHour = minHour;
 	}
-	public int getMaxHour() {
+	public String getMaxHour() {
 		return maxHour;
 	}
-	public void setMaxHour(int maxHour) {
+	public void setMaxHour(String maxHour) {
 		this.maxHour = maxHour;
 	}
 	public int getDesiredTemp() {

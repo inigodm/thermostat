@@ -3,18 +3,11 @@
 <c:if test="${sessionScope.user != null}">
 <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-left">
-	      	<li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedule<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	                <li><a href="/Thermostat/site/thermostat/schedules">New</a></li>
-	                <li><a href="#about">See all</a></li>
-	          </ul>
+	      	<li>
+	          <a href="/Thermostat/site/thermostat/schedules">Schedules</a>
 	        </li>
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	                <li><a href="/Thermostat/site/stats">ThermoStats</a></li>
-	          </ul>
+	        <li>
+	          <a href="/Thermostat/site/stats">Stats</a>
 	        </li>
 	        <li><a href="/settings">Settings</a></li>
           </ul>

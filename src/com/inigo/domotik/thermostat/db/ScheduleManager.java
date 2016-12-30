@@ -22,8 +22,8 @@ public class ScheduleManager {
 			PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, s.getFromDate()+"");
 			stmt.setString(2, s.getToDate()+"");
-			stmt.setInt(3, s.getMinHour());
-			stmt.setInt(4, s.getMaxHour());
+			stmt.setString(3, s.getMinHour());
+			stmt.setString(4, s.getMaxHour());
 			stmt.setInt(5, s.getDesiredTemp());
 			stmt.setInt(6, s.getActive());
 			System.out.println("Me devuelve esto" + stmt.executeUpdate());
@@ -41,10 +41,10 @@ public class ScheduleManager {
 		try (Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setInt(1, s.getActive());
-			stmt.setLong(2, s.getFromDate());
-			stmt.setLong(3, s.getToDate());
-			stmt.setInt(4, s.getMinHour());
-			stmt.setInt(5, s.getMaxHour());
+			stmt.setString(2, s.getFromDate());
+			stmt.setString(3, s.getToDate());
+			stmt.setString(4, s.getMinHour());
+			stmt.setString(5, s.getMaxHour());
 			stmt.setInt(6, s.getDesiredTemp());
 			stmt.setInt(7, s.getId());
 			System.out.println("Me devuelve esto" + stmt.executeUpdate());
@@ -70,17 +70,17 @@ public class ScheduleManager {
 	}
 
 	public synchronized List<Schedule> getSchedules() throws ThermostatException {
-		//return getSchedules(-1, -1);
-		Schedule s = new Schedule();
+		return getSchedules(-1, -1);
+		/*Schedule s = new Schedule();
 		s.setDesiredTemp(22);
-		s.setMinHour(2);
-		s.setMaxHour(3);
-		s.setFromDate(12);
-		s.setToDate(25);
+		s.setMinHour("2");
+		s.setMaxHour("3");
+		s.setFromDate("12");
+		s.setToDate("25");
 		List<Schedule> l = new ArrayList<>();
 		l.add(s);
 		l.add(s);
-		return l;
+		return l;*/
 	}
 
 	public List<Schedule> getSchedules(int limit, int offset) throws ThermostatException {
@@ -107,11 +107,11 @@ public class ScheduleManager {
 	private Schedule getSchedule(ResultSet rs) throws SQLException{
 		Schedule res = new Schedule();
 		res.setId(rs.getInt("rowid"));
-		res.setFromDate(rs.getLong("fromdate"));
+		res.setFromDate(rs.getString("fromdate"));
 		res.setDesiredTemp(rs.getInt("desiredtemp"));
-		res.setMaxHour(rs.getInt("endhour"));
-		res.setMinHour(rs.getInt("starthour"));
-		res.setToDate(rs.getLong("todate"));
+		res.setMaxHour(rs.getString("endhour"));
+		res.setMinHour(rs.getString("starthour"));
+		res.setToDate(rs.getString("todate"));
 		res.setActive(rs.getInt("active"));
 		return res;
 	}

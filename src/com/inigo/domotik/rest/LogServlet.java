@@ -37,7 +37,7 @@ public class LogServlet {
 		LogRequest lr = new LogRequest()
 				.setFromDate(from)
 				.setToDate(to);
-		DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), 10);
+		DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), 20);
 		db.readFile();
 		return (db.res+"").replaceAll("'", "\"");
 	}

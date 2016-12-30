@@ -14,7 +14,7 @@
 		                        <label class="control-label col-sm-5" for="horainicio">Init date</label>
 		                        <div class="input-group col-sm-6">
 			                       <div class="input-append date form_date" id="horainicio" data-date="" data-date-format="dd-mm-yyyy">
-								        <input class="span2" size="16" type="text" value="">
+								        <input class="span2" size="16" type="text" value="" readonly>
 								        <span class="add-on"><i class="icon-remove"></i></span>
 								        <span class="add-on"><i class="icon-th"></i></span>
 								    </div>  
@@ -24,7 +24,7 @@
 	                        	 <label class="control-label col-sm-5" for="horafin">End date</label>
 		                         <div class="input-group col-sm-6">
 				                    <div class="input-append date form_date" id="horafin" data-date="" data-date-format="dd-mm-yyyy">
-								        <input class="span2" size="16" type="text" value="">
+								        <input class="span2" size="16" type="text" value="" readonly>
 								        <span class="add-on"><i class="icon-remove"></i></span>
 								        <span class="add-on"><i class="icon-th"></i></span>
 								    </div>  
@@ -69,7 +69,8 @@
                         </div>
                         <div class="form-group-inline">
 						    <div class="col-sm-offset-2 col-sm-10">
-						      <button type="submit" class="btn btn-default">Submit</button>
+						      <button id="add" ng-enabled="adding" class="btn btn-default" ng-click="add()">Submit</button>
+						      <button id="edit" ng-enabled="editing" class="btn btn-default" ng-click="add()">Save</button>
 						    </div>
 						  </div>
                     </form>
@@ -84,12 +85,12 @@
 						    </thead>
 						    <tbody>
 						      <tr ng-repeat="x in schedules">
-						        <td>{%x.startDate%} - {%x.endDate%}</td>
-						        <td>{%x.startTime%} - {%x.stopTime%}</td>
-						        <td>{%x.minTemp%}</td>
+						        <td>{%x.fromDate%} - {%x.toDate%}</td>
+						        <td>{%x.minHour%} - {%x.maxHour%}</td>
+						        <td>{%x.desiredTemp%}</td>
 						        <td>
-						         	<span class="glyphicon glyphicon-pencil"></span>
-									<span class="glyphicon glyphicon-trash"></span>
+						         	<span class="glyphicon glyphicon-pencil" ng-click=""></span>
+									<span class="glyphicon glyphicon-trash" ng-click="del(x.id)"></span>
 								</td>
 						      </tr>
 						    </tbody>
@@ -129,15 +130,33 @@
                  
             mod.controller("newCtrl",['$scope','$http', function($scope, $http){
             	$scope.add = function(value){
-                	$http.post("/Thermostat/site/thermostat/scheduleManager",
-                			JSON.stringify({"method":"changetemp", "data": value})
-                	).success($scope.schedules = []);
-            	};
+                	$http.post("/Thermostat/site/rest/tasks/",
+                			JSON.stringify({"fromDate":$("#fechainicio").find("input").val(),
+                				"toDate":$("#fechafin").find("input").val(),
+                				"maxHour":$("#horainicio").find("input").val(),
+                				"minHour":$("#horafin").find("input").val(),
+                				"desiredTemp":$("#mintemp").val(),
+                				"active":1}
+                			)).success($scope.doReturnOk);
+                	};
+                	
+                	$scope.doReturnOk = function(resp){
+                		$scope.schedules = resp;
+                    }
+                	
             	$scope.findSchedules = function(value){
                 	$http.post("/Thermostat/site/thermostat/scheduleManager",
                 			JSON.stringify({"method":"changetemp", "data": {method:"getAll"}})
                 	).success($scope.schedules = []);
             	};
+            	
+            	$scope.del = function(id){
+            		alert(id);
+            		$http.delete("/Thermostat/site/rest/tasks/",
+                			JSON.stringify({"id":id}
+                			)).success($scope.doReturnOk);
+                	
+            	}
             }]);
             </script>
        </div>    
