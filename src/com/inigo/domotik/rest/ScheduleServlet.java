@@ -1,6 +1,8 @@
 package com.inigo.domotik.rest;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,37 +23,17 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		super(Schedule.class);
 	}
 
-	protected Object get() {
+	@Override
+	protected Object get(List<String> pathP, Map<String, String> queryP,  HttpServletRequest request, HttpServletResponse response) throws IOException{
+	
     	ScheduleManager sm = new ScheduleManager();
     	Object res = null;
-    	System.out.println("asdadasda");
-		/*try {
-			switch (reqObject.getMethod()) {
-			case "delete":
-				sm.delete(reqObject.getData());
-				break;
-			case "update":
-				sm.update(reqObject.getData());
-				break;
-			case "create":
-				sm.add(reqObject.getData());
-				break;
-			case "getAll":
-				res = sm.getSchedules();
-				break;
-			default:
-				break;
-			}
+    	try {
+			res = sm.getSchedules();
 		} catch (ThermostatException e) {
 			e.printStackTrace();
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}*/
+		}
     	return res;
-	}
-
-	@Override
-	protected Object get(Schedule reqObject, HttpServletRequest request, HttpServletResponse response) {
-		return reqObject;
 	}
 
 	@Override
@@ -68,6 +50,22 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		return res;
 	}
 
+	@Override
+	protected Object delete(List<String> pathP, Map<String, String> queryP, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		ScheduleManager sm = new ScheduleManager();
+		List<Schedule> res = null;
+		try {
+			sm.delete(Integer.parseInt(pathP.get(0)));
+			res = sm.getSchedules();
+		} catch (ThermostatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NumberFormatException | NullPointerException e){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		return res;
+	}
 	
 }
 

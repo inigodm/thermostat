@@ -55,12 +55,12 @@ public class ScheduleManager {
 		return s;
 	}
 
-	public synchronized int delete(Schedule s) throws ThermostatException {
+	public synchronized int delete(int s) throws ThermostatException {
 		int res = -1;
 		String sql= "delete from schedules where oid=?";
 		try (Connection conn = CustomConnection.getConnection();
 		PreparedStatement stmt = conn.prepareStatement(sql)){
-		stmt.setInt(1, s.getId());
+		stmt.setInt(1, s);
 		res = stmt.executeUpdate();
 		}catch (Exception e) {
 			e.printStackTrace();

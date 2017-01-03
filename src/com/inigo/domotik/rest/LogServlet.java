@@ -9,37 +9,43 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.apache.catalina.tribes.tipis.Streamable;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.inigo.domotik.thermostat.db.LogManager;
 import com.inigo.domotik.thermostat.models.Log;
 import com.inigo.domotik.thermostat.models.LogRequest;
 import com.inigo.domotik.utils.StringUtils;
 
-@Path("/stats/get")
-public class LogServlet {
+@WebServlet("/site/rest/stats/get/*")
+public class LogServlet extends RESTServlet<String>{
 
-	@GET
-	@Path("/{fromDate}/{toDate}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Object get(@PathParam("fromDate")String from, @PathParam("toDate")String to) throws ParseException {
+	public LogServlet() {
+		super(String.class);
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	protected Object get(List<String> pathP, Map<String, String> queryP, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String from = pathP.get(0);
+		String to = pathP.get(1);
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
 		LogRequest lr = new LogRequest()
 				.setFromDate(from)
 				.setToDate(to);
-		DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), 20);
-		db.readFile();
-		return (db.res+"").replaceAll("'", "\"");
+		try {
+			DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), 20);
+			db.readFile();
+			return (db.res+"").replaceAll("'", "\"");
+		} catch (ParseException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		return null;
 	}
 }
 

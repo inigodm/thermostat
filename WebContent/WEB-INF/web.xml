@@ -13,7 +13,7 @@
     <url-pattern>/test</url-pattern>
   </servlet-mapping>
   
-	<servlet>
+	<!-- servlet>
 		<servlet-name>jersey-servlet</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
@@ -30,5 +30,5 @@
 	<servlet-mapping>
 		<servlet-name>jersey-servlet</servlet-name>
 		<url-pattern>/site/rest/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping-->
 </web-app>

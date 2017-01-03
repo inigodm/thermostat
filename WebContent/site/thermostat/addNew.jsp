@@ -4,7 +4,7 @@
 <t:wrapper>
 <link href="/Thermostat/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/Thermostat/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-<div class="panel-group" ng-app="newApp" ng-controller="newCtrl">
+<div class="panel-group" ng-app="newApp" ng-controller="newCtrl" ng-init="findSchedules()">
             <div class="panel panel-default">
                 <div class="panel-heading">Thermostate: add new Schedule</div>
                 <div class="panel-body">
@@ -144,19 +144,13 @@
                 		$scope.schedules = resp;
                     }
                 	
-            	$scope.findSchedules = function(value){
-                	$http.post("/Thermostat/site/thermostat/scheduleManager",
-                			JSON.stringify({"method":"changetemp", "data": {method:"getAll"}})
-                	).success($scope.schedules = []);
+            	$scope.findSchedules = function(){
+                	$http.get("/Thermostat/site/rest/tasks/").success($scope.doReturnOk);
             	};
             	
             	$scope.del = function(id){
-            		alert(id);
-            		$http.delete("/Thermostat/site/rest/tasks/",
-                			JSON.stringify({"id":id}
-                			)).success($scope.doReturnOk);
-                	
-            	}
+            		$http.delete("/Thermostat/site/rest/tasks/"+id+"/").success($scope.doReturnOk);
+                }
             }]);
             </script>
        </div>    
