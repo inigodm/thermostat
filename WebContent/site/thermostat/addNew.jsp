@@ -4,6 +4,7 @@
 <t:wrapper>
 <link href="/Thermostat/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/Thermostat/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
 <div class="panel-group" ng-app="newApp" ng-controller="newCtrl" ng-init="findSchedules()">
             <div class="panel panel-default">
                 <div class="panel-heading">Thermostate: add new Schedule</div>
@@ -63,11 +64,26 @@
 	                        </div>
 	                        </div>
 	                        <div class="col-sm-6">
+		                        <label class="control-label col-sm-5" for="weekdays">Days</label>
+		                        <div class="input-group col-sm-6">
+		                           <select id="weekdays" multiple>
+									  <option value="L">Monday</option>
+									  <option value="M">Tuesday</option>
+									  <option value="X">Wednesday</option>
+									  <option value="J">Thursday</option>
+									  <option value="V">Friday</option>
+									  <option value="S">Saturday</option>
+									  <option value="D">Sunday</option>
+									</select>
+	                        </div>
+	                        </div>
+	                    </div>
+                        <div class="form-group-inline">
+                            <div class="col-sm-6">
 		                        <label class="control-label col-sm-5" for="active">Active</label>
 		                        <input id="active" type="checkbox" value="true" class="form-control input-small"/>
 	                        </div>
-                        </div>
-                        <div class="form-group-inline">
+                        
 						    <div class="col-sm-offset-2 col-sm-10">
 						      <button id="add" ng-enabled="adding" class="btn btn-default" ng-click="add()">Submit</button>
 						      <button id="edit" ng-enabled="editing" class="btn btn-default" ng-click="add()">Save</button>
@@ -102,6 +118,7 @@
 		<script type="text/javascript" src="/Thermostat/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/Thermostat/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="/Thermostat/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
             <script>
             $('.form_time').datetimepicker({
             weekStart: 1,
@@ -123,6 +140,11 @@
     		minView: 2,
     		forceParse: 0
         	});
+            $('.selectpicker').selectpicker({
+            	  style: 'btn-info',
+            	  size: 4
+            	});
+            
             var mod = angular.module('newApp', []).config(function($interpolateProvider) {
       		    $interpolateProvider.startSymbol('{%');
       		    $interpolateProvider.endSymbol('%}');
@@ -136,6 +158,7 @@
                 				"maxHour":$("#horainicio").find("input").val(),
                 				"minHour":$("#horafin").find("input").val(),
                 				"desiredTemp":$("#mintemp").val(),
+                				"weekdays":$("#weekdays").val().join(","),
                 				"active":1}
                 			)).success($scope.doReturnOk);
                 	};

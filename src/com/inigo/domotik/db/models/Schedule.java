@@ -1,4 +1,4 @@
-package com.inigo.domotik.thermostat.models.db;
+package com.inigo.domotik.db.models;
 
 public class Schedule {
 	/**
@@ -13,6 +13,7 @@ public class Schedule {
 	 */
 	private int id;
 	private int active;
+	private String weekdays;
 	private String fromDate;
 	private String toDate;
 	private String minHour;
@@ -59,5 +60,11 @@ public class Schedule {
 	}
 	public void setDesiredTemp(int desiredTemp) {
 		this.desiredTemp = desiredTemp;
+	}
+	public String getWeekdays() {
+		return weekdays;
+	}
+	public void setWeekdays(String weekdays) {
+		this.weekdays = weekdays;
 	}
 }

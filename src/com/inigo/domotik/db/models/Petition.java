@@ -1,4 +1,4 @@
-package com.inigo.domotik.thermostat.models;
+package com.inigo.domotik.db.models;
 
 public class Petition<T> {
 	String method;

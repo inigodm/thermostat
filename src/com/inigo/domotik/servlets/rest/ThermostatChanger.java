@@ -1,4 +1,4 @@
-package com.inigo.domotik.rest;
+package com.inigo.domotik.servlets.rest;
 
 
 import java.io.IOException;
@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.inigo.domotik.thermostat.models.Petition;
+import com.inigo.domotik.db.models.Petition;
 import com.inigo.domotik.thread.thermostat.ThermostatManager;
 
 /**

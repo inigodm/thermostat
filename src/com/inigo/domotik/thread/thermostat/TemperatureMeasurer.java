@@ -12,8 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.inigo.domotik.thermostat.db.LogManager;
-import com.inigo.domotik.thermostat.models.Log;
+import com.inigo.domotik.db.LogManager;
+import com.inigo.domotik.db.models.Log;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
@@ -122,14 +122,16 @@ public class TemperatureMeasurer implements Starter{
 		l.setActive(isActive()?1:0);
 		return l;
 	}
+	private static int HILO = 0;
 	
 	class TempMonitoring implements Runnable{
 		@Override
 		public void run() {
+			HILO ++;
 			while(true){
 				rawTemps.clear();
 				try {
-					System.out.println("STARTING temp measurement");
+					System.out.println("STARTING temp measurement in thread" + HILO + " " + this.hashCode());
 					setRawTemp(TEMP_ROOM_INDEX);
 					System.out.println("END temp measurement");
 					activateCalefactor();

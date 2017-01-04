@@ -1,4 +1,4 @@
-package com.inigo.domotik.rest;
+package com.inigo.domotik.servlets.rest;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,10 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.inigo.domotik.db.ScheduleManager;
+import com.inigo.domotik.db.models.Petition;
+import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
-import com.inigo.domotik.thermostat.db.ScheduleManager;
-import com.inigo.domotik.thermostat.models.Petition;
-import com.inigo.domotik.thermostat.models.db.Schedule;
 
 /**
  * Servlet implementation class ScheduleManager

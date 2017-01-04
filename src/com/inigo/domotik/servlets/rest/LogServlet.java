@@ -1,4 +1,4 @@
-package com.inigo.domotik.rest;
+package com.inigo.domotik.servlets.rest;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.inigo.domotik.thermostat.models.Log;
-import com.inigo.domotik.thermostat.models.LogRequest;
+import com.inigo.domotik.db.models.Log;
+import com.inigo.domotik.db.models.LogRequest;
 import com.inigo.domotik.utils.StringUtils;
 
 @WebServlet("/site/rest/stats/get/*")

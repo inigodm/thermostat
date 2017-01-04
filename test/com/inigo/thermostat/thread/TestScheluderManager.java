@@ -1,11 +1,10 @@
 package com.inigo.thermostat.thread;
 
-import java.util.Date;
 import java.util.List;
 
+import com.inigo.domotik.db.ScheduleManager;
+import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
-import com.inigo.domotik.thermostat.db.ScheduleManager;
-import com.inigo.domotik.thermostat.models.db.Schedule;
 
 import junit.framework.TestCase;
 
@@ -19,6 +18,7 @@ public class TestScheluderManager extends TestCase{
 		s.setToDate("15");
 		s.setMaxHour("23");
 		s.setMinHour("20");
+		s.setWeekdays("LMXJV");
 		ScheduleManager sm = new ScheduleManager();
 		s = sm.add(s);
 		int id = s.getId();

@@ -1,4 +1,4 @@
-package com.inigo.domotik.rest;
+package com.inigo.domotik.servlets.rest;
 
 import java.io.BufferedReader;
 import java.io.IOException;

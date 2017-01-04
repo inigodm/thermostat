@@ -1,4 +1,4 @@
-package com.inigo.domotik.thermostat.models;
+package com.inigo.domotik.db.models;
 
 import com.google.gson.Gson;
 

@@ -1,6 +1,6 @@
 package com.inigo.domotik.thread.thermostat;
 
-import com.inigo.domotik.thermostat.models.ThermostatInfo;
+import com.inigo.domotik.db.models.ThermostatInfo;
 
 public class ThermostatManager {
 	TemperatureMeasurer tc = TemperatureMeasurer.getInstance();

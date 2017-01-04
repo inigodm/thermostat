@@ -1,4 +1,4 @@
-package com.inigo.domotik.thermostat.db;
+package com.inigo.domotik.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,24 +8,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inigo.domotik.db.CustomConnection;
+import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
-import com.inigo.domotik.thermostat.models.db.Schedule;
 
 public class ScheduleManager {
 
 	public synchronized Schedule add(Schedule s) throws ThermostatException {
 		String sql= "insert into schedules (FROMDATE, " + 
-                " TODATE, STARTHOUR, ENDHOUR, DESIREDTEMP, ACTIVE) values"
-                + " (?,?,?,?,?,?)";
+                " TODATE, WEEKDAYS, STARTHOUR, ENDHOUR, DESIREDTEMP, ACTIVE) values"
+                + " (?,?,?,?,?,?,?)";
 		try (Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, s.getFromDate()+"");
 			stmt.setString(2, s.getToDate()+"");
-			stmt.setString(3, s.getMinHour());
-			stmt.setString(4, s.getMaxHour());
-			stmt.setInt(5, s.getDesiredTemp());
-			stmt.setInt(6, s.getActive());
+			stmt.setString(3, s.getWeekdays());
+			stmt.setString(4, s.getMinHour());
+			stmt.setString(5, s.getMaxHour());
+			stmt.setInt(6, s.getDesiredTemp());
+			stmt.setInt(7, s.getActive());
 			System.out.println("Me devuelve esto" + stmt.executeUpdate());
 		} catch (Exception e) {
 			e.printStackTrace();

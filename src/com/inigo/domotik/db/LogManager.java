@@ -1,4 +1,4 @@
-package com.inigo.domotik.thermostat.db;
+package com.inigo.domotik.db;
 
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -8,7 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.inigo.domotik.thermostat.models.Log;
+import com.inigo.domotik.db.models.Log;
 
 public class LogManager {
 	static final DateFormat df = new SimpleDateFormat("yyyyMMdd");
