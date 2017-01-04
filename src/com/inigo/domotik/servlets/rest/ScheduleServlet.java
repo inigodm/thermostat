@@ -16,7 +16,7 @@ import com.inigo.domotik.exceptions.ThermostatException;
 /**
  * Servlet implementation class ScheduleManager
  */
-@WebServlet("/site/rest/tasks/")
+@WebServlet("/site/rest/tasks/*")
 public class ScheduleServlet extends RESTServlet<Schedule>{
     
 	public ScheduleServlet() {
@@ -42,6 +42,20 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		List<Schedule> res = null;
 		try {
 			sm.add(reqObject);
+			res = sm.getSchedules();
+		} catch (ThermostatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	@Override
+	protected Object put(Schedule reqObject, HttpServletRequest request, HttpServletResponse response) {
+		ScheduleManager sm = new ScheduleManager();
+		List<Schedule> res = null;
+		try {
+			sm.update(reqObject);
 			res = sm.getSchedules();
 		} catch (ThermostatException e) {
 			// TODO Auto-generated catch block

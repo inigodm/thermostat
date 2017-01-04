@@ -36,7 +36,7 @@ public class ScheduleManager {
 	
 	public synchronized Schedule update(Schedule s) throws ThermostatException {
 		String sql= "update schedules set ACTIVE=?, FROMDATE=?, " + 
-                " TODATE=?, STARTHOUR=?, ENDHOUR=?, DESIREDTEMP=? where "
+                " TODATE=?, STARTHOUR=?, ENDHOUR=?, WEEKDAYS=?, DESIREDTEMP=? where "
                 + " rowid = ?";
 		try (Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -45,8 +45,9 @@ public class ScheduleManager {
 			stmt.setString(3, s.getToDate());
 			stmt.setString(4, s.getMinHour());
 			stmt.setString(5, s.getMaxHour());
-			stmt.setInt(6, s.getDesiredTemp());
-			stmt.setInt(7, s.getId());
+			stmt.setString(6, s.getWeekdays());
+			stmt.setInt(7, s.getDesiredTemp());
+			stmt.setInt(8, s.getId());
 			System.out.println("Me devuelve esto" + stmt.executeUpdate());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,7 +89,7 @@ public class ScheduleManager {
 		if (limit != -1 && offset != -1){
 			sql = " LIMIT " + limit + " OFFSET " + offset;
 		}
-		sql = "select rowid, active, fromdate, todate, starthour, endhour,"
+		sql = "select rowid, active, fromdate, todate, weekdays, starthour, endhour,"
 				+ "desiredtemp from schedules" + sql;
 		List<Schedule> schedules = new ArrayList<>();
 		try (Connection conn = CustomConnection.getConnection();
@@ -112,6 +113,7 @@ public class ScheduleManager {
 		res.setMaxHour(rs.getString("endhour"));
 		res.setMinHour(rs.getString("starthour"));
 		res.setToDate(rs.getString("todate"));
+		res.setWeekdays(rs.getString("weekdays"));
 		res.setActive(rs.getInt("active"));
 		return res;
 	}

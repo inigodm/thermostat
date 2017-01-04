@@ -10,6 +10,7 @@
                 <div class="panel-heading">Thermostate: add new Schedule</div>
                 <div class="panel-body">
                     <form class="form-inline" role="form">
+                    	<input id="id" type="hidden"/>
                     	<div class="form-group-line">
                     		<div class="col-sm-6">
 		                        <label class="control-label col-sm-5" for="horainicio">Init date</label>
@@ -59,15 +60,15 @@
                         <div class="form-group-line">
                     		<div class="col-sm-6">
 		                        <label class="control-label col-sm-5" for="mintemp">Min Temp</label>
-		                        <div class="input-group col-sm-6">
+		                        <div class="input-append col-sm-6">
 			                        <input id="mintemp" type="number" value="15" class="form-control input-small"/>
-	                        </div>
+	                        	</div>
 	                        </div>
 	                        <div class="col-sm-6">
-		                        <label class="control-label col-sm-5" for="weekdays">Days</label>
-		                        <div class="input-group col-sm-6">
-		                           <select id="weekdays" multiple>
-									  <option value="L">Monday</option>
+	                        	<label class="control-label col-sm-5" for="weekdays">Days</label>
+		                        <div class="input-append">
+		                           <select id="weekdays" class="form-control input-small" multiple>
+									  <option value="L" default>Monday</option>
 									  <option value="M">Tuesday</option>
 									  <option value="X">Wednesday</option>
 									  <option value="J">Thursday</option>
@@ -79,14 +80,17 @@
 	                        </div>
 	                    </div>
                         <div class="form-group-inline">
-                            <div class="col-sm-6">
-		                        <label class="control-label col-sm-5" for="active">Active</label>
+                            <div class="col-sm-offset-0"/>
+		                    <div class="col-sm-4">
+		                        <label class="control-label col-sm-5" for="active">Active
 		                        <input id="active" type="checkbox" value="true" class="form-control input-small"/>
+		                        </label>
 	                        </div>
                         
-						    <div class="col-sm-offset-2 col-sm-10">
-						      <button id="add" ng-enabled="adding" class="btn btn-default" ng-click="add()">Submit</button>
-						      <button id="edit" ng-enabled="editing" class="btn btn-default" ng-click="add()">Save</button>
+						    <div class="col-sm-offset-1 col-sm-2">
+						      <button id="post" ng-show="post" class="btn btn-default" ng-click="dopost()">Submit</button>
+						      <button id="put" ng-show="put" class="btn btn-default" ng-click="doput()">Save</button>
+						      <button id="cancel"  class="btn btn-default" ng-click="docancel()">Cancel</button>
 						    </div>
 						  </div>
                     </form>
@@ -94,18 +98,19 @@
                         <table class="table table-striped">
 						    <thead>
 						      <tr>
-						        <th>Date range</th>
+						        <th>Active</th>
+						        <th>Days</th>
 						        <th>Time range</th>
 						        <th>Temperature</th>
 						      </tr>
 						    </thead>
 						    <tbody>
-						      <tr ng-repeat="x in schedules">
-						        <td>{%x.fromDate%} - {%x.toDate%}</td>
+						      <tr ng-repeat="x in schedules" ng-click="setFields(x)">
+						        <td>{%x.active%}</td>
+						        <td>{%x.weekdays%}</td>
 						        <td>{%x.minHour%} - {%x.maxHour%}</td>
 						        <td>{%x.desiredTemp%}</td>
 						        <td>
-						         	<span class="glyphicon glyphicon-pencil" ng-click=""></span>
 									<span class="glyphicon glyphicon-trash" ng-click="del(x.id)"></span>
 								</td>
 						      </tr>
@@ -151,7 +156,7 @@
             });
                  
             mod.controller("newCtrl",['$scope','$http', function($scope, $http){
-            	$scope.add = function(value){
+            	$scope.dopost = function(value){
                 	$http.post("/Thermostat/site/rest/tasks/",
                 			JSON.stringify({"fromDate":$("#fechainicio").find("input").val(),
                 				"toDate":$("#fechafin").find("input").val(),
@@ -159,13 +164,59 @@
                 				"minHour":$("#horafin").find("input").val(),
                 				"desiredTemp":$("#mintemp").val(),
                 				"weekdays":$("#weekdays").val().join(","),
-                				"active":1}
+                				"active":$("#active").is(":checked")?1:0}
                 			)).success($scope.doReturnOk);
                 	};
                 	
-                	$scope.doReturnOk = function(resp){
-                		$scope.schedules = resp;
-                    }
+                $scope.doReturnOk = function(resp){
+                	$scope.schedules = resp;
+                	$scope.docancel();
+                }
+                
+                $scope.doput = function(value){
+                		$http.put("/Thermostat/site/rest/tasks/",
+                    			JSON.stringify({"fromDate":$("#fechainicio").find("input").val(),
+                    				"toDate":$("#fechafin").find("input").val(),
+                    				"maxHour":$("#horainicio").find("input").val(),
+                    				"minHour":$("#horafin").find("input").val(),
+                    				"desiredTemp":$("#mintemp").val(),
+                    				"weekdays":$("#weekdays").val().join(","),
+                    				"active":$("#active").is(":checked")?1:0,
+                    				"id":$("#id").val()}
+                    			)).success($scope.doReturnOk);
+                    	};
+                    	
+                $scope.loadweekdays = function(x){
+                	$("#weekdays").val(x.split(","));
+                    //$("#weekdays").multiselect("refresh");
+                }
+                $scope.put=false;
+                $scope.post=true;
+                $scope.setFields = function(x){
+                	$("#fechainicio").find("input").val(x.fromDate);
+        			$("#fechafin").find("input").val(x.toDate);
+        			$("#horainicio").find("input").val(x.minHour);
+        			$("#horafin").find("input").val(x.maxHour);
+        			$("#mintemp").val(x.desiredTemp);
+        			$scope.loadweekdays(x.weekdays);
+        			$("#active").prop('checked', x.active==1);
+        			$("#id").val(x.id);
+        			$scope.put=true;
+        			$scope.post=false;
+                }
+                
+                $scope.docancel = function(){
+                	$("#fechainicio").find("input").val("");
+        			$("#fechafin").find("input").val("");
+        			$("#horainicio").find("input").val("");
+        			$("#horafin").find("input").val("");
+        			$("#mintemp").val(15);
+        			$scope.loadweekdays("");
+        			$("#active").val(0);
+        			$("#id").val("");
+        			$scope.put=false;
+                    $scope.post=true;
+                }
                 	
             	$scope.findSchedules = function(){
                 	$http.get("/Thermostat/site/rest/tasks/").success($scope.doReturnOk);
