@@ -42,6 +42,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		List<Schedule> res = null;
 		try {
 			sm.add(reqObject);
+			sm.refreshSchedules();
 			res = sm.getSchedules();
 		} catch (ThermostatException e) {
 			// TODO Auto-generated catch block
@@ -56,6 +57,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		List<Schedule> res = null;
 		try {
 			sm.update(reqObject);
+			sm.refreshSchedules();
 			res = sm.getSchedules();
 		} catch (ThermostatException e) {
 			// TODO Auto-generated catch block
@@ -71,6 +73,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		List<Schedule> res = null;
 		try {
 			sm.delete(Integer.parseInt(pathP.get(0)));
+			sm.refreshSchedules();
 			res = sm.getSchedules();
 		} catch (ThermostatException e) {
 			// TODO Auto-generated catch block

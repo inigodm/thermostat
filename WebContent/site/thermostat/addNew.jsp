@@ -13,31 +13,9 @@
                     	<input id="id" type="hidden"/>
                     	<div class="form-group-line">
                     		<div class="col-sm-6">
-		                        <label class="control-label col-sm-5" for="horainicio">Init date</label>
-		                        <div class="input-group col-sm-6">
-			                       <div class="input-append date form_date" id="horainicio" data-date="" data-date-format="dd-mm-yyyy">
-								        <input class="span2" size="16" type="text" value="" readonly>
-								        <span class="add-on"><i class="icon-remove"></i></span>
-								        <span class="add-on"><i class="icon-th"></i></span>
-								    </div>  
-	                        </div>
-	                        </div>
-	                        <div class="col-sm-6">
-	                        	 <label class="control-label col-sm-5" for="horafin">End date</label>
-		                         <div class="input-group col-sm-6">
-				                    <div class="input-append date form_date" id="horafin" data-date="" data-date-format="dd-mm-yyyy">
-								        <input class="span2" size="16" type="text" value="" readonly>
-								        <span class="add-on"><i class="icon-remove"></i></span>
-								        <span class="add-on"><i class="icon-th"></i></span>
-								    </div>  
-		                         </div>
-	                        </div>
-                        </div>
-                        <div class="form-group-line">
-                    		<div class="col-sm-6">
 		                        <label class="control-label col-sm-5" for="fechainicio">Init time</label>
 		                        <div class="input-group col-sm-6">
-			                        <div id="fechainicio" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+			                        <div id="minHour" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
 								        <input class="span2" size="16" type="text" value="" readonly>
 								        <span class="add-on"><i class="icon-remove"></i></span>
 								        <span class="add-on"><i class="icon-th"></i></span>
@@ -48,7 +26,7 @@
 	                        <div class="col-sm-6">
 	                        	 <label class="control-label col-sm-5" for="fechafin">End time</label>
 		                         <div class="input-group col-sm-6">
-				                    <div id="fechafin" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input4" data-link-format="hh:ii">
+				                    <div id="maxHour" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input4" data-link-format="hh:ii">
 								        <input class="span2" size="16" type="text" value="" readonly>
 								        <span class="add-on"><i class="icon-remove"></i></span>
 								        <span class="add-on"><i class="icon-th"></i></span>
@@ -87,7 +65,7 @@
 		                        </label>
 	                        </div>
                         
-						    <div class="col-sm-offset-1 col-sm-2">
+						    <div class="col-sm-offset-0 col-sm-6">
 						      <button id="post" ng-show="post" class="btn btn-default" ng-click="dopost()">Submit</button>
 						      <button id="put" ng-show="put" class="btn btn-default" ng-click="doput()">Save</button>
 						      <button id="cancel"  class="btn btn-default" ng-click="docancel()">Cancel</button>
@@ -157,11 +135,9 @@
                  
             mod.controller("newCtrl",['$scope','$http', function($scope, $http){
             	$scope.dopost = function(value){
-                	$http.post("/Thermostat/site/rest/tasks/",
-                			JSON.stringify({"fromDate":$("#fechainicio").find("input").val(),
-                				"toDate":$("#fechafin").find("input").val(),
-                				"maxHour":$("#horainicio").find("input").val(),
-                				"minHour":$("#horafin").find("input").val(),
+            		$http.post("/Thermostat/site/rest/tasks/",
+                			JSON.stringify({"maxHour":$("#maxHour").find("input").val(),
+                				"minHour":$("#minHour").find("input").val(),
                 				"desiredTemp":$("#mintemp").val(),
                 				"weekdays":$("#weekdays").val().join(","),
                 				"active":$("#active").is(":checked")?1:0}
@@ -175,10 +151,8 @@
                 
                 $scope.doput = function(value){
                 		$http.put("/Thermostat/site/rest/tasks/",
-                    			JSON.stringify({"fromDate":$("#fechainicio").find("input").val(),
-                    				"toDate":$("#fechafin").find("input").val(),
-                    				"maxHour":$("#horainicio").find("input").val(),
-                    				"minHour":$("#horafin").find("input").val(),
+                    			JSON.stringify({"maxHour":$("#maxHour").find("input").val(),
+                    				"minHour":$("#minHour").find("input").val(),
                     				"desiredTemp":$("#mintemp").val(),
                     				"weekdays":$("#weekdays").val().join(","),
                     				"active":$("#active").is(":checked")?1:0,
@@ -193,10 +167,8 @@
                 $scope.put=false;
                 $scope.post=true;
                 $scope.setFields = function(x){
-                	$("#fechainicio").find("input").val(x.fromDate);
-        			$("#fechafin").find("input").val(x.toDate);
-        			$("#horainicio").find("input").val(x.minHour);
-        			$("#horafin").find("input").val(x.maxHour);
+                	$("#minHour").find("input").val(x.minHour);
+        			$("#maxHour").find("input").val(x.maxHour);
         			$("#mintemp").val(x.desiredTemp);
         			$scope.loadweekdays(x.weekdays);
         			$("#active").prop('checked', x.active==1);
@@ -206,10 +178,8 @@
                 }
                 
                 $scope.docancel = function(){
-                	$("#fechainicio").find("input").val("");
-        			$("#fechafin").find("input").val("");
-        			$("#horainicio").find("input").val("");
-        			$("#horafin").find("input").val("");
+                	$("#minHour").find("input").val("");
+        			$("#maxHour").find("input").val("");
         			$("#mintemp").val(15);
         			$scope.loadweekdays("");
         			$("#active").val(0);

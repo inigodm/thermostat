@@ -14,8 +14,6 @@ public class TestScheluderManager extends TestCase{
 	public void testNewShecule() throws ThermostatException{
 		Schedule s = new Schedule();
 		s.setDesiredTemp(25);
-		s.setFromDate("(new Date()).getTime()");
-		s.setToDate("15");
 		s.setMaxHour("23");
 		s.setMinHour("20");
 		s.setWeekdays("LMXJV");

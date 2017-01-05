@@ -14,8 +14,6 @@ public class Schedule {
 	private int id;
 	private int active;
 	private String weekdays;
-	private String fromDate;
-	private String toDate;
 	private String minHour;
 	private String maxHour;
 	private int desiredTemp;
@@ -30,18 +28,6 @@ public class Schedule {
 	}
 	public void setActive(int userId) {
 		this.active = userId;
-	}
-	public String getFromDate() {
-		return fromDate;
-	}
-	public void setFromDate(String fromDate) {
-		this.fromDate = fromDate;
-	}
-	public String getToDate() {
-		return toDate;
-	}
-	public void setToDate(String toDate) {
-		this.toDate = toDate;
 	}
 	public String getMinHour() {
 		return minHour;

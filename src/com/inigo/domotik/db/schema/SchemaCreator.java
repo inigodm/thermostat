@@ -52,9 +52,7 @@ public class SchemaCreator {
 
 	private void createSchedulesTable() throws ThermostatException {
 		String sql = "CREATE TABLE schedules " +
-                "(FROMDATE           TEXT    NOT NULL, " + 
-                " TODATE           TEXT    NOT NULL, " + 
-                " WEEKDAYS           TEXT    NOT NULL, " + 
+                "(WEEKDAYS           TEXT    NOT NULL, " + 
                 " STARTHOUR           TEXT    NOT NULL, " + 
                 " ENDHOUR           TEXT    NOT NULL, " + 
                 " DESIREDTEMP           INTEGER    NOT NULL, " +
