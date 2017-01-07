@@ -24,7 +24,7 @@ import com.inigo.domotik.utils.StringUtils;
 
 @WebServlet("/site/rest/stats/get/*")
 public class LogServlet extends RESTServlet<String>{
-
+	int NUM_MAX_MEDICIONES = 60;
 	public LogServlet() {
 		super(String.class);
 		// TODO Auto-generated constructor stub
@@ -39,7 +39,7 @@ public class LogServlet extends RESTServlet<String>{
 				.setFromDate(from)
 				.setToDate(to);
 		try {
-			DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), 20);
+			DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), NUM_MAX_MEDICIONES);
 			db.readFile();
 			return (db.res+"").replaceAll("'", "\"");
 		} catch (ParseException e) {
@@ -55,6 +55,7 @@ class DataBuilder{
 	Date from;
 	Date to;
 	Gson gson = new Gson();
+	boolean finished = false;
 	public List<String> res = new ArrayList<>();
 	public DataBuilder(Date from, Date to, int total){
 		period = (int)(((to.getTime() - from.getTime())/(1000*60*total)));
@@ -73,9 +74,13 @@ class DataBuilder{
 	}
 	
 	private void fileConsumer(String line){
+		if (finished){
+			return;
+		}
 		try {
 			Log l = gson.fromJson(line, Log.class);
-			if (StringUtils.stringToDate(l.getDate(), "yyyy-MM-dd'T'HH:mm:ss").getTime() > from.getTime()){
+			Long date = StringUtils.stringToDate(l.getDate(), "yyyy-MM-dd'T'HH:mm:ss").getTime();
+			if (date > from.getTime() && date < to.getTime()){
 				count++;
 				if (count >= period){
 					count = 0;
@@ -84,6 +89,9 @@ class DataBuilder{
 				}else{
 					System.out.println("omit " + count);
 				}
+			}
+			if (date < to.getTime()){
+				finished = true;
 			}
 		} catch (JsonSyntaxException e) {
 			// TODO Auto-generated catch block

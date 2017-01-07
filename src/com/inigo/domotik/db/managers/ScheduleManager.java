@@ -1,4 +1,4 @@
-package com.inigo.domotik.db;
+package com.inigo.domotik.db.managers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,10 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.utils.DBUtils;
 
-public class ScheduleManager {
+public class ScheduleManager implements TableManager{
+	
+	public ScheduleManager(){
+		
+	}
 	
 	public static final List<Schedule> SCHEDULES = new ArrayList<>();
 
@@ -107,6 +113,40 @@ public class ScheduleManager {
 		res.setWeekdays(rs.getString("weekdays"));
 		res.setActive(rs.getInt("active"));
 		return res;
+	}
+
+	@Override
+	public void createTable() throws ThermostatException {
+		try{
+			System.out.println("Deleting table schedules");
+			DBUtils.executeUpdate("drop table schedules");
+		}catch (Exception e){
+			
+		}
+		System.out.println("trying to generate tables");
+		createSchedulesTable();
+		System.out.println("Done");
+	}
+	
+	private void createSchedulesTable() throws ThermostatException {
+		String sql = "CREATE TABLE schedules " +
+                "(WEEKDAYS           TEXT    NOT NULL, " + 
+                " STARTHOUR           TEXT    NOT NULL, " + 
+                " ENDHOUR           TEXT    NOT NULL, " + 
+                " DESIREDTEMP           INTEGER    NOT NULL, " +
+                " ACTIVE           INTEGER    NOT NULL)";
+		DBUtils.executeUpdate(sql);
+	}
+
+	
+	public int getCurrentDesiredTemp() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean isNowScheludedDateTime() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

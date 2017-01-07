@@ -1,9 +1,9 @@
 package com.inigo.domotik.utils;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.exceptions.ThermostatException;
@@ -17,5 +17,16 @@ public class DBUtils {
 			throw new ThermostatException(e.getMessage(), e);
 		}
 	}	
+	
+	public synchronized static ResultSet executeQuery(String sql) throws ThermostatException{
+		ResultSet rs = null;
+		try (Connection conn = CustomConnection.getConnection();
+			Statement stmt = conn.createStatement()){
+			rs = stmt.executeQuery(sql);
+		}catch (SQLException e){
+			throw new ThermostatException(e.getMessage(), e);
+		}
+		return rs;
+	}
 	
 }

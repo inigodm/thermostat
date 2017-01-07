@@ -1,4 +1,4 @@
-package com.inigo.domotik.db;
+package com.inigo.domotik.utils;
 
 import java.nio.file.Files;
 import java.nio.file.LinkOption;

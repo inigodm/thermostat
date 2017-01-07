@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.inigo.domotik.db.CustomConnection;
-import com.inigo.domotik.db.schema.SchemaCreator;
 import com.inigo.domotik.exceptions.ThermostatException;
 
 import junit.framework.TestCase;
@@ -38,18 +37,6 @@ public class TestConnection extends TestCase{
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(sql);
 		    stmt.close();
-		}
-	}
-	
-	public synchronized void testCreateSchema() throws SQLException, ThermostatException{
-		try{
-			String sql = "select user, pass, userid from users";
-			getData(sql);
-			sql = "select fromDate, toDate, startHour, endHour, minTemp, maxTemp, userid, scheduleid from schedules";
-			getData(sql);
-		}catch(Exception e){
-			SchemaCreator sc = new SchemaCreator();
-			sc.createSchema();	
 		}
 	}
 	

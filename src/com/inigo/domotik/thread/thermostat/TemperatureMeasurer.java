@@ -12,12 +12,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.inigo.domotik.db.LogManager;
+import com.inigo.domotik.db.managers.ScheduleManager;
 import com.inigo.domotik.db.models.Log;
+import com.inigo.domotik.db.models.Schedule;
+import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
 import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
+import com.inigo.domotik.utils.LogManager;
 
 public class TemperatureMeasurer implements Starter{
 	
@@ -124,6 +127,13 @@ public class TemperatureMeasurer implements Starter{
 	}
 	private static int HILO = 0;
 	
+	private void setDesiredTempFromScheduler() throws ThermostatException {
+		ScheduleManager sm = new ScheduleManager();
+		if (sm.isNowScheludedDateTime()){
+			desiredTemp = sm.getCurrentDesiredTemp();
+		}
+	}
+	
 	class TempMonitoring implements Runnable{
 		@Override
 		public void run() {
@@ -133,6 +143,7 @@ public class TemperatureMeasurer implements Starter{
 				try {
 					System.out.println("STARTING temp measurement in thread" + HILO + " " + this.hashCode());
 					setRawTemp(TEMP_ROOM_INDEX);
+					setDesiredTempFromScheduler();
 					System.out.println("END temp measurement");
 					activateCalefactor();
 					LogManager.addLogger(buildLog());

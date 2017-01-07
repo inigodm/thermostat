@@ -2,7 +2,7 @@ package com.inigo.thermostat.thread;
 
 import java.util.List;
 
-import com.inigo.domotik.db.ScheduleManager;
+import com.inigo.domotik.db.managers.ScheduleManager;
 import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
 
