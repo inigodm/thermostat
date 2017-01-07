@@ -5,13 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.utils.DBUtils;
+import com.inigo.domotik.utils.DateUtils;
 
 public class ScheduleManager implements TableManager{
 	
@@ -20,6 +23,7 @@ public class ScheduleManager implements TableManager{
 	}
 	
 	public static final List<Schedule> SCHEDULES = new ArrayList<>();
+	public static final List<Schedule> ACTIVATEDSCHEDULES = new ArrayList<>();
 
 	public synchronized Schedule add(Schedule s) throws ThermostatException {
 		String sql= "insert into schedules (WEEKDAYS, STARTHOUR, ENDHOUR, DESIREDTEMP, ACTIVE) values"
@@ -140,13 +144,30 @@ public class ScheduleManager implements TableManager{
 
 	
 	public int getCurrentDesiredTemp() {
-		// TODO Auto-generated method stub
-		return 0;
+		int temp = 0;
+		for (Schedule s: ACTIVATEDSCHEDULES){
+			if (s.getDesiredTemp() > temp){
+				temp = s.getDesiredTemp();
+			}
+		}
+		return temp;
 	}
 
 	public boolean isNowScheludedDateTime() {
-		// TODO Auto-generated method stub
-		return false;
+		String day = DateUtils.dayOfWeek();
+		ACTIVATEDSCHEDULES.clear();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		int hourNow = DateUtils.hourOfDayAsNumber(sdf.format(new Date()));
+		for (Schedule s : SCHEDULES){
+			if (s.getActive() == 1 && s.getWeekdays().indexOf(day) != -1){
+				int init = DateUtils.hourOfDayAsNumber(s.getMinHour());
+				int end = DateUtils.hourOfDayAsNumber(s.getMaxHour());
+				if (init < hourNow && hourNow < end){
+					ACTIVATEDSCHEDULES.add(s);
+				}
+			}
+		}
+		return ACTIVATEDSCHEDULES.size() > 0;
 	}
 
 }
