@@ -14,16 +14,16 @@ import java.util.concurrent.TimeUnit;
 
 import com.inigo.domotik.db.managers.ScheduleManager;
 import com.inigo.domotik.db.models.Log;
-import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.servlets.rest.models.ThermostatInfo;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
-import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
 import com.inigo.domotik.utils.LogManager;
 
+//TODO: this class does too many things
 public class TemperatureMeasurer implements Starter{
-	
+	public static final int DEFAULT_TEMP = 15;
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 0;
 	Map<Integer, Reader> readers = new HashMap<>();
@@ -124,8 +124,17 @@ public class TemperatureMeasurer implements Starter{
 		return l;
 	}
 	
+	public ThermostatInfo increase(int i) {
+		ThermostatInfo info = new ThermostatInfo();
+		setDesiredTemp(getDesiredTemp() + i);
+		info.setDesiredTemp("" + getDesiredTemp());
+		info.setRoomTemp(""+ getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
+		info.setOn(isActive());
+		return info;
+	}
+	
 	private static int HILO = 0;
-	int desiredTemp = ThermostatManager.DEFAULT_TEMP;
+	int desiredTemp = DEFAULT_TEMP;
 	boolean isInSchedule = false;
 	
 	private void setDesiredTempFromScheduler() throws ThermostatException {
@@ -134,7 +143,7 @@ public class TemperatureMeasurer implements Starter{
 			desiredTemp = sm.getCurrentDesiredTemp();
 			isInSchedule=true;
 		}else if (isInSchedule){
-			desiredTemp = ThermostatManager.DEFAULT_TEMP;
+			desiredTemp = DEFAULT_TEMP;
 			isInSchedule=false;
 		}
 	}

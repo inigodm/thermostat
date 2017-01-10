@@ -13,12 +13,16 @@ import java.util.List;
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
-import com.inigo.domotik.thread.thermostat.ThermostatManager;
+import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
 import com.inigo.domotik.utils.DBUtils;
 import com.inigo.domotik.utils.DateUtils;
 
 public class ScheduleManager implements TableManager{
-	
+	// Schedule cache
+	public static final List<Schedule> SCHEDULES = new ArrayList<>();
+	//TODO: activated schedules have nothing todo here
+	public static final List<Schedule> ACTIVATEDSCHEDULES = new ArrayList<>();
+
 	
 	public ScheduleManager(){
 		try {
@@ -29,9 +33,7 @@ public class ScheduleManager implements TableManager{
 		}
 	}
 	
-	public static final List<Schedule> SCHEDULES = new ArrayList<>();
-	public static final List<Schedule> ACTIVATEDSCHEDULES = new ArrayList<>();
-
+	
 	public synchronized Schedule add(Schedule s) throws ThermostatException {
 		String sql= "insert into schedules (WEEKDAYS, STARTHOUR, ENDHOUR, DESIREDTEMP, ACTIVE) values"
                 + " (?,?,?,?,?)";
@@ -90,10 +92,6 @@ public class ScheduleManager implements TableManager{
 		return SCHEDULES;
 	}
 
-	public List<Schedule> refreshSchedules() throws ThermostatException{
-		return getSchedules(-1, 1);
-	}
-	
 	public synchronized List<Schedule> getSchedules(int limit, int offset) throws ThermostatException {
 		SCHEDULES.clear();
 		String sql = "";
@@ -132,6 +130,11 @@ public class ScheduleManager implements TableManager{
 		return res;
 	}
 
+	public List<Schedule> refreshSchedules() throws ThermostatException{
+		return getSchedules(-1, 1);
+	}
+	
+	
 	@Override
 	public void createTable() throws ThermostatException {
 		try{
@@ -157,7 +160,7 @@ public class ScheduleManager implements TableManager{
 
 	
 	public int getCurrentDesiredTemp() {
-		int temp = ThermostatManager.DEFAULT_TEMP;
+		int temp = TemperatureMeasurer.DEFAULT_TEMP;
 		for (Schedule s: ACTIVATEDSCHEDULES){
 			if (s.getDesiredTemp() > temp){
 				temp = s.getDesiredTemp();
@@ -166,6 +169,7 @@ public class ScheduleManager implements TableManager{
 		return temp;
 	}
 
+	//TODO: this have nothig to do with DB
 	public boolean isNowScheludedDateTime() {
 		String day = DateUtils.dayOfWeek();
 		ACTIVATEDSCHEDULES.clear();

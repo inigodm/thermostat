@@ -1,7 +1,5 @@
 package com.inigo.domotik.db.models;
 
-import com.google.gson.Gson;
-
 public class Log {
 	String date;
 	double temperature;

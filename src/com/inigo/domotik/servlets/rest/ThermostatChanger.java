@@ -9,8 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.inigo.domotik.db.models.Petition;
-import com.inigo.domotik.thread.thermostat.ThermostatManager;
+import com.inigo.domotik.servlets.rest.models.Petition;
+import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
 
 /**
  * Servlet implementation class ThermostatChanger
@@ -19,11 +19,11 @@ import com.inigo.domotik.thread.thermostat.ThermostatManager;
 public class ThermostatChanger extends RESTServlet<Petition> {
 	public ThermostatChanger() {
 		super(Petition.class);
-		tm = new ThermostatManager();
+		tm = TemperatureMeasurer.getInstance();
 	}
 
 
-	ThermostatManager tm;
+	TemperatureMeasurer tm;
 	@Override
 	protected Object get(List<String> pathP, Map<String, String> queryP, HttpServletRequest request,HttpServletResponse response) throws IOException {
 		System.out.println("dfdsfdsfsdsd");

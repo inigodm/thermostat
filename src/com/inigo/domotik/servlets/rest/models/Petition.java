@@ -1,4 +1,4 @@
-package com.inigo.domotik.db.models;
+package com.inigo.domotik.servlets.rest.models;
 
 public class Petition<T> {
 	String method;

@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.inigo.domotik.db.managers.ScheduleManager;
-import com.inigo.domotik.db.models.Petition;
 import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.servlets.rest.models.Petition;
 
 /**
  * Servlet implementation class ScheduleManager
@@ -83,36 +83,4 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 		}
 		return res;
 	}
-	
 }
-
-class ScheduleManagerPetition extends Petition<Schedule>{
-	
-}
-
-class ScheduleManagerResponse{
-	int code;
-	String msg;
-	List<Object> response;
-	
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}
-	public String getMsg() {
-		return msg;
-	}
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-	public List<Object> getResponse() {
-		return response;
-	}
-	public void setResponse(List<Object> response) {
-		this.response = response;
-	}
-	
-}
-

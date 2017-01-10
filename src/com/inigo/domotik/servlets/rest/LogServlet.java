@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.inigo.domotik.db.models.Log;
-import com.inigo.domotik.db.models.LogRequest;
 import com.inigo.domotik.utils.StringUtils;
 
 @WebServlet("/site/rest/stats/get/*")
@@ -35,9 +34,6 @@ public class LogServlet extends RESTServlet<String>{
 		String from = pathP.get(0);
 		String to = pathP.get(1);
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
-		LogRequest lr = new LogRequest()
-				.setFromDate(from)
-				.setToDate(to);
 		try {
 			DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), NUM_MAX_MEDICIONES);
 			db.readFile();

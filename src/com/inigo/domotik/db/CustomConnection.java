@@ -25,7 +25,7 @@ import java.util.concurrent.Executor;
 import com.inigo.domotik.exceptions.ThermostatException;
 
 /**
- * @author GADEMOIN
+ * @author inigo
  * Es una Connection que cachea los statements que se crean en el de modo que a la hora de cerrarlo
  * solo hay que hacer close.
  */

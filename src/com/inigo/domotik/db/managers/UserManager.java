@@ -9,7 +9,7 @@ import java.util.Random;
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.utils.DBUtils;
-//TODO: Thius must be a UserManager
+
 public class UserManager implements TableManager{
 	public boolean isError;
 	public String user;
@@ -44,6 +44,7 @@ public class UserManager implements TableManager{
 		DBUtils.executeUpdate(sql);
 	}
 	
+	//TODO: add salted hash validation
 	private void addData() throws ThermostatException {
 		Random rnd = new Random();
 		String sql = "insert into users (user, pass, salt) values ('inigo', 'password', '" + rnd.nextLong() +"')";
@@ -54,7 +55,6 @@ public class UserManager implements TableManager{
 		if (this.user != null){
 			return "site/index";
 		}
-		//isError = !("inigo".equals(username) && "password".equals(pass));
 		String user = findUser(username, pass);
 		isError = (null == user);
 		if (username == null && pass == null){
@@ -69,6 +69,7 @@ public class UserManager implements TableManager{
 		}
 	}
 	
+	//TODO: add salted hash validation
 	private synchronized String findUser(String user, String pass) throws ThermostatException{
 		try(Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = createPreparedStatement(conn, user.toLowerCase(), pass);
