@@ -29,10 +29,8 @@ public class TemperatureMeasurer implements Starter{
 	Map<Integer, Reader> readers = new HashMap<>();
 	public final List<String> rawTemps = new ArrayList<>();
 	ScheduledExecutorService executor = null;
-	int desiredTemp = ThermostatManager.DEFAULT_TEMP;
 	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	static TemperatureMeasurer inner;
-	
 	private TemperatureMeasurer(){
 		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
 		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
@@ -125,12 +123,19 @@ public class TemperatureMeasurer implements Starter{
 		l.setActive(isActive()?1:0);
 		return l;
 	}
+	
 	private static int HILO = 0;
+	int desiredTemp = ThermostatManager.DEFAULT_TEMP;
+	boolean isInSchedule = false;
 	
 	private void setDesiredTempFromScheduler() throws ThermostatException {
 		ScheduleManager sm = new ScheduleManager();
 		if (sm.isNowScheludedDateTime()){
 			desiredTemp = sm.getCurrentDesiredTemp();
+			isInSchedule=true;
+		}else if (isInSchedule){
+			desiredTemp = ThermostatManager.DEFAULT_TEMP;
+			isInSchedule=false;
 		}
 	}
 	
