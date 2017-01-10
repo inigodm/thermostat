@@ -53,4 +53,9 @@ public class Schedule {
 	public void setWeekdays(String weekdays) {
 		this.weekdays = weekdays;
 	}
+	@Override
+	public String toString() {
+		return "Schedule [id=" + id + ", active=" + active + ", weekdays=" + weekdays + ", minHour=" + minHour
+				+ ", maxHour=" + maxHour + ", desiredTemp=" + desiredTemp + "]";
+	}
 }

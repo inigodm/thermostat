@@ -4,6 +4,8 @@ import com.inigo.domotik.db.models.ThermostatInfo;
 
 public class ThermostatManager {
 	TemperatureMeasurer tc = TemperatureMeasurer.getInstance();
+	public static final int DEFAULT_TEMP = 15;
+	
 	
 	public int getDesiredTemp() {
 		return tc.getDesiredTemp();

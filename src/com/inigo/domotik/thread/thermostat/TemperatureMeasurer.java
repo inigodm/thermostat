@@ -29,7 +29,7 @@ public class TemperatureMeasurer implements Starter{
 	Map<Integer, Reader> readers = new HashMap<>();
 	public final List<String> rawTemps = new ArrayList<>();
 	ScheduledExecutorService executor = null;
-	int desiredTemp = 15;
+	int desiredTemp = ThermostatManager.DEFAULT_TEMP;
 	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	static TemperatureMeasurer inner;
 	

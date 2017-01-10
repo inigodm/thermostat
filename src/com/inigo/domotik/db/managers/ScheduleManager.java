@@ -13,13 +13,20 @@ import java.util.List;
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.thread.thermostat.ThermostatManager;
 import com.inigo.domotik.utils.DBUtils;
 import com.inigo.domotik.utils.DateUtils;
 
 public class ScheduleManager implements TableManager{
 	
+	
 	public ScheduleManager(){
-		
+		try {
+			refreshSchedules();
+		} catch (ThermostatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static final List<Schedule> SCHEDULES = new ArrayList<>();
@@ -98,8 +105,14 @@ public class ScheduleManager implements TableManager{
 		try (Connection conn = CustomConnection.getConnection();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql)){
+			SCHEDULES.clear();
 			while (rs.next()){
-				SCHEDULES.add(getSchedule(rs));
+				Schedule s = getSchedule(rs);
+				SCHEDULES.add(s);
+				System.out.println("added " + s);
+			}
+			for (Schedule s: SCHEDULES){
+				System.out.println("Cargada " + s);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -144,7 +157,7 @@ public class ScheduleManager implements TableManager{
 
 	
 	public int getCurrentDesiredTemp() {
-		int temp = 0;
+		int temp = ThermostatManager.DEFAULT_TEMP;
 		for (Schedule s: ACTIVATEDSCHEDULES){
 			if (s.getDesiredTemp() > temp){
 				temp = s.getDesiredTemp();
@@ -156,15 +169,24 @@ public class ScheduleManager implements TableManager{
 	public boolean isNowScheludedDateTime() {
 		String day = DateUtils.dayOfWeek();
 		ACTIVATEDSCHEDULES.clear();
+		for (Schedule s: SCHEDULES){
+			System.out.println("Cargada " + s);
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		int hourNow = DateUtils.hourOfDayAsNumber(sdf.format(new Date()));
+		System.out.println("Hay " + SCHEDULES.size() + " guardadas");
 		for (Schedule s : SCHEDULES){
 			if (s.getActive() == 1 && s.getWeekdays().indexOf(day) != -1){
+				System.out.println("Activa: " + s.toString()  +" con " + hourNow + " el dia " + day);
 				int init = DateUtils.hourOfDayAsNumber(s.getMinHour());
 				int end = DateUtils.hourOfDayAsNumber(s.getMaxHour());
+				System.out.println("init " + init  +" now " + hourNow + " end " + end);
+				System.out.println(init < hourNow && hourNow < end);
 				if (init < hourNow && hourNow < end){
 					ACTIVATEDSCHEDULES.add(s);
 				}
+			}else{
+				System.out.println("Innactiva: " + s.toString()  +" con " + hourNow + " el dia " + day);
 			}
 		}
 		return ACTIVATEDSCHEDULES.size() > 0;
