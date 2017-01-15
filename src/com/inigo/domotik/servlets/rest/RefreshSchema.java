@@ -17,6 +17,11 @@ import com.inigo.domotik.exceptions.ThermostatException;
 @WebServlet("/refresh")
 public class RefreshSchema  extends RESTServlet<String>{
 
+	public RefreshSchema() {
+		super(String.class);
+		// TODO Auto-generated constructor stub
+	}
+	
 	public RefreshSchema(Class<String> in) {
 		super(in);
 		// TODO Auto-generated constructor stub

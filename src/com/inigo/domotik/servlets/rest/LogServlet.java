@@ -54,7 +54,7 @@ class DataBuilder{
 	boolean finished = false;
 	public List<String> res = new ArrayList<>();
 	public DataBuilder(Date from, Date to, int total){
-		period = (int)(((to.getTime() - from.getTime())/(1000*60*total)));
+		period = 1;//(int)(((to.getTime() - from.getTime())/(1000*60*total)));
 		this.from = from;
 		this.to = to;
 	}	
