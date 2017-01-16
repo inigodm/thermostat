@@ -9,14 +9,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Thermostate: add new Schedule</div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form">
+                    <form class="form-inline" id="addform" role="form">
                     	<input id="id" type="hidden"/>
                     	<div class="form-group-line">
                     		<div class="col-sm-6">
 		                        <label class="control-label col-sm-5" for="fechainicio">Init time</label>
 		                        <div class="input-group col-sm-6">
 			                        <div id="minHour" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
-								        <input class="span2" size="16" type="text" value="" readonly>
+								        <input class="span2" size="16" type="text" value="" readonly required>
 								        <span class="add-on"><i class="icon-remove"></i></span>
 								        <span class="add-on"><i class="icon-th"></i></span>
 								    </div>     
@@ -27,7 +27,7 @@
 	                        	 <label class="control-label col-sm-5" for="fechafin">End time</label>
 		                         <div class="input-group col-sm-6">
 				                    <div id="maxHour" class="controls input-append date form_time" data-date="" data-date-format="hh:ii" data-link-field="dtp_input4" data-link-format="hh:ii">
-								        <input class="span2" size="16" type="text" value="" readonly>
+								        <input class="span2" size="16" type="text" value="" readonly required>
 								        <span class="add-on"><i class="icon-remove"></i></span>
 								        <span class="add-on"><i class="icon-th"></i></span>
 								    </div>  
@@ -39,7 +39,7 @@
                     		<div class="col-sm-6">
 		                        <label class="control-label col-sm-5" for="mintemp">Min Temp</label>
 		                        <div class="input-append col-sm-6">
-			                        <input id="mintemp" type="number" value="15" class="form-control input-small"/>
+			                        <input id="mintemp" type="number" value="15" class="form-control input-small" required/>
 	                        	</div>
 	                        </div>
 	                        <div class="col-sm-6">
@@ -102,6 +102,7 @@
 		<script type="text/javascript" src="/Thermostat/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="/Thermostat/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
             <script>
             $('.form_time').datetimepicker({
             weekStart: 1,
@@ -135,6 +136,12 @@
                  
             mod.controller("newCtrl",['$scope','$http', function($scope, $http){
             	$scope.dopost = function(value){
+            		if (!$('addform').checkValidity()) {
+              		  // If the form is invalid, submit it. The form won't actually submit;
+              		  // this will just cause the browser to display the native HTML5 error messages.
+              		  $$('addform').find(':submit').click();
+              		  return;
+              		}
             		$http.post("/Thermostat/site/rest/tasks/",
                 			JSON.stringify({"maxHour":$("#maxHour").find("input").val(),
                 				"minHour":$("#minHour").find("input").val(),
@@ -150,6 +157,12 @@
                 }
                 
                 $scope.doput = function(value){
+                		if (!$('addform').checkValidity()) {
+                		  // If the form is invalid, submit it. The form won't actually submit;
+                		  // this will just cause the browser to display the native HTML5 error messages.
+                		  $$('addform').find(':submit').click();
+                		  return;
+                		}
                 		$http.put("/Thermostat/site/rest/tasks/",
                     			JSON.stringify({"maxHour":$("#maxHour").find("input").val(),
                     				"minHour":$("#minHour").find("input").val(),
@@ -193,7 +206,24 @@
             	};
             	
             	$scope.del = function(id){
-            		$http.delete("/Thermostat/site/rest/tasks/"+id+"/").success($scope.doReturnOk);
+            	    bootbox.confirm({
+            	    	title:"Atention",
+            	        message: "You are going to delete selected schedule. Are you sure?",
+            	        buttons: {
+            	            cancel: {
+            	                label: '<i class="fa fa-times"></i> Cancel'
+            	            },
+            	            confirm: {
+            	                label: '<i class="fa fa-check"></i> Confirm'
+            	            }
+            	        },
+            	        callback: function (result) {
+            	            console.log('This was logged in the callback!' + result + (result==true));
+            	            if (result){
+            	            	$http.delete("/Thermostat/site/rest/tasks/"+id+"/").success($scope.doReturnOk);
+            	            }
+            	        }
+            	    });
                 }
             }]);
             </script>
