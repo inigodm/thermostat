@@ -19,11 +19,12 @@ import com.inigo.domotik.servlets.rest.models.ThermostatInfo;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
+import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
 import com.inigo.domotik.utils.LogManager;
 
 //TODO: this class does too many things
 public class TemperatureMeasurer implements Starter{
-	public static final int DEFAULT_TEMP = 15;
+	public static final int DEFAULT_TEMP = 16;
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 0;
 	Map<Integer, Reader> readers = new HashMap<>();
@@ -32,8 +33,8 @@ public class TemperatureMeasurer implements Starter{
 	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	static TemperatureMeasurer inner;
 	private TemperatureMeasurer(){
-		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public static TemperatureMeasurer getInstance(){

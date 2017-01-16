@@ -51,6 +51,7 @@ class DataBuilder{
 	Date from;
 	Date to;
 	Gson gson = new Gson();
+	int totalOn = 0;
 	boolean finished = false;
 	public List<String> res = new ArrayList<>();
 	public DataBuilder(Date from, Date to, int total){
@@ -77,16 +78,11 @@ class DataBuilder{
 			Log l = gson.fromJson(line, Log.class);
 			Long date = StringUtils.stringToDate(l.getDate(), "yyyy-MM-dd'T'HH:mm:ss").getTime();
 			if (date > from.getTime() && date < to.getTime()){
-				count++;
-				if (count >= period){
-					count = 0;
-					res.add(line);
-					System.out.println("add " + line);
-				}else{
-					System.out.println("omit " + count);
-				}
+				totalOn += l.getActive();
+				res.add(line);
+				System.out.println("add " + line);
 			}
-			if (date < to.getTime()){
+			if (date > to.getTime()){
 				finished = true;
 			}
 		} catch (JsonSyntaxException e) {
