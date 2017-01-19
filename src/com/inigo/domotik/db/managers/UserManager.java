@@ -9,6 +9,7 @@ import java.util.Random;
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.exceptions.ThermostatException;
 import com.inigo.domotik.utils.DBUtils;
+import com.inigo.domotik.utils.SHA256;
 
 public class UserManager implements TableManager{
 	public boolean isError;
@@ -47,14 +48,12 @@ public class UserManager implements TableManager{
 	//TODO: add salted hash validation
 	private void addData() throws ThermostatException {
 		Random rnd = new Random();
-		String sql = "insert into users (user, pass, salt) values ('inigo', 'password', '" + rnd.nextLong() +"')";
+		SHA256 sha = new SHA256().generateSalt().hash("password");
+		String sql = "insert into users (user, pass, salt) values ('inigo', '" + sha.getHash() + "', '" + sha.getSalt() +"')";
 		DBUtils.executeUpdate(sql);
 	}
 	
 	public String login(String username, String pass) throws ThermostatException {
-		if (this.user != null){
-			return "site/index";
-		}
 		String user = findUser(username, pass);
 		isError = (null == user);
 		if (username == null && pass == null){
@@ -74,21 +73,30 @@ public class UserManager implements TableManager{
 		try(Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = createPreparedStatement(conn, user.toLowerCase(), pass);
 			ResultSet rs = stmt.executeQuery()){
-			String res = null;
+			String userdb = null;
 			if (rs.next()){
-				res = rs.getString(1);
+				userdb = returnValidUser(rs.getString(1), rs.getString(2), rs.getString(3), pass);
 			}
-			return res;
+			return userdb;
 		}catch(SQLException e){
 			throw new ThermostatException(e.getMessage(), e);
 		}
 	}
 	
+	private String returnValidUser(String user, String hash, String salt, String pass){
+		String res = null;
+		if (user != null && pass != null && !"".equals(pass)){
+			if (new SHA256().setSalt(salt).isValidHash(hash, pass)){
+				res = user;
+			}
+		}
+		return res;
+	}
+	
 	private PreparedStatement createPreparedStatement(Connection conn, String user, String pass) throws SQLException{
-		String sql = "select user from users where user = ? and pass = ?";
+		String sql = "select user, pass, salt from users where user = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, user);
-		stmt.setString(2, pass);
 		return stmt;
 	}
 

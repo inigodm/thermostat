@@ -74,6 +74,11 @@
 		    <artifactId>reflections-maven</artifactId>
 		    <version>0.9.9-RC2</version>
 		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.4</version>
+		</dependency>
 		<!-- dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
