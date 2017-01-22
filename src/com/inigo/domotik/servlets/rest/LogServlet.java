@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.inigo.domotik.db.models.Log;
+import com.inigo.domotik.utils.DateUtils;
 import com.inigo.domotik.utils.StringUtils;
 
 @WebServlet("/site/rest/stats/get/*")
@@ -36,7 +38,7 @@ public class LogServlet extends RESTServlet<String>{
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
 		try {
 			DataBuilder db = new DataBuilder(df.parse(from), df.parse(to), NUM_MAX_MEDICIONES);
-			db.readFile();
+			db.readFiles();
 			return (db.res+"").replaceAll("'", "\"");
 		} catch (ParseException e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -60,9 +62,17 @@ class DataBuilder{
 		this.to = to;
 	}	
 	
-	public void readFile(){
+	public void readFiles(){
+		Date f = from;
+		while (f.getTime() < to.getTime()){
+			readFile(f);
+			f = DateUtils.getNextDay(f);
+		}
+	}
+	
+	public void readFile(Date f){
 		final DateFormat df = new SimpleDateFormat("yyyyMMdd");
-		try (Stream<String> stream = Files.lines(Paths.get("/home/tomcat7/thermostatLog"+df.format(from)+".log"))) {
+		try (Stream<String> stream = Files.lines(Paths.get("/home/tomcat7/thermostatLog"+df.format(f)+".log"))) {
 			stream.forEach(this::fileConsumer);
 		} catch (IOException e) {
 			e.printStackTrace();

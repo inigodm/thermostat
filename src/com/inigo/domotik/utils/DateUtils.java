@@ -18,4 +18,12 @@ public class DateUtils {
 		return h+m;
 	}
 	
+	public static Date getNextDay(Date f){
+		Calendar c = Calendar.getInstance();
+		c.setTime(f);
+		c.add(Calendar.DATE, 1); 
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		return c.getTime();
+	}
+	
 }

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Random;
 
 import com.inigo.domotik.db.CustomConnection;
 import com.inigo.domotik.exceptions.ThermostatException;
@@ -47,7 +46,6 @@ public class UserManager implements TableManager{
 	
 	//TODO: add salted hash validation
 	private void addData() throws ThermostatException {
-		Random rnd = new Random();
 		SHA256 sha = new SHA256().generateSalt().hash("password");
 		String sql = "insert into users (user, pass, salt) values ('inigo', '" + sha.getHash() + "', '" + sha.getSalt() +"')";
 		DBUtils.executeUpdate(sql);
