@@ -136,12 +136,6 @@
                  
             mod.controller("newCtrl",['$scope','$http', function($scope, $http){
             	$scope.dopost = function(value){
-            		/*if (!$('addform').checkValidity()) {
-              		  // If the form is invalid, submit it. The form won't actually submit;
-              		  // this will just cause the browser to display the native HTML5 error messages.
-              		  $$('addform').find(':submit').click();
-              		  return;
-              		}*/
             		$http.post("/Thermostat/site/rest/tasks/",
                 			JSON.stringify({"maxHour":$("#maxHour").find("input").val(),
                 				"minHour":$("#minHour").find("input").val(),
