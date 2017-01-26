@@ -33,8 +33,8 @@ public class TemperatureMeasurer implements Starter{
 	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	static TemperatureMeasurer inner;
 	private TemperatureMeasurer(){
-		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
-		//readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
 	}
 	
 	public static TemperatureMeasurer getInstance(){
