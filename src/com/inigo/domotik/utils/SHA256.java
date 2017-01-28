@@ -18,7 +18,6 @@ public class SHA256 {
 		if (word != null){
 			this.hash =  org.apache.commons.codec.digest.DigestUtils.sha256Hex(word+salt);
 		}
-		System.out.println("Hash for "+ word +" is " + hash);
 		return this;
 	}
 	

@@ -9,6 +9,9 @@
 	        <li>
 	          <a href="/Thermostat/site/stats">Stats</a>
 	        </li>
+	        <li>
+	          <a href="/Thermostat/site/changepassword.jsp">Change Password</a>
+	        </li>
           </ul>
            <ul class="nav navbar-nav navbar-right">
             <!--li class="dropdown">

@@ -44,6 +44,12 @@ public class UserManager implements TableManager{
 		DBUtils.executeUpdate(sql);
 	}
 	
+	public void updatePassword(String user, String pass) throws ThermostatException{
+		SHA256 sha = new SHA256().generateSalt().hash(pass);
+		String sql = "update users set pass = '" + sha.getHash() + "', salt= '" + sha.getSalt() +"' where user = '" + user + "'";
+		DBUtils.executeUpdate(sql);
+	}
+	
 	//TODO: add salted hash validation
 	private void addData() throws ThermostatException {
 		SHA256 sha = new SHA256().generateSalt().hash("password");

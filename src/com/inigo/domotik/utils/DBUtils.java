@@ -14,6 +14,7 @@ public class DBUtils {
 		Statement stmt = conn.createStatement()){
 		stmt.executeUpdate(sql);
 		}catch (SQLException e){
+			e.printStackTrace();
 			throw new ThermostatException(e.getMessage(), e);
 		}
 	}	
@@ -24,6 +25,7 @@ public class DBUtils {
 			Statement stmt = conn.createStatement()){
 			rs = stmt.executeQuery(sql);
 		}catch (SQLException e){
+			e.printStackTrace();
 			throw new ThermostatException(e.getMessage(), e);
 		}
 		return rs;
