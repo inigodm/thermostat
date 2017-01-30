@@ -8,7 +8,7 @@ I use a 5' resistive screen to manage the rasp, a DS18S20 sensor to get ambienta
 
 The GPIO configuration is:
 
- 
+  
  | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
  |-----|-----|---------|------|---|----||----|---|------|---------|-----|-----|
  |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
