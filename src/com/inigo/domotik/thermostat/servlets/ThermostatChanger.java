@@ -1,4 +1,4 @@
-package com.inigo.domotik.servlets.rest;
+package com.inigo.domotik.thermostat.servlets;
 
 
 import java.io.IOException;
@@ -9,8 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.inigo.domotik.servlets.rest.RESTServlet;
 import com.inigo.domotik.servlets.rest.models.Petition;
-import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
+import com.inigo.domotik.thermostat.threads.TemperatureMeasurer;
 
 /**
  * Servlet implementation class ThermostatChanger

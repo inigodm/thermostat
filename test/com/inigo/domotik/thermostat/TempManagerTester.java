@@ -1,6 +1,6 @@
 package com.inigo.domotik.thermostat;
 
-import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
+import com.inigo.domotik.thermostat.threads.TemperatureMeasurer;
 
 import junit.framework.TestCase;
 

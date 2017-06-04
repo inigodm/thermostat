@@ -1,4 +1,4 @@
-package com.inigo.domotik.servlets.rest;
+package com.inigo.domotik.thermostat.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.reflections.Reflections;
 
-import com.inigo.domotik.db.managers.TableManager;
+import com.inigo.domotik.db.dao.TableManager;
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.servlets.rest.RESTServlet;
 
 @WebServlet("/refresh")
 public class RefreshSchema  extends RESTServlet<String>{

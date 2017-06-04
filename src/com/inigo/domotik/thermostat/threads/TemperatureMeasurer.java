@@ -1,4 +1,4 @@
-package com.inigo.domotik.thread.thermostat;
+package com.inigo.domotik.thermostat.threads;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -12,14 +12,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.inigo.domotik.db.managers.ScheduleManager;
 import com.inigo.domotik.db.models.Log;
 import com.inigo.domotik.exceptions.ThermostatException;
-import com.inigo.domotik.servlets.rest.models.ThermostatInfo;
+import com.inigo.domotik.thermostat.db.ThermostatDAO;
+import com.inigo.domotik.thermostat.servlets.models.ThermostatInfo;
+import com.inigo.domotik.thermostat.threads.readers.CPUTempReader;
+import com.inigo.domotik.thermostat.threads.readers.RoomTempReader;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
-import com.inigo.domotik.thread.readers.thermostat.linux.CPUTempReader;
-import com.inigo.domotik.thread.readers.thermostat.linux.RoomTempReader;
 import com.inigo.domotik.utils.LogManager;
 
 //TODO: this class does too many things
@@ -139,7 +139,7 @@ public class TemperatureMeasurer implements Starter{
 	boolean isInSchedule = false;
 	
 	private void setDesiredTempFromScheduler() throws ThermostatException {
-		ScheduleManager sm = new ScheduleManager();
+		ThermostatDAO sm = new ThermostatDAO();
 		if (sm.isNowScheludedDateTime()){
 			desiredTemp = sm.getCurrentDesiredTemp();
 			isInSchedule=true;

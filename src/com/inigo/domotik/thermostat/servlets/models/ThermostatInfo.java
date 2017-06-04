@@ -1,4 +1,4 @@
-package com.inigo.domotik.servlets.rest.models;
+package com.inigo.domotik.thermostat.servlets.models;
 
 public class ThermostatInfo {
 	String roomTemp;

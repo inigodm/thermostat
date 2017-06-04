@@ -1,4 +1,4 @@
-package com.inigo.domotik.db.managers;
+package com.inigo.domotik.db.dao;
 
 import com.inigo.domotik.exceptions.ThermostatException;
 

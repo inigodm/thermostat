@@ -1,8 +1,6 @@
 package com.inigo.domotik.servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.inigo.domotik.db.managers.UserManager;
+import com.inigo.domotik.db.dao.UserManager;
 import com.inigo.domotik.exceptions.ThermostatException;
 /**
  * Servlet implementation class ChangePassword
@@ -32,9 +29,7 @@ public class ChangePassword extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Gson gson = new Gson();
 		System.out.println("Changing password");
-		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 		String in = request.getParameter("pass");
         HttpSession session = ((HttpServletRequest) request).getSession(true);
 		UserManager um = new UserManager();
@@ -45,6 +40,7 @@ public class ChangePassword extends HttpServlet {
 		}
 		response.sendRedirect("/site/changepassword.jsp");
 	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}

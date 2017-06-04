@@ -1,4 +1,4 @@
-package com.inigo.domotik.db.managers;
+package com.inigo.domotik.thermostat.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,24 +11,28 @@ import java.util.Date;
 import java.util.List;
 
 import com.inigo.domotik.db.CustomConnection;
-import com.inigo.domotik.db.models.Schedule;
+import com.inigo.domotik.db.dao.TableManager;
 import com.inigo.domotik.exceptions.ThermostatException;
-import com.inigo.domotik.thread.thermostat.TemperatureMeasurer;
+import com.inigo.domotik.thermostat.models.Schedule;
+import com.inigo.domotik.thermostat.threads.TemperatureMeasurer;
 import com.inigo.domotik.utils.DBUtils;
 import com.inigo.domotik.utils.DateUtils;
 
-public class ScheduleManager implements TableManager{
+/**
+ * Accede a la base de datos para todo lo relacionado con el thermostato
+ *
+ */
+public class ThermostatDAO implements TableManager{
 	// Schedule cache
 	public static final List<Schedule> SCHEDULES = new ArrayList<>();
 	//TODO: activated schedules have nothing todo here
 	public static final List<Schedule> ACTIVATEDSCHEDULES = new ArrayList<>();
 
 	
-	public ScheduleManager(){
+	public ThermostatDAO(){
 		try {
 			refreshSchedules();
 		} catch (ThermostatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

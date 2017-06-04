@@ -1,4 +1,4 @@
-package com.inigo.domotik.servlets.rest;
+package com.inigo.domotik.thermostat.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,10 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.inigo.domotik.db.managers.ScheduleManager;
-import com.inigo.domotik.db.models.Schedule;
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.servlets.rest.RESTServlet;
 import com.inigo.domotik.servlets.rest.models.Petition;
+import com.inigo.domotik.thermostat.db.ThermostatDAO;
+import com.inigo.domotik.thermostat.models.Schedule;
 
 /**
  * Servlet implementation class ScheduleManager
@@ -26,7 +27,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 	@Override
 	protected Object get(List<String> pathP, Map<String, String> queryP,  HttpServletRequest request, HttpServletResponse response) throws IOException{
 	
-    	ScheduleManager sm = new ScheduleManager();
+    	ThermostatDAO sm = new ThermostatDAO();
     	Object res = null;
     	try {
 			res = sm.getSchedules();
@@ -38,7 +39,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 
 	@Override
 	protected Object post(Schedule reqObject, HttpServletRequest request, HttpServletResponse response) {
-		ScheduleManager sm = new ScheduleManager();
+		ThermostatDAO sm = new ThermostatDAO();
 		List<Schedule> res = null;
 		try {
 			sm.add(reqObject);
@@ -53,7 +54,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 	
 	@Override
 	protected Object put(Schedule reqObject, HttpServletRequest request, HttpServletResponse response) {
-		ScheduleManager sm = new ScheduleManager();
+		ThermostatDAO sm = new ThermostatDAO();
 		List<Schedule> res = null;
 		try {
 			sm.update(reqObject);
@@ -69,7 +70,7 @@ public class ScheduleServlet extends RESTServlet<Schedule>{
 	@Override
 	protected Object delete(List<String> pathP, Map<String, String> queryP, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		ScheduleManager sm = new ScheduleManager();
+		ThermostatDAO sm = new ThermostatDAO();
 		List<Schedule> res = null;
 		try {
 			sm.delete(Integer.parseInt(pathP.get(0)));

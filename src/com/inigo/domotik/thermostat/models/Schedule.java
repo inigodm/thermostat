@@ -1,4 +1,4 @@
-package com.inigo.domotik.db.models;
+package com.inigo.domotik.thermostat.models;
 
 public class Schedule {
 	/**

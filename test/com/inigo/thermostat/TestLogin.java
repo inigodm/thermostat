@@ -1,6 +1,6 @@
 package com.inigo.thermostat;
 
-import com.inigo.domotik.db.managers.UserManager;
+import com.inigo.domotik.db.dao.UserManager;
 import com.inigo.domotik.exceptions.ThermostatException;
 
 import junit.framework.TestCase;

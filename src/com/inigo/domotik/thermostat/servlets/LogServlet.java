@@ -1,4 +1,4 @@
-package com.inigo.domotik.servlets.rest;
+package com.inigo.domotik.thermostat.servlets;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.inigo.domotik.db.models.Log;
+import com.inigo.domotik.servlets.rest.RESTServlet;
 import com.inigo.domotik.utils.DateUtils;
 import com.inigo.domotik.utils.StringUtils;
 
