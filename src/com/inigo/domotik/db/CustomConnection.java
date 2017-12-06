@@ -1,5 +1,9 @@
 package com.inigo.domotik.db;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -47,17 +51,26 @@ public class CustomConnection implements Connection{
 	public static Connection getConnection() throws ThermostatException{
 		 try {
 			 if (innerConn == null || innerConn.isClosed()){
-				 Class.forName("org.sqlite.JDBC");
-			 	innerConn = DriverManager.getConnection("jdbc:sqlite:/home/tomcat7/db.db");
+				Class.forName("org.sqlite.JDBC");
+				Properties p = new Properties();
+				p.load(obtainPropertiesInputStream());
+			 	innerConn = DriverManager.getConnection("jdbc:sqlite:" + p.getProperty("db"));
 			 }
 			 return new CustomConnection(innerConn);
 			 
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | SQLException | IOException e) {
 			e.printStackTrace();
 			throw new ThermostatException(e.getMessage(), e);
 		}
     }
 	
+	private static InputStream obtainPropertiesInputStream() throws ThermostatException {
+		InputStream is = CustomConnection.class.getClassLoader().getResourceAsStream("thermostat.properties");
+		if (is == null){
+			throw new ThermostatException("thermostat.properties file does not exist");	
+		}
+		return is;
+	}
 	/**
 	 * @param iface
 	 * @return

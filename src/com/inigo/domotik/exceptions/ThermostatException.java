@@ -6,4 +6,8 @@ public class ThermostatException extends Exception{
 		super(message, e);
 	}
 
+	public ThermostatException(String message) {
+		super(message);
+	}
+
 }

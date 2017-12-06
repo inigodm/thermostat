@@ -9,6 +9,7 @@ public class TestLogin extends TestCase{
 	
 	public void testUserName() throws ThermostatException{
 		UserManager login = new UserManager(null);
+		login.createTable();
 		assertEquals("site/index", login.login("inigo", "password"));
 		assertEquals(false, login.isError);
 	}

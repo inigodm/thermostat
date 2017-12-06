@@ -10,6 +10,10 @@ import junit.framework.TestCase;
 
 public class TestScheluderManager extends TestCase{
 	
+	public void testCreateTable() throws ThermostatException{
+		ThermostatDAO sm = new ThermostatDAO();
+		sm.createTable();
+	}
 	
 	public void testNewShecule() throws ThermostatException{
 		Schedule s = new Schedule();
@@ -29,16 +33,9 @@ public class TestScheluderManager extends TestCase{
 		//assertFalse(-1 == sm.delete(s));
 	}
 	
-	public void testGetShecule(){
-		ThermostatDAO sm = new ThermostatDAO();
-		
-	}
-	
 	public void testGetSheculeList() throws ThermostatException{
 		ThermostatDAO sm = new ThermostatDAO();
 		List<Schedule> schedules = sm.getSchedules();
 		assertTrue(schedules.size() > 0);
-		schedules = sm.getSchedules(2, 0);
-		assertTrue(schedules.size() == 2);
 	}
 }
