@@ -30,7 +30,10 @@ public class LoginFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpSession session = ((HttpServletRequest) request).getSession(true);
-		if ("127.0.0.1".equals(request.getRemoteAddr()) || "localhost".equals(request.getRemoteAddr())){
+		System.out.println("ADRESS " + request.getRemoteAddr());
+		if (request.getRemoteAddr().contains("127.0.0.1") 
+				|| request.getRemoteAddr().contains("localhost")
+				|| request.getRemoteAddr().contains("0:0:0:0:0:0:0:1")){
 			session.setAttribute("user", "inigo");
 		}
 		if (session.getAttribute("user") == null){
