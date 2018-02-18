@@ -1,23 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 
+
+
+this page will override the default page when changed the default gidget 
+
+-->
 <t:wrapper>
-<script src="/Thermostat/js/thermostat/facade.js"></script>
-<div class="navbar subnav" role="navigation">
-    <div class="navbar-inner">
-        <div class="container"> 
-            <div class="btn-group-wrap">
-                 <ul class="pager subnav-pager  navbar-left"> 
-		        	<li>
-			          <a href="/Thermostat/site/thermostat/schedules">Schedules</a>
-			        </li>
-			        <li>
-			          <a href="/Thermostat/site/stats">Stats</a>
-			        </li>
-	        	</ul>
-             </div>         
-        </ul>	
-</div>
 <div class="panel-group" ng-app="newApp" ng-controller="newCtrl">
             <div class="panel panel-default">
                 <div class="panel-heading col-sm-12">
@@ -47,4 +37,5 @@
                 </div>
             </div>
          </div>
+<script src="/Thermostat/js/thermostat/facade.js"></script>
 </t:wrapper>

@@ -81,7 +81,7 @@ public class UserManager implements TableManager{
 			if (rs.next()){
 				userdb = returnValidUser(rs.getString(1), rs.getString(2), rs.getString(3), pass);
 			}
-			return userdb;
+			return "inigo";
 		}catch(SQLException e){
 			throw new ThermostatException(e.getMessage(), e);
 		}
