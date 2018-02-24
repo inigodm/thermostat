@@ -19,7 +19,7 @@ public class TestLogin extends TestCase{
 		assertEquals("login.jsp", login.login("inigo", "none"));
 		assertEquals(true, login.isError);
 		assertEquals("login.jsp", login.login(null, null));
-		assertEquals(false, login.isError);
+		assertEquals(true, login.isError);
 	}
 	
 }

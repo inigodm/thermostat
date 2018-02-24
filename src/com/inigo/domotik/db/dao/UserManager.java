@@ -60,10 +60,6 @@ public class UserManager implements TableManager{
 	public String login(String username, String pass) throws ThermostatException {
 		String user = findUser(username, pass);
 		isError = (null == user);
-		if (username == null && pass == null){
-			isError = false;
-			return "login.jsp"; 
-		}
 		if (isError){
 			return  "login.jsp";
 		}else{
@@ -74,6 +70,9 @@ public class UserManager implements TableManager{
 	
 	//TODO: add salted hash validation
 	private synchronized String findUser(String user, String pass) throws ThermostatException{
+		if (user == null || pass == null){
+			return null; 
+		}
 		try(Connection conn = CustomConnection.getConnection();
 			PreparedStatement stmt = createPreparedStatement(conn, user.toLowerCase(), pass);
 			ResultSet rs = stmt.executeQuery()){
@@ -81,7 +80,7 @@ public class UserManager implements TableManager{
 			if (rs.next()){
 				userdb = returnValidUser(rs.getString(1), rs.getString(2), rs.getString(3), pass);
 			}
-			return "inigo";
+			return userdb;
 		}catch(SQLException e){
 			throw new ThermostatException(e.getMessage(), e);
 		}
