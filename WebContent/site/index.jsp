@@ -22,11 +22,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading col-sm-12">
 	                    <div class="col-sm-2"></div>
+	                    <div class="col-sm-9">
 	                    <div class="col-sm-1">
 	                    	<div ng-class="ngcircle"></div>
 	                    </div>
-                        <div class="col-sm-8">      
-                        	Thermostate <span  class="lcd-text"><c:out value="{%roomTemp%}"/></span>ºC
+                        <div class="col-sm-11">
+                        	Thermostate 
+                        	Inside: <span  class="lcd-text"><c:out value="{%roomTemp%}"/></span>ºC
+                        	Outside: <span  class="lcd-text"><c:out value="{%outTemp%}"/></span>ºC
+                        </div>
                         </div>
                         <div class="col-sm-2"></div>
 	            </div>

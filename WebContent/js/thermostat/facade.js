@@ -32,6 +32,7 @@ mod.controller("newCtrl", [ '$scope', '$timeout', '$http', '$interval',
 			$scope.manage_thermostatInfo = function(resp) {
 				$scope.val = resp.desiredTemp;
 				$scope.roomTemp = resp.roomTemp;
+				$scope.outTemp = resp.outsideTemp;
 				var isOn = resp.isOn;
 				if (isOn || isOn == "true") {
 					$scope.ngcircle = "circle-red";

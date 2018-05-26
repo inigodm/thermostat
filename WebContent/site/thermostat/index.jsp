@@ -16,7 +16,7 @@ this page will override the default page when changed the default gidget
 	                    	<div ng-class="ngcircle"></div>
 	                    </div>
                         <div class="col-sm-8">      
-                        	Thermostate <span  class="lcd-text"><c:out value="{%roomTemp%}"/></span>ºC
+                        	Thermostate <span  class="lcd-text">Inside: <c:out value="{%roomTemp%}"/> Outside: <c:out value="{%outTemp%}"/></span>ºC
                         </div>
                         <div class="col-sm-2"></div>
 	            </div>

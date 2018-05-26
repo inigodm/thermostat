@@ -10,15 +10,12 @@ import com.inigo.domotik.exceptions.ThermostatException;
 public class ThermostatProperties {
 	static Properties p = null;
 	
-	public ThermostatProperties() throws ThermostatException{
-		if (p == null){
-			loadProperties();
-		}
+	private ThermostatProperties(){
 	}
 	
-	private void loadProperties() throws ThermostatException{
+	private static void loadProperties() throws ThermostatException{
 		try {
-			Properties p = new Properties();
+			p = new Properties();
 			p.load(obtainPropertiesInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -26,11 +23,18 @@ public class ThermostatProperties {
 		}
 	}
 	
-	private InputStream obtainPropertiesInputStream() throws ThermostatException {
+	private static InputStream obtainPropertiesInputStream() throws ThermostatException {
 		InputStream is = CustomConnection.class.getClassLoader().getResourceAsStream("thermostat.properties");
 		if (is == null){
 			throw new ThermostatException("thermostat.properties file does not exist");	
 		}
 		return is;
+	}
+	
+	public static String get(String key) throws ThermostatException {
+		if (p == null){
+			loadProperties();
+		}
+		return p.getProperty(key);
 	}
 }

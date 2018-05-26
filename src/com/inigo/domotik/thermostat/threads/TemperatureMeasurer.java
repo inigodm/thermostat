@@ -18,23 +18,29 @@ import com.inigo.domotik.thermostat.db.ThermostatDAO;
 import com.inigo.domotik.thermostat.servlets.models.ThermostatInfo;
 import com.inigo.domotik.thermostat.threads.readers.CPUTempReader;
 import com.inigo.domotik.thermostat.threads.readers.RoomTempReader;
+import com.inigo.domotik.thermostat.threads.readers.YahooWeatherReader;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.utils.LogManager;
+import com.inigo.domotik.utils.ThermostatProperties;
 
 //TODO: this class does too many things
 public class TemperatureMeasurer implements Starter{
 	public static final int DEFAULT_TEMP = 16;
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 0;
+	public static final int TEMP_OUTSIDE_INDEX = 1;
+	public static final YahooWeatherReader yahooReader = new YahooWeatherReader();
 	Map<Integer, Reader> readers = new HashMap<>();
 	public final List<String> rawTemps = new ArrayList<>();
 	ScheduledExecutorService executor = null;
 	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	static TemperatureMeasurer inner;
 	private TemperatureMeasurer(){
-		//readers.put(TEMP_CPU_INDEX, new CPUTempReader());
+		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
 		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
+		readers.put(TEMP_OUTSIDE_INDEX, new YahooWeatherReader());
+		
 	}
 	
 	public static TemperatureMeasurer getInstance(){
@@ -66,11 +72,11 @@ public class TemperatureMeasurer implements Starter{
 		return rawTemps;
 	}
 	
-	public void setRawTemp(int index){
+	public void addMeasure(int index){
 		String temp = readers.get(index).read();
-		System.out.println("Raw read: " + temp);
+		System.out.println("Raw read " + index + ": " + temp);
 		if (temp != ""){
-			rawTemps.add(index, (new Double(temp)/1000 + ""));
+			rawTemps.add(index, temp);
 		}
 		System.out.println("readed " + rawTemps);
 	}
@@ -112,22 +118,24 @@ public class TemperatureMeasurer implements Starter{
 	}
 	
 	
-	public void logNow(){
+	public void logNow() throws ThermostatException{
 		LogManager.addLogger(buildLog());
 	}
 	
-	public Log buildLog(){
+	public Log buildLog() throws ThermostatException{
 		Log l = new Log();
 		l.setDate(df.format(new Date()));
 		l.setDesiredTemp(desiredTemp);
 		l.setTemperature(this.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
 		l.setActive(isActive()?1:0);
+		l.setOutsideTemp(this.getRawTemp(TemperatureMeasurer.TEMP_OUTSIDE_INDEX));
 		return l;
 	}
 	
 	public ThermostatInfo increase(int i) {
 		ThermostatInfo info = new ThermostatInfo();
 		setDesiredTemp(getDesiredTemp() + i);
+		info.setOutsideTemp(""+ getRawTemp(TemperatureMeasurer.TEMP_OUTSIDE_INDEX));
 		info.setDesiredTemp("" + getDesiredTemp());
 		info.setRoomTemp(""+ getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
 		info.setOn(isActive());
@@ -157,7 +165,8 @@ public class TemperatureMeasurer implements Starter{
 				rawTemps.clear();
 				try {
 					System.out.println("STARTING temp measurement in thread" + HILO + " " + this.hashCode());
-					setRawTemp(TEMP_ROOM_INDEX);
+					addMeasure(TEMP_ROOM_INDEX);
+					addMeasure(TEMP_OUTSIDE_INDEX);
 					setDesiredTempFromScheduler();
 					System.out.println("END temp measurement");
 					activateCalefactor();

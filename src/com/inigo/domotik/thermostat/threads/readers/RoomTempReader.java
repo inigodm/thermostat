@@ -35,7 +35,18 @@ public class RoomTempReader implements Reader {
 		} catch (IOException e) {
 			System.out.println("ERROR: " + e.getMessage());
 		}
-		return res;
+		return transformReaded(res);
 	}
 
+	/** Temperature must be divided by 1000 because of the format in which is readed
+	 * @param temp
+	 * @return
+	 */
+	private String transformReaded(String temp) {
+		try{
+			return new Double(temp)/1000 + "";
+		}catch (Exception e) {
+			return temp;
+		}
+	}
 }

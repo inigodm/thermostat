@@ -34,4 +34,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>junit</name>
+			<type>2</type>
+			<location>/home/inigo/eclipse-workspace/junitee4junit4/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>

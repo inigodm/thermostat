@@ -27,6 +27,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.utils.ThermostatProperties;
 
 /**
  * @author inigo
@@ -52,13 +53,11 @@ public class CustomConnection implements Connection{
 		 try {
 			 if (innerConn == null || innerConn.isClosed()){
 				Class.forName("org.sqlite.JDBC");
-				Properties p = new Properties();
-				p.load(obtainPropertiesInputStream());
-			 	innerConn = DriverManager.getConnection("jdbc:sqlite:" + p.getProperty("db"));
+				innerConn = DriverManager.getConnection("jdbc:sqlite:" + ThermostatProperties.get("db"));
 			 }
 			 return new CustomConnection(innerConn);
 			 
-		} catch (ClassNotFoundException | SQLException | IOException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			throw new ThermostatException(e.getMessage(), e);
 		}

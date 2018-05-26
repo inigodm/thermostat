@@ -1,4 +1,4 @@
-package com.inigo.ws.yahoo;
+package com.inigo.domotik.thermostat.threads.readers;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,9 +12,12 @@ import javax.net.ssl.HttpsURLConnection;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.inigo.domotik.exceptions.ThermostatException;
+import com.inigo.domotik.thread.readers.Reader;
+import com.inigo.domotik.utils.ThermostatProperties;
 
 
-public class YahooWeatherReader {
+public class YahooWeatherReader implements Reader{
 	
 	public <T> T read(String cityName) {
 		try {
@@ -23,13 +26,14 @@ public class YahooWeatherReader {
 					+ getParameters(cityName) + "&format=json");
 			String response = readResponse(new InputStreamReader(conn.getInputStream()));
 			response = extractDesiredNode(response);
+			System.out.println("Response from yahoo:" + response);
 			return parseJsonTo(response, new TypeToken<Map<String, Map<String, String>>>(){}.getType());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-//"https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text=%27arkaia%27)%20and%20u=%27c%27&format=json"
+
 	private String getParameters(String cityName) {
 		return URLEncoder.encode("select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + cityName + "') and u = 'c'");
 	}
@@ -56,5 +60,17 @@ public class YahooWeatherReader {
 	private <T> T parseJsonTo(String json, Type t) {
 		Gson gson = new Gson();
 		return gson.fromJson(json, t);
+	}
+	
+	@Override
+	public String read() {
+		try {
+			YahooWeatherReader reader = new YahooWeatherReader();
+			Map<String, Map<String, String>> res = reader.read(ThermostatProperties.get("cityname"));
+			return res.get("condition").get("temp");
+		} catch (ThermostatException e) {
+			e.printStackTrace();
+		}
+		return "0";
 	}
 }

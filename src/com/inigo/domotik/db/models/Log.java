@@ -3,6 +3,7 @@ package com.inigo.domotik.db.models;
 public class Log {
 	String date;
 	double temperature;
+	double outsideTemp;
 	int desiredTemp;
 	int active;
 	
@@ -32,6 +33,12 @@ public class Log {
 	}
 	public void setActive(boolean active) {
 		this.active = active?1:0;
+	}
+	public double getOutsideTemp() {
+		return outsideTemp;
+	}
+	public void setOutsideTemp(double outsideTemp) {
+		this.outsideTemp = outsideTemp;
 	}
 	@Override
 	public String toString() {
