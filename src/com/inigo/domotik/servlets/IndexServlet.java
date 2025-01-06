@@ -25,7 +25,7 @@ public class IndexServlet extends BaseServlet {
 		TemperatureMeasurer tm = TemperatureMeasurer.getInstance();
 		request.setAttribute("cpuTemp", (tm.getTemps().get(TemperatureMeasurer.TEMP_CPU_INDEX)));
 		request.setAttribute("roomTemp", (tm.getTemps().get(TemperatureMeasurer.TEMP_ROOM_INDEX)));
-		request.setAttribute("outTemp", (tm.getTemps().get(TemperatureMeasurer.TEMP_OUTSIDE_INDEX)));
+		request.setAttribute("outTemp", -128);
 		toDestiny("/site/index.jsp", true, request, response);
 	}
 

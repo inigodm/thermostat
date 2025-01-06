@@ -1,6 +1,5 @@
 package com.inigo.domotik.thermostat.threads;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,19 +17,18 @@ import com.inigo.domotik.thermostat.db.ThermostatDAO;
 import com.inigo.domotik.thermostat.servlets.models.ThermostatInfo;
 import com.inigo.domotik.thermostat.threads.readers.CPUTempReader;
 import com.inigo.domotik.thermostat.threads.readers.RoomTempReader;
-import com.inigo.domotik.thermostat.threads.readers.YahooWeatherReader;
 import com.inigo.domotik.thread.Starter;
 import com.inigo.domotik.thread.readers.Reader;
 import com.inigo.domotik.utils.LogManager;
-import com.inigo.domotik.utils.ThermostatProperties;
+import com.pi4j.io.gpio.RaspiPin;
 
 //TODO: this class does too many things
 public class TemperatureMeasurer implements Starter{
 	public static final int DEFAULT_TEMP = 16;
 	public static final int TEMP_CPU_INDEX = 0;
 	public static final int TEMP_ROOM_INDEX = 0;
-	public static final int TEMP_OUTSIDE_INDEX = 1;
-	public static final YahooWeatherReader yahooReader = new YahooWeatherReader();
+	//public static final int TEMP_OUTSIDE_INDEX = 1;
+	//public static final YahooWeatherReader yahooReader = new YahooWeatherReader();
 	Map<Integer, Reader> readers = new HashMap<>();
 	public final List<String> rawTemps = new ArrayList<>();
 	ScheduledExecutorService executor = null;
@@ -39,7 +37,7 @@ public class TemperatureMeasurer implements Starter{
 	private TemperatureMeasurer(){
 		readers.put(TEMP_CPU_INDEX, new CPUTempReader());
 		readers.put(TEMP_ROOM_INDEX, new RoomTempReader());
-		readers.put(TEMP_OUTSIDE_INDEX, new YahooWeatherReader());
+		//readers.put(TEMP_OUTSIDE_INDEX, new YahooWeatherReader());
 		
 	}
 	
@@ -89,21 +87,22 @@ public class TemperatureMeasurer implements Starter{
 		return Double.parseDouble(rawTemps.get(tempIndex));
 	}
 
-    private synchronized void activateCalefactor(){
+    private synchronized void shutdownCalefactor(){
 		try {
-			System.out.println("Set calefactor to on? " +isActive());
+			System.out.println("Activate heather? " +isActive());
 			if (isActive()){
-				Runtime.getRuntime().exec("gpio write 25 0");//enciende
+				Gpio.setAs(RaspiPin.GPIO_25, false);//enciende
 			}else{
-				Runtime.getRuntime().exec("gpio write 25 1");//apaga
+				Gpio.setAs(RaspiPin.GPIO_25, true);//apaga
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.err.println("No se ha podido activar/desactivar el thermostato: estamos en local?");
+			e.printStackTrace();
 		}
 	}
 	
 	public boolean isActive(){
-		System.out.println("Is " + this.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?");
+		System.out.println("Is " + this.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) + "<" + desiredTemp + "?" + (this.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp));
 		return this.getTemp(TemperatureMeasurer.TEMP_ROOM_INDEX) < desiredTemp;
 	}
 
@@ -114,7 +113,7 @@ public class TemperatureMeasurer implements Starter{
 	public void setDesiredTemp(int desiredTemp) {
 		System.out.println("Set temp to" + desiredTemp);
 		this.desiredTemp = desiredTemp;
-		activateCalefactor();
+		shutdownCalefactor();
 	}
 	
 	
@@ -128,14 +127,14 @@ public class TemperatureMeasurer implements Starter{
 		l.setDesiredTemp(desiredTemp);
 		l.setTemperature(this.getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
 		l.setActive(isActive()?1:0);
-		l.setOutsideTemp(this.getRawTemp(TemperatureMeasurer.TEMP_OUTSIDE_INDEX));
+		//l.setOutsideTemp(this.getRawTemp(TemperatureMeasurer.TEMP_OUTSIDE_INDEX));
 		return l;
 	}
 	
 	public ThermostatInfo increase(int i) {
 		ThermostatInfo info = new ThermostatInfo();
 		setDesiredTemp(getDesiredTemp() + i);
-		info.setOutsideTemp(""+ getRawTemp(TemperatureMeasurer.TEMP_OUTSIDE_INDEX));
+		//info.setOutsideTemp(""+ getRawTemp(TemperatureMeasurer.TEMP_OUTSIDE_INDEX));
 		info.setDesiredTemp("" + getDesiredTemp());
 		info.setRoomTemp(""+ getRawTemp(TemperatureMeasurer.TEMP_ROOM_INDEX));
 		info.setOn(isActive());
@@ -166,10 +165,10 @@ public class TemperatureMeasurer implements Starter{
 				try {
 					System.out.println("STARTING temp measurement in thread" + HILO + " " + this.hashCode());
 					addMeasure(TEMP_ROOM_INDEX);
-					addMeasure(TEMP_OUTSIDE_INDEX);
+					//addMeasure(TEMP_OUTSIDE_INDEX);
 					setDesiredTempFromScheduler();
 					System.out.println("END temp measurement");
-					activateCalefactor();
+					shutdownCalefactor();
 					LogManager.addLogger(buildLog());
 					TimeUnit.SECONDS.sleep(60);
 				} catch (Exception e) {

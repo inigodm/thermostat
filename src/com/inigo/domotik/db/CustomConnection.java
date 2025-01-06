@@ -53,7 +53,8 @@ public class CustomConnection implements Connection{
 		 try {
 			 if (innerConn == null || innerConn.isClosed()){
 				Class.forName("org.sqlite.JDBC");
-				innerConn = DriverManager.getConnection("jdbc:sqlite:" + ThermostatProperties.get("db"));
+				String aux = "/home/tomcat8/db.db";
+				innerConn = DriverManager.getConnection("jdbc:sqlite:" + aux);
 			 }
 			 return new CustomConnection(innerConn);
 			 
