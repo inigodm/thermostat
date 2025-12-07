@@ -98,12 +98,10 @@ public class ThermostatDAO implements TableManager{
 
 	public synchronized List<Schedule> getSchedules(int limit, int offset) throws ThermostatException {
 		SCHEDULES.clear();
-		String sql = "";
-		if (limit != -1 && offset != -1){
-			sql = " LIMIT " + limit + " OFFSET " + offset;
-		}
-		sql = "select rowid, active, weekdays, starthour, endhour,"
-				+ "desiredtemp from schedules" + sql;
+        String sql = "select rowid, active, weekdays, starthour, endhour, desiredtemp from schedules";
+        if (limit != -1 && offset != -1){
+            sql += " LIMIT " + limit + " OFFSET " + offset;
+        }
 		try (Connection conn = CustomConnection.getConnection();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql)){
@@ -135,7 +133,7 @@ public class ThermostatDAO implements TableManager{
 	}
 
 	public List<Schedule> refreshSchedules() throws ThermostatException{
-		return getSchedules(-1, 1);
+		return getSchedules(-1, -1);
 	}
 	
 	
@@ -190,7 +188,7 @@ public class ThermostatDAO implements TableManager{
 				int end = DateUtils.hourOfDayAsNumber(s.getMaxHour());
 				System.out.println("init " + init  +" now " + hourNow + " end " + end);
 				System.out.println(init < hourNow && hourNow < end);
-				if (init < hourNow && hourNow < end){
+				if (init <= hourNow && hourNow <= end){
 					ACTIVATEDSCHEDULES.add(s);
 				}
 			}else{
